@@ -20,6 +20,12 @@ htmlcov/
 *.log
 summary.md
 
+# Private specifications & agent guidelines (git-spec)
+AGENTS.md
+planning-with-files/
+大纲.md
+git规范.md
+
 # OS metadata
 .DS_Store
 Thumbs.db

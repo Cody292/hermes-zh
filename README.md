@@ -9,13 +9,13 @@
 ---
 
 <a name="中文文档"></a>
-## 🇨🇳 中文文档
+## 中文文档
 
 `hermes-zh` 是专为 [Hermes Agent](https://hermes-agent.nousresearch.com/) 打造的官方原生生命周期、免改源码的 Simplified Chinese 简体中文汉化插件。
 
 遵循 Hermes 官方插件规范与生命周期挂钩设计，严格遵守无死锁、抗重入、懒加载与模块解耦准则，为 Telegram、Discord、Slack 等平台及终端 CLI 提供完整的本土化中文体验。
 
-### 🌟 核心特性
+### 核心特性
 
 #### 1. 102 条全量斜杠指令中文菜单
 - **Telegram 原生指令菜单**：在 Telegram 输入 `/` 呼出菜单时，全部 102 条内置与常用系统指令均展示地道、流畅的中文说明与参数提示。
@@ -30,14 +30,14 @@
 - **/platform 平台适配器监控**：各平台连接、重试、暂停状态与操作指引中文展示。
 
 #### 3. 高危命令审批卡与原因拦截
-- **声明式模板属性覆盖**：优雅替换 Telegram 审批卡标题、放行按钮（✅ 仅允许一次、✅ 本会话允许、🔒 永久允许、❌ 拒绝）与 Toast 提示气泡。
+- **声明式模板属性覆盖**：优雅替换 Telegram 审批卡标题、放行按钮（[允许一次]、[本会话允许]、[永久允许]、[拒绝]）与 Toast 提示气泡。
 - **高危命令原因精准转译**：涵盖破坏性递归删除、根目录路径操作、危险提权、Fork 炸弹、敏感密钥读取、Docker 变更、动态代码执行等 30+ 类高危原因。
-- **审批结果通知**：优雅汉化「✅ 已允许本次会话执行」、「❌ 已拒绝执行」、「⌛ 审批已过期」等实时卡片状态。
+- **审批结果通知**：优雅汉化「已允许本次会话执行」、「已拒绝执行」、「审批已过期」等实时卡片状态。
 
 #### 4. 实时动态心跳与工具动词
-- **流式处理心跳**：例如「⏳ 正在处理中 — 2 分钟 — 轮次 3/500，等待模型响应 (流式)」。
+- **流式处理心跳**：例如「正在处理中 — 2 分钟 — 轮次 3/500，等待模型响应 (流式)」。
 - **工具执行标签 (Tool Verbs)**：涵盖 `terminal` (正在运行终端命令)、`execute_code` (正在执行Python代码)、`read_file` (正在读取文件)、`browser_exec` (正在操作浏览器)、`memory` (正在更新记忆) 等 30+ 种工具动词与预览构建器。
-- **自我提升复盘**：后台复盘摘要实时呈现「💾 自我提升复盘：技能 'xxx' 已更新 · 记忆库已更新」。
+- **自我提升复盘**：后台复盘摘要实时呈现「自我提升复盘：技能 'xxx' 已更新 · 记忆库已更新」。
 
 #### 5. 发现小贴士 (Tips) 380 条全量精翻库
 - 内置 `tips_zh.json`，全量精翻官方 380 条命令行使用技巧与高阶功能说明。
@@ -45,7 +45,7 @@
 
 ---
 
-### 🏗️ 架构设计与规范
+### 架构设计与规范
 
 本插件严格遵循 Hermes 原生插件开发规范：
 1. **杜绝冷启动硬开**：严禁在 `__init__.py` 顶层导入重型网络库或打补丁，所有平台定制统一通过 `ctx.register_platform_handler("telegram", ...)` 由官方连接成功时回调注入。
@@ -58,7 +58,7 @@
 
 ---
 
-### 🚀 安装与启用
+### 安装与启用
 
 #### 方式 1：社区快捷安装（推荐）
 ```bash
@@ -91,7 +91,7 @@ plugins:
 
 ---
 
-### 🔍 验证与诊断
+### 验证与诊断
 
 #### 1. 运行插件合规体验证
 ```bash
@@ -108,13 +108,13 @@ hermes plugins validate <path-to-hermes-zh>
 ---
 
 <a name="english-documentation"></a>
-## 🇬🇧 English Documentation
+## English Documentation
 
 `hermes-zh` is a native, zero-source-modification Simplified Chinese localization plugin designed for [Hermes Agent](https://hermes-agent.nousresearch.com/).
 
 Built strictly against Hermes official plugin specifications and lifecycle hooks, it implements lazy loading, anti-recursion guards, and modular decoupling to deliver an authentic, idiomatic Chinese experience across Telegram, Discord, Slack, and terminal CLI environments.
 
-### 🌟 Key Features
+### Key Features
 
 #### 1. Full 102 Slash Commands Localized Menu
 - **Native Slash Menu on Telegram**: Typing `/` reveals all 102 built-in and system commands with idiomatic Simplified Chinese descriptions and parameter hints.
@@ -127,14 +127,14 @@ Built strictly against Hermes official plugin specifications and lifecycle hooks
 - **/whoami & /busy**: User identity, scope permissions, executable commands list, and busy steering/queue explanations.
 
 #### 3. Command Approval Cards & Risk Reason Interception
-- **Declarative Template Overrides**: Localizes Telegram approval card headers, interactive action buttons (✅ Allow Once, ✅ Allow for Session, 🔒 Allow Forever, ❌ Deny), and toast notifications.
+- **Declarative Template Overrides**: Localizes Telegram approval card headers, interactive action buttons ([Allow Once], [Allow for Session], [Allow Forever], [Deny]), and toast notifications.
 - **Accurate High-Risk Explanations**: 30+ categories of dangerous command patterns translated (recursive deletions, root directory operations, privilege escalations, fork bombs, secret exposure risks, docker modifications, dynamic code execution).
 - **Resolution Status Alerts**: Real-time card statuses such as "Allowed for this session", "Denied", and "Approval expired".
 
 #### 4. Real-time Dynamic Heartbeats & Tool Verbs
-- **Streaming Heartbeat**: e.g., "⏳ Processing — 2m — Turn 3/500, waiting for model response (streaming)".
+- **Streaming Heartbeat**: e.g., "Processing — 2m — Turn 3/500, waiting for model response (streaming)".
 - **Tool Verbs & Previews**: Over 30 tool action verbs including `terminal` (Running command), `execute_code` (Executing Python code), `read_file` (Reading file), `browser_exec` (Controlling browser), and `memory` (Updating memory).
-- **Self-Improvement Reviews**: Instant post-turn reflections (e.g., "💾 Self-Improvement: Skill updated · Memory updated").
+- **Self-Improvement Reviews**: Instant post-turn reflections (e.g., "Self-Improvement: Skill updated · Memory updated").
 
 #### 5. Curated Library of 380 Tips
 - Bundled with `tips_zh.json`, providing 380 high-quality translated CLI tips and power-user tricks.
@@ -142,7 +142,7 @@ Built strictly against Hermes official plugin specifications and lifecycle hooks
 
 ---
 
-### 🏗️ Architecture & Principles
+### Architecture & Principles
 
 - **No Eager Import on Cold Start**: Heavy modules and monkey patches are never loaded at `__init__.py` top-level. Adapters register via `ctx.register_platform_handler("telegram", ...)` upon successful gateway connection.
 - **Asynchronous Coroutine Contract**: Preserves full `async def` signatures and parameter forwarding.
@@ -154,7 +154,7 @@ Built strictly against Hermes official plugin specifications and lifecycle hooks
 
 ---
 
-### 🚀 Installation & Quick Start
+### Installation & Quick Start
 
 #### Method 1: Community Quick Install (Recommended)
 ```bash
@@ -186,7 +186,7 @@ plugins:
 
 ---
 
-### 🔍 Verification & Diagnostics
+### Verification & Diagnostics
 
 #### Validate Plugin Manifest
 ```bash
@@ -202,7 +202,7 @@ Displays loaded version, localized command count, and active verb hooks.
 
 ---
 
-### 📄 License
+### License
 
 This project is licensed under the [MIT License](LICENSE).
 Contributions and community issues are welcome!
