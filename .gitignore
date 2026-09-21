@@ -1,0 +1,25 @@
+# Bytecode & Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Tests & Coverage (Excluded as required)
+tests/
+test_*.py
+*.test.py
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local configurations & backups
+.env
+*.local
+*.bak*
+*.tmp
+*.log
+summary.md
+
+# OS metadata
+.DS_Store
+Thumbs.db

@@ -1,0 +1,2670 @@
+{
+  "version": "1.3.0",
+  "total": 380,
+  "items": [
+    {
+      "id": 0,
+      "en": "/bg <prompt> runs a task in a separate session while your current one stays free; /btw <question> answers a side question about this conversation without interrupting it.",
+      "zh": "/bg <prompt> 在独立会话中运行任务，同时保持当前会话空闲；/btw <question> 则可在不中断当前对话的前提下回答附带问题。"
+    },
+    {
+      "id": 1,
+      "en": "/branch forks the current session so you can explore a different direction without losing progress.",
+      "zh": "/branch 分叉当前会话，便于你在不丢失现有进度的情况下探索不同方向。"
+    },
+    {
+      "id": 2,
+      "en": "/compress manually compresses conversation context when things get long.",
+      "zh": "/compress 在对话内容过长时手动压缩对话上下文。"
+    },
+    {
+      "id": 3,
+      "en": "/rollback lists filesystem checkpoints — restore files the agent modified to any prior state.",
+      "zh": "/rollback 列出文件系统检查点——可将智能体修改过的文件恢复到任意历史状态。"
+    },
+    {
+      "id": 4,
+      "en": "/rollback diff 2 previews what changed since checkpoint 2 without restoring anything.",
+      "zh": "/rollback diff 2 预览自检查点 2 以来的所有变动，且不会恢复任何内容。"
+    },
+    {
+      "id": 5,
+      "en": "/rollback 2 src/file.py restores a single file from a specific checkpoint.",
+      "zh": "/rollback 2 src/file.py 从指定检查点仅恢复单个文件。"
+    },
+    {
+      "id": 6,
+      "en": "/title \"my project\" names your session — resume it later with /resume or hermes -c.",
+      "zh": "/title \"my project\" 为当前会话命名——之后可通过 /resume 或 hermes -c 恢复该会话。"
+    },
+    {
+      "id": 7,
+      "en": "/resume picks up where you left off in a previously named session.",
+      "zh": "/resume 继续之前已命名的会话，从上次离开的地方接着进行。"
+    },
+    {
+      "id": 8,
+      "en": "/queue <prompt> queues a message for the next turn without interrupting the current one.",
+      "zh": "/queue <prompt> 将消息加入下一轮排队队列，不会中断当前轮次。"
+    },
+    {
+      "id": 9,
+      "en": "/undo removes the last user/assistant exchange from the conversation.",
+      "zh": "/undo 从对话中移除上一轮用户与助手的问答交互。"
+    },
+    {
+      "id": 10,
+      "en": "/retry resends your last message — useful when the agent's response wasn't quite right.",
+      "zh": "/retry 重新发送你上一条消息——当智能体的回复不甚理想时非常有用。"
+    },
+    {
+      "id": 11,
+      "en": "/verbose cycles tool progress display: off → new → all → verbose.",
+      "zh": "/verbose 循环切换工具执行进度显示：off → new → all → verbose。"
+    },
+    {
+      "id": 12,
+      "en": "/reasoning high increases the model's thinking depth. /reasoning show displays the reasoning.",
+      "zh": "/reasoning high 可提高模型的思考深度。/reasoning show 则显示具体推理过程。"
+    },
+    {
+      "id": 13,
+      "en": "/fast toggles priority processing for faster API responses (provider-dependent).",
+      "zh": "/fast 切换优先处理模式以获得更快的 API 响应速度（取决于提供商）。"
+    },
+    {
+      "id": 14,
+      "en": "/yolo skips all dangerous command approval prompts for the rest of the session.",
+      "zh": "/yolo 在当前会话后续操作中跳过所有高危命令的确认提示。"
+    },
+    {
+      "id": 15,
+      "en": "/model lets you switch models mid-session — try /model sonnet or /model gpt-5.",
+      "zh": "/model 支持会话中途切换模型——例如尝试 /model sonnet 或 /model gpt-5。"
+    },
+    {
+      "id": 16,
+      "en": "/model --global changes your default model permanently.",
+      "zh": "/model --global 永久修改你的默认模型。"
+    },
+    {
+      "id": 17,
+      "en": "/personality pirate sets a fun personality — 14 built-in options from kawaii to shakespeare.",
+      "zh": "/personality pirate 可设置趣味人设——内置 14 种人设选项，涵盖 kawaii 到 shakespeare。"
+    },
+    {
+      "id": 18,
+      "en": "/skin changes the CLI theme — try ares, mono, slate, poseidon, or charizard.",
+      "zh": "/skin 切换 CLI 主题——可尝试 ares、mono、slate、poseidon 或 charizard。"
+    },
+    {
+      "id": 19,
+      "en": "/statusbar toggles a persistent bar showing model, tokens, context fill %, cost, and duration.",
+      "zh": "/statusbar 切换常驻状态栏，显示模型、Token、上下文填充比例（%）、费用和运行耗时。"
+    },
+    {
+      "id": 20,
+      "en": "/tools disable browser temporarily removes browser tools for the current session.",
+      "zh": "/tools disable browser 会在当前会话中临时禁用浏览器工具。"
+    },
+    {
+      "id": 21,
+      "en": "/browser connect attaches browser tools to your running Chromium-family browser via CDP.",
+      "zh": "/browser connect 通过 CDP 将浏览器工具连接至正在运行的 Chromium 家族浏览器。"
+    },
+    {
+      "id": 22,
+      "en": "/plugins lists installed plugins and their status.",
+      "zh": "/plugins 列出已安装的插件及其运行状态。"
+    },
+    {
+      "id": 23,
+      "en": "/cron manages scheduled tasks — set up recurring prompts with delivery to any platform.",
+      "zh": "/cron 管理定时任务——设置周期性执行的提示词，并推送到任意目标平台。"
+    },
+    {
+      "id": 24,
+      "en": "/reload-mcp hot-reloads MCP server configuration without restarting.",
+      "zh": "/reload-mcp 无需重启即可热重载 MCP 服务端配置。"
+    },
+    {
+      "id": 25,
+      "en": "/usage shows token usage, cost breakdown, and session duration.",
+      "zh": "/usage 查看 Token 使用量、费用明细以及会话耗时。"
+    },
+    {
+      "id": 26,
+      "en": "/insights shows usage analytics for the last 30 days.",
+      "zh": "/insights 展示最近 30 天的使用分析统计数据。"
+    },
+    {
+      "id": 27,
+      "en": "/paste checks your clipboard for an image and attaches it to your next message.",
+      "zh": "/paste 检查剪贴板中的图片并附加到下一条消息中。"
+    },
+    {
+      "id": 28,
+      "en": "/profile shows which profile is active and its home directory.",
+      "zh": "/profile 显示当前处于激活状态的配置文件及其用户主目录。"
+    },
+    {
+      "id": 29,
+      "en": "/config shows your current configuration at a glance.",
+      "zh": "/config 一目了然地查看你当前的完整配置。"
+    },
+    {
+      "id": 30,
+      "en": "/stop kills all running background processes spawned by the agent.",
+      "zh": "/stop 终止由智能体衍生出的所有正在运行的后台进程。"
+    },
+    {
+      "id": 31,
+      "en": "@file:path/to/file.py injects file contents directly into your message.",
+      "zh": "@file:path/to/file.py 将文件内容直接注入到你的消息中。"
+    },
+    {
+      "id": 32,
+      "en": "@file:main.py:10-50 injects only lines 10-50 of a file.",
+      "zh": "@file:main.py:10-50 仅注入文件的第 10 至 50 行。"
+    },
+    {
+      "id": 33,
+      "en": "@folder:src/ injects a directory tree listing.",
+      "zh": "@folder:src/ 注入目录树结构列表。"
+    },
+    {
+      "id": 34,
+      "en": "@diff injects your unstaged git changes into the message.",
+      "zh": "@diff 将尚未暂存的 Git 改动注入消息中。"
+    },
+    {
+      "id": 35,
+      "en": "@staged injects your staged git changes (git diff --staged).",
+      "zh": "@staged 将已暂存的 Git 改动（git diff --staged）注入消息中。"
+    },
+    {
+      "id": 36,
+      "en": "@git:5 injects the last 5 commits with full patches.",
+      "zh": "@git:5 注入最近 5 次提交记录及完整补丁。"
+    },
+    {
+      "id": 37,
+      "en": "@url:https://example.com fetches and injects a web page's content.",
+      "zh": "@url:https://example.com 抓取网页内容并注入消息中。"
+    },
+    {
+      "id": 38,
+      "en": "Typing @ triggers filesystem path completion — navigate to any file interactively.",
+      "zh": "输入 @ 会触发文件系统路径补全——支持交互式定位导航到任意文件。"
+    },
+    {
+      "id": 39,
+      "en": "Combine multiple references: \"Review @file:main.py and @file:test.py for consistency.\"",
+      "zh": "可组合多个引用：\"Review @file:main.py and @file:test.py for consistency.\""
+    },
+    {
+      "id": 40,
+      "en": "Alt+Enter inserts a newline for multi-line input. (Windows Terminal intercepts Alt+Enter — use Ctrl+Enter instead.)",
+      "zh": "Alt+Enter 插入换行符以进行多行输入。（Windows Terminal 会拦截 Alt+Enter，此时请改用 Ctrl+Enter。）"
+    },
+    {
+      "id": 41,
+      "en": "Ctrl+C interrupts the agent. Double-press within 2 seconds to force exit.",
+      "zh": "Ctrl+C 可中断智能体运行。2 秒内连按两次将强制退出。"
+    },
+    {
+      "id": 42,
+      "en": "Ctrl+Z suspends Hermes to the background — run fg in your shell to resume.",
+      "zh": "Ctrl+Z 将 Hermes 挂起至后台——在 Shell 中执行 fg 命令即可恢复。"
+    },
+    {
+      "id": 43,
+      "en": "Tab accepts auto-suggestion ghost text or autocompletes slash commands.",
+      "zh": "Tab 键可采纳自动建议的幽灵文本，或自动补全斜杠命令。"
+    },
+    {
+      "id": 44,
+      "en": "Type a new message while the agent is working to interrupt and redirect it.",
+      "zh": "在智能体工作期间直接输入新消息，可立即中断并重定向它的行为。"
+    },
+    {
+      "id": 45,
+      "en": "Alt+V pastes an image from your clipboard into the conversation.",
+      "zh": "Alt+V 将剪贴板中的图片直接粘贴至对话中。"
+    },
+    {
+      "id": 46,
+      "en": "Pasting 5+ lines auto-saves to a file and inserts a compact reference instead.",
+      "zh": "粘贴 5 行及以上内容时会自动保存为文件，并替换为精简的引用标记。"
+    },
+    {
+      "id": 47,
+      "en": "hermes -c resumes your most recent CLI session. hermes -c \"project name\" resumes by title.",
+      "zh": "hermes -c 恢复你最近一次的 CLI 会话。hermes -c \"project name\" 则按标题恢复指定会话。"
+    },
+    {
+      "id": 48,
+      "en": "hermes -w creates an isolated git worktree — perfect for parallel agent workflows.",
+      "zh": "hermes -w 创建一个独立的 Git Worktree——非常适合并行的智能体工作流。"
+    },
+    {
+      "id": 49,
+      "en": "hermes -w -q \"Fix issue #42\" combines worktree isolation with a one-shot query.",
+      "zh": "hermes -w -q \"Fix issue #42\" 将 Worktree 隔离与单次查询相结合。"
+    },
+    {
+      "id": 50,
+      "en": "hermes chat -t web,terminal enables only specific toolsets for a focused session.",
+      "zh": "hermes chat -t web,terminal 仅启用特定的工具集，以打造专注的会话。"
+    },
+    {
+      "id": 51,
+      "en": "hermes chat -s github-pr-workflow preloads a skill at launch.",
+      "zh": "hermes chat -s github-pr-workflow 启动时预加载指定技能。"
+    },
+    {
+      "id": 52,
+      "en": "hermes chat -q \"query\" runs a single non-interactive query and exits.",
+      "zh": "hermes chat -q \"query\" 运行单次非交互式查询并退出。"
+    },
+    {
+      "id": 53,
+      "en": "hermes chat --max-turns 1000 overrides the default 500-iteration limit per turn.",
+      "zh": "hermes chat --max-turns 1000 覆盖每轮交互默认的 500 次迭代上限。"
+    },
+    {
+      "id": 54,
+      "en": "hermes chat --checkpoints enables filesystem snapshots before every destructive file change.",
+      "zh": "hermes chat --checkpoints 在每次发生破坏性文件修改前启用文件系统快照。"
+    },
+    {
+      "id": 55,
+      "en": "hermes --yolo bypasses all dangerous command approval prompts for the entire session.",
+      "zh": "hermes --yolo 在整个会话中绕过所有高危命令的确认提示。"
+    },
+    {
+      "id": 56,
+      "en": "hermes chat --source telegram tags the session for filtering in hermes sessions list.",
+      "zh": "hermes chat --source telegram 为会话打上标签，以便在 hermes sessions list 中进行筛选。"
+    },
+    {
+      "id": 57,
+      "en": "hermes -p work chat runs under a specific profile without changing your default.",
+      "zh": "hermes -p work chat 在指定配置文件下运行，且不会更改你的默认配置。"
+    },
+    {
+      "id": 58,
+      "en": "hermes doctor --fix diagnoses and auto-repairs config and dependency issues.",
+      "zh": "hermes doctor --fix 诊断并自动修复配置与依赖项问题。"
+    },
+    {
+      "id": 59,
+      "en": "hermes dump outputs a compact setup summary — great for bug reports.",
+      "zh": "hermes dump 输出紧凑的环境配置摘要——非常适合用于提交 Bug 报告。"
+    },
+    {
+      "id": 60,
+      "en": "hermes config set KEY VALUE auto-routes secrets to .env and everything else to config.yaml.",
+      "zh": "hermes config set KEY VALUE 自动将机密信息路由保存至 .env，其余内容写入 config.yaml。"
+    },
+    {
+      "id": 61,
+      "en": "hermes config edit opens config.yaml in your default editor.",
+      "zh": "hermes config edit 在你的默认编辑器中打开 config.yaml。"
+    },
+    {
+      "id": 62,
+      "en": "hermes config check scans for missing or stale configuration options.",
+      "zh": "hermes config check 扫描缺失或陈旧过期的配置选项。"
+    },
+    {
+      "id": 63,
+      "en": "hermes sessions browse opens an interactive session picker with search.",
+      "zh": "hermes sessions browse 打开带有搜索功能的交互式会话选择器。"
+    },
+    {
+      "id": 64,
+      "en": "hermes sessions stats shows session counts by platform and database size.",
+      "zh": "hermes sessions stats 按平台展示会话总数以及数据库文件大小。"
+    },
+    {
+      "id": 65,
+      "en": "hermes sessions prune --older-than 30 cleans up old sessions.",
+      "zh": "hermes sessions prune --older-than 30 清理陈旧的历史会话。"
+    },
+    {
+      "id": 66,
+      "en": "hermes skills search react --source skills-sh searches the skills.sh public directory.",
+      "zh": "hermes skills search react --source skills-sh 在 skills.sh 公共目录中搜索技能。"
+    },
+    {
+      "id": 67,
+      "en": "hermes skills check scans installed hub skills for upstream updates.",
+      "zh": "hermes skills check 扫描已安装的 Hub 技能是否存在上游更新。"
+    },
+    {
+      "id": 68,
+      "en": "hermes skills tap add myorg/skills-repo adds a custom GitHub skill source.",
+      "zh": "hermes skills tap add myorg/skills-repo 添加自定义的 GitHub 技能源。"
+    },
+    {
+      "id": 69,
+      "en": "hermes skills snapshot export setup.json exports your skill configuration for backup or sharing.",
+      "zh": "hermes skills snapshot export setup.json 导出你的技能配置快照，用于备份或共享。"
+    },
+    {
+      "id": 70,
+      "en": "hermes mcp add github --command npx adds MCP servers from the command line.",
+      "zh": "hermes mcp add github --command npx 从命令行添加 MCP 服务端。"
+    },
+    {
+      "id": 71,
+      "en": "hermes mcp serve runs Hermes itself as an MCP server for other agents.",
+      "zh": "hermes mcp serve 将 Hermes 本身作为 MCP 服务端运行，供其他智能体调用。"
+    },
+    {
+      "id": 72,
+      "en": "hermes auth add lets you add multiple API keys for credential pool rotation.",
+      "zh": "hermes auth add 支持添加多个 API Key，用于凭据池轮换。"
+    },
+    {
+      "id": 73,
+      "en": "hermes completion bash >> ~/.bashrc enables tab completion for all commands and profiles.",
+      "zh": "hermes completion bash >> ~/.bashrc 为所有命令和配置文件开启 Tab 自动补全。"
+    },
+    {
+      "id": 74,
+      "en": "hermes logs -f follows agent.log in real time. --level WARNING --since 1h filters output.",
+      "zh": "hermes logs -f 实时跟踪 agent.log。可搭配 --level WARNING --since 1h 筛选输出。"
+    },
+    {
+      "id": 75,
+      "en": "hermes backup creates a zip backup of your entire Hermes home directory.",
+      "zh": "hermes backup 为你的整个 Hermes 主目录创建 zip 格式备份压缩包。"
+    },
+    {
+      "id": 76,
+      "en": "hermes profile create coder creates an isolated profile that becomes its own command.",
+      "zh": "hermes profile create coder 创建独立的配置文件，且会生成对应的专属独立命令。"
+    },
+    {
+      "id": 77,
+      "en": "hermes profile create work --clone copies your current config and keys to a new profile.",
+      "zh": "hermes profile create work --clone 将你当前的配置与密钥完整克隆到新配置文件中。"
+    },
+    {
+      "id": 78,
+      "en": "hermes update syncs new bundled skills to ALL profiles automatically.",
+      "zh": "hermes update 自动将新捆绑的内置技能同步到所有配置文件。"
+    },
+    {
+      "id": 79,
+      "en": "hermes gateway install sets up Hermes as a system service (systemd/launchd).",
+      "zh": "hermes gateway install 将 Hermes 配置为系统服务（systemd/launchd）。"
+    },
+    {
+      "id": 80,
+      "en": "hermes memory setup lets you configure an external memory provider (Honcho, Mem0, etc.).",
+      "zh": "hermes memory setup 支持配置外部记忆提供商（如 Honcho、Mem0 等）。"
+    },
+    {
+      "id": 81,
+      "en": "hermes webhook subscribe creates event-driven webhook routes with HMAC validation.",
+      "zh": "hermes webhook subscribe 创建带有 HMAC 验证的事件驱动型 Webhook 路由。"
+    },
+    {
+      "id": 82,
+      "en": "Save money: hermes tools disables unused tools, hermes skills config trims skills down.",
+      "zh": "节省成本：使用 hermes tools 禁用未使用的工具，使用 hermes skills config 精简技能。"
+    },
+    {
+      "id": 83,
+      "en": "/reasoning low or /reasoning minimal cuts thinking depth below the default (medium) — faster, cheaper responses.",
+      "zh": "/reasoning low 或 /reasoning minimal 将思考深度降至默认（medium）以下——响应更快且成本更低。"
+    },
+    {
+      "id": 84,
+      "en": "hermes models routes vision, compression, and aux tasks to cheaper models — cuts background token cost 85%+ without downgrading your main chat model.",
+      "zh": "hermes models 将视觉、上下文压缩和辅助任务路由至更经济的模型——在不降低主对话模型规格的前提下，削减 85% 以上的后台 Token 成本。"
+    },
+    {
+      "id": 85,
+      "en": "Set display.bell_on_complete: true in config.yaml to hear a bell when long tasks finish.",
+      "zh": "在 config.yaml 中设置 display.bell_on_complete: true，以便在耗时任务完成时响起提示音。"
+    },
+    {
+      "id": 86,
+      "en": "Set display.streaming: true to see tokens appear in real time as the model generates.",
+      "zh": "设置 display.streaming: true，即可在模型生成内容时实时看到逐字流式输出的 Token。"
+    },
+    {
+      "id": 87,
+      "en": "Set display.show_reasoning: true to watch the model's chain-of-thought reasoning.",
+      "zh": "设置 display.show_reasoning: true，可实时查看模型的思维链推理过程。"
+    },
+    {
+      "id": 88,
+      "en": "Set display.compact: true to reduce whitespace in output for denser information.",
+      "zh": "设置 display.compact: true，可减少输出中的空白行与留白，提升信息显示密度。"
+    },
+    {
+      "id": 89,
+      "en": "Set display.busy_input_mode: queue to queue messages instead of interrupting the agent, or steer to inject them mid-run via /steer.",
+      "zh": "设置 display.busy_input_mode: queue 可让新消息排队而不是中断智能体，或设为 steer 以通过 /steer 在运行途中注入指导。"
+    },
+    {
+      "id": 90,
+      "en": "Set display.resume_display: minimal to skip the full conversation recap on session resume.",
+      "zh": "设置 display.resume_display: minimal，可在恢复会话时跳过完整对话内容回顾。"
+    },
+    {
+      "id": 91,
+      "en": "Set compression.threshold: 0.50 to control when auto-compression fires (default: 50% of context).",
+      "zh": "设置 compression.threshold: 0.50 可控制何时触发自动压缩（默认：上下文的 50%）。"
+    },
+    {
+      "id": 92,
+      "en": "Set agent.max_turns: 1000 to let the agent take more tool-calling steps per turn.",
+      "zh": "设置 agent.max_turns: 1000，可允许智能体在单轮交互中执行更多的工具调用步数。"
+    },
+    {
+      "id": 93,
+      "en": "Set file_read_max_chars: 200000 to increase the max content per read_file call.",
+      "zh": "设置 file_read_max_chars: 200000，可增加每次 read_file 调用所能读取的最大字符数。"
+    },
+    {
+      "id": 94,
+      "en": "Set approvals.mode: smart to let an LLM auto-approve safe commands and auto-deny dangerous ones.",
+      "zh": "设置 approvals.mode: smart，可让 LLM 自动批准安全命令并自动拦截高危命令。"
+    },
+    {
+      "id": 95,
+      "en": "Set fallback_model in config.yaml to automatically fail over to a backup provider.",
+      "zh": "在 config.yaml 中设置 fallback_model，可在主提供商故障时自动故障转移至备用提供商。"
+    },
+    {
+      "id": 96,
+      "en": "Set privacy.redact_pii: true to hash user IDs and phone numbers before sending to the LLM.",
+      "zh": "设置 privacy.redact_pii: true 可在将数据发送给 LLM 之前，对用户 ID 和手机号进行哈希脱敏。"
+    },
+    {
+      "id": 97,
+      "en": "Set browser.record_sessions: true to auto-record browser sessions as WebM videos.",
+      "zh": "设置 browser.record_sessions: true 可将浏览器操作会话自动录制为 WebM 视频。"
+    },
+    {
+      "id": 98,
+      "en": "Set worktree: true in config.yaml to always create a git worktree (same as hermes -w).",
+      "zh": "在 config.yaml 中设置 worktree: true 可始终创建 Git Worktree（效果同 hermes -w）。"
+    },
+    {
+      "id": 99,
+      "en": "Set security.website_blocklist.enabled: true to block specific domains from web tools.",
+      "zh": "设置 security.website_blocklist.enabled: true 可禁止网络工具访问特定的域名。"
+    },
+    {
+      "id": 100,
+      "en": "Set cron.wrap_response: false to deliver raw agent output without the cron header/footer.",
+      "zh": "设置 cron.wrap_response: false 可直接推送原始智能体输出，不附加定时任务的页眉/页脚。"
+    },
+    {
+      "id": 101,
+      "en": "HERMES_TIMEZONE overrides the server timezone with any IANA timezone string.",
+      "zh": "HERMES_TIMEZONE 可使用任意 IANA 时区字符串覆盖服务器默认时区。"
+    },
+    {
+      "id": 102,
+      "en": "Environment variable substitution works in config.yaml: use ${VAR_NAME} syntax.",
+      "zh": "config.yaml 支持环境变量替换：使用 ${VAR_NAME} 语法即可。"
+    },
+    {
+      "id": 103,
+      "en": "Quick commands in config.yaml run shell commands instantly with zero token usage.",
+      "zh": "config.yaml 中的快捷命令（Quick commands）可即时执行 Shell 命令，且不消耗任何 Token。"
+    },
+    {
+      "id": 104,
+      "en": "Custom personalities can be defined in config.yaml under agent.personalities.",
+      "zh": "可在 config.yaml 的 agent.personalities 下定义自定义人设。"
+    },
+    {
+      "id": 105,
+      "en": "provider_routing controls OpenRouter provider sorting, whitelisting, and blacklisting.",
+      "zh": "provider_routing 用于控制 OpenRouter 提供商的排序、白名单以及黑名单。"
+    },
+    {
+      "id": 106,
+      "en": "execute_code runs Python scripts that call Hermes tools programmatically — results stay out of context.",
+      "zh": "execute_code 可运行以编程方式调用 Hermes 工具的 Python 脚本——执行结果不会占用上下文。"
+    },
+    {
+      "id": 107,
+      "en": "delegate_task spawns up to 10 concurrent sub-agents by default (delegation.max_concurrent_children) with isolated contexts for parallel work.",
+      "zh": "delegate_task 默认最多衍生出 10 个并发子智能体（受 delegation.max_concurrent_children 控制），并具备独立上下文以进行并行作业。"
+    },
+    {
+      "id": 108,
+      "en": "web_extract works on PDF URLs — pass any PDF link and it converts to markdown.",
+      "zh": "web_extract 支持 PDF 链接——传入任意 PDF URL 即可自动转换为 Markdown。"
+    },
+    {
+      "id": 109,
+      "en": "search_files is ripgrep-backed and faster than grep — use it instead of terminal grep.",
+      "zh": "search_files 基于 ripgrep 构建且速度显著优于 grep——建议优先使用它来替代终端 grep。"
+    },
+    {
+      "id": 110,
+      "en": "patch uses 9 fuzzy matching strategies so minor whitespace differences won't break edits.",
+      "zh": "patch 采用 9 种模糊匹配策略，微小的空白符差异不会导致修改失败。"
+    },
+    {
+      "id": 111,
+      "en": "patch supports V4A format for bulk multi-file edits in a single call.",
+      "zh": "patch 支持 V4A 格式，可在单次调用中批量修改多个文件。"
+    },
+    {
+      "id": 112,
+      "en": "read_file suggests similar filenames when a file isn't found.",
+      "zh": "未找到目标文件时，read_file 会智能推荐相似的文件名。"
+    },
+    {
+      "id": 113,
+      "en": "read_file auto-deduplicates — re-reading an unchanged file returns a lightweight stub.",
+      "zh": "read_file 具备自动去重机制——重新读取未变动的文件仅返回轻量存根。"
+    },
+    {
+      "id": 114,
+      "en": "browser_vision takes a screenshot and analyzes it with AI — works for CAPTCHAs and visual content.",
+      "zh": "browser_vision 支持网页截屏并通过 AI 进行视觉分析——适用于验证码识别与视觉内容理解。"
+    },
+    {
+      "id": 115,
+      "en": "browser_console can evaluate JavaScript expressions in the page context.",
+      "zh": "browser_console 可以在当前页面上下文中直接执行并求值 JavaScript 表达式。"
+    },
+    {
+      "id": 116,
+      "en": "image_generate creates images with FLUX 2 Pro and automatic 2x upscaling.",
+      "zh": "image_generate 基于 FLUX 2 Pro 生成图像，并支持自动 2 倍无损放大。"
+    },
+    {
+      "id": 117,
+      "en": "text_to_speech converts text to audio — plays as voice bubbles on Telegram.",
+      "zh": "text_to_speech 将文本转换为语音音频——在 Telegram 上可直接以语音气泡播放。"
+    },
+    {
+      "id": 118,
+      "en": "send_message can reach any connected messaging platform from within a session.",
+      "zh": "send_message 可在会话内部向任意已连接的即时通讯平台发送消息。"
+    },
+    {
+      "id": 119,
+      "en": "The todo tool helps the agent track complex multi-step tasks during a session.",
+      "zh": "todo 工具可帮助智能体在会话期间跟踪管理复杂的多步骤任务。"
+    },
+    {
+      "id": 120,
+      "en": "session_search performs full-text search across ALL past conversations.",
+      "zh": "session_search 支持在所有历史对话中进行全文检索。"
+    },
+    {
+      "id": 121,
+      "en": "The agent automatically saves preferences, corrections, and environment facts to memory.",
+      "zh": "智能体会自动将用户偏好、纠错反馈以及环境事实持久化保存至记忆库中。"
+    },
+    {
+      "id": 122,
+      "en": "/moa routes one hard prompt through your configured Mixture of Agents model set.",
+      "zh": "/moa 将高难度提示词路由至已配置的混合智能体（Mixture of Agents）模型组进行协同处理。"
+    },
+    {
+      "id": 123,
+      "en": "Terminal commands support background mode with notify_on_complete for long-running tasks.",
+      "zh": "终端命令支持后台运行模式，并提供 notify_on_complete 用于耗时任务完成时的通知。"
+    },
+    {
+      "id": 124,
+      "en": "Terminal background processes support watch_patterns to alert on specific output lines.",
+      "zh": "终端后台进程支持 watch_patterns，可在匹配到特定输出行时发出告警。"
+    },
+    {
+      "id": 125,
+      "en": "The terminal tool supports 6 backends: local, Docker, SSH, Modal, Daytona, and Singularity.",
+      "zh": "terminal 工具支持 6 种执行后端：local、Docker、SSH、Modal、Daytona 以及 Singularity。"
+    },
+    {
+      "id": 126,
+      "en": "Each profile gets its own config, API keys, memory, sessions, skills, and cron jobs.",
+      "zh": "每个配置文件都拥有独立的配置、API Key、记忆、会话、技能以及定时任务。"
+    },
+    {
+      "id": 127,
+      "en": "Profile names become shell commands — 'hermes profile create coder' creates the 'coder' command.",
+      "zh": "配置文件名会映射为独立的 Shell 命令——例如 'hermes profile create coder' 会生成 'coder' 命令。"
+    },
+    {
+      "id": 128,
+      "en": "hermes profile export coder -o backup.tar.gz creates a portable profile archive.",
+      "zh": "hermes profile export coder -o backup.tar.gz 可生成便携式的配置文件归档压缩包。"
+    },
+    {
+      "id": 129,
+      "en": "If two profiles accidentally share a bot token, the second gateway is blocked with a clear error.",
+      "zh": "如果两个配置文件意外共享了同一个 Bot Token，第二个网关将被拦截并抛出明确错误提示。"
+    },
+    {
+      "id": 130,
+      "en": "Sessions auto-generate descriptive titles after the first exchange — no manual naming needed.",
+      "zh": "会话在首轮交互后会自动生成描述性标题——无需手动命名。"
+    },
+    {
+      "id": 131,
+      "en": "Session titles support lineage: \"my project\" → \"my project #2\" → \"my project #3\".",
+      "zh": "会话标题支持血统继承演化：如 \"my project\" → \"my project #2\" → \"my project #3\"。"
+    },
+    {
+      "id": 132,
+      "en": "When exiting, Hermes prints a resume command with session ID and stats.",
+      "zh": "退出时，Hermes 会打印附带会话 ID 与统计信息的恢复命令。"
+    },
+    {
+      "id": 133,
+      "en": "hermes sessions export backup.jsonl exports all sessions for backup or analysis.",
+      "zh": "hermes sessions export backup.jsonl 可导出全部会话，用于数据备份或离线分析。"
+    },
+    {
+      "id": 134,
+      "en": "hermes -r SESSION_ID resumes any specific past session by its ID.",
+      "zh": "hermes -r SESSION_ID 可通过会话 ID 精确恢复任意指定的历史会话。"
+    },
+    {
+      "id": 135,
+      "en": "Memory is a frozen snapshot — changes appear in the system prompt only at next session start.",
+      "zh": "记忆采用冻结快照机制——所做修改仅在下一次新会话启动时才会注入系统提示词。"
+    },
+    {
+      "id": 136,
+      "en": "Memory entries are automatically scanned for prompt injection and exfiltration patterns.",
+      "zh": "记忆条目会自动经过安全扫描，以检测防范提示词注入与数据外泄模式。"
+    },
+    {
+      "id": 137,
+      "en": "The agent has two memory stores: personal notes (~2200 chars) and user profile (~1375 chars).",
+      "zh": "智能体拥有两类记忆存储：个人笔记（约 2200 字符）与用户画像（约 1375 字符）。"
+    },
+    {
+      "id": 138,
+      "en": "Corrections you give the agent (\"no, do it this way\") are often auto-saved to memory.",
+      "zh": "你对智能体提出的纠错指导（如“不对，按这种方式做”）通常会自动持久化到记忆中。"
+    },
+    {
+      "id": 139,
+      "en": "Over 80 bundled skills covering github, creative, mlops, productivity, research, and more.",
+      "zh": "内置超过 80 种捆绑技能，涵盖 github、creative、mlops、productivity、research 等诸多领域。"
+    },
+    {
+      "id": 140,
+      "en": "Every installed skill automatically becomes a slash command — type / to see them all.",
+      "zh": "每个已安装的技能都会自动注册为斜杠命令——输入 / 即可查看完整列表。"
+    },
+    {
+      "id": 141,
+      "en": "hermes skills install official/security/1password installs optional skills from the repo.",
+      "zh": "hermes skills install official/security/1password 可从官方仓库安装可选技能。"
+    },
+    {
+      "id": 142,
+      "en": "Skills can restrict to specific OS platforms — some only load on macOS or Linux.",
+      "zh": "技能可限制运行在特定操作系统平台——部分技能仅在 macOS 或 Linux 上加载。"
+    },
+    {
+      "id": 143,
+      "en": "skills.external_dirs in config.yaml lets you load skills from custom directories.",
+      "zh": "config.yaml 中的 skills.external_dirs 允许你从自定义目录加载外部技能。"
+    },
+    {
+      "id": 144,
+      "en": "The agent can create its own skills as procedural memory using skill_manage.",
+      "zh": "智能体可通过 skill_manage 自主创建技能，将其作为程序性记忆。"
+    },
+    {
+      "id": 145,
+      "en": "/plan writes a markdown implementation plan to .hermes/plans/ without executing anything.",
+      "zh": "/plan 将 Markdown 格式的实施计划写入 .hermes/plans/，且不会执行任何操作。"
+    },
+    {
+      "id": 146,
+      "en": "Cron jobs can attach skills: hermes cron add --skill blogwatcher \"Check for new posts\".",
+      "zh": "定时任务可以附加技能：hermes cron add --skill blogwatcher \"Check for new posts\"。"
+    },
+    {
+      "id": 147,
+      "en": "Cron delivery targets include telegram, discord, slack, email, sms, and 12+ more platforms.",
+      "zh": "定时任务投递目标涵盖 Telegram、Discord、Slack、邮件、短信以及 12 种以上的其他平台。"
+    },
+    {
+      "id": 148,
+      "en": "If a cron response starts with [SILENT], delivery is suppressed — useful for monitoring-only jobs.",
+      "zh": "如果定时任务的响应以 [SILENT] 开头，则会抑制投递——这对于纯监控类任务非常有用。"
+    },
+    {
+      "id": 149,
+      "en": "Cron supports relative delays (30m), intervals (every 2h), cron expressions, and ISO timestamps.",
+      "zh": "定时任务支持相对延迟（30m）、周期性间隔（every 2h）、Cron 表达式以及 ISO 时间戳。"
+    },
+    {
+      "id": 150,
+      "en": "Cron jobs run in completely fresh agent sessions — prompts must be self-contained.",
+      "zh": "定时任务均在完全崭新的智能体会话中运行——提示词必须自包含完整上下文。"
+    },
+    {
+      "id": 151,
+      "en": "Voice mode works with zero API keys if faster-whisper is installed (free local speech-to-text).",
+      "zh": "若安装了 faster-whisper（免费本地语音转文本），无需任何 API Key 即可使用语音模式。"
+    },
+    {
+      "id": 152,
+      "en": "Five TTS providers available: Edge TTS (free), ElevenLabs, OpenAI, NeuTTS (free local), MiniMax.",
+      "zh": "支持 5 种 TTS 语音合成提供商：Edge TTS（免费）、ElevenLabs、OpenAI、NeuTTS（免费本地）和 MiniMax。"
+    },
+    {
+      "id": 153,
+      "en": "/voice on enables voice mode in the CLI. Ctrl+B toggles push-to-talk recording.",
+      "zh": "/voice on 可在 CLI 中开启语音模式。Ctrl+B 切换按键通话录音。"
+    },
+    {
+      "id": 154,
+      "en": "Streaming TTS plays sentences as they generate — you don't wait for the full response.",
+      "zh": "流式 TTS 随句子生成即时播放——无需等待完整回复全部输出。"
+    },
+    {
+      "id": 155,
+      "en": "Voice messages on Telegram, Discord, WhatsApp, and Slack are auto-transcribed.",
+      "zh": "Telegram、Discord、WhatsApp 和 Slack 上的语音留言会自动转录为文本。"
+    },
+    {
+      "id": 156,
+      "en": "Hermes runs on 21 messaging platforms: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, email, and more.",
+      "zh": "Hermes 支持 21 个即时通讯平台：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、邮件等。"
+    },
+    {
+      "id": 157,
+      "en": "hermes gateway install sets it up as a system service that starts on boot.",
+      "zh": "hermes gateway install 将其配置为开机自启的系统服务。"
+    },
+    {
+      "id": 158,
+      "en": "DingTalk uses Stream Mode — no webhooks or public URL needed.",
+      "zh": "钉钉（DingTalk）采用 Stream 模式——无需配置 Webhook 或公网 URL。"
+    },
+    {
+      "id": 159,
+      "en": "BlueBubbles brings iMessage to Hermes via a local macOS server.",
+      "zh": "BlueBubbles 通过本地 macOS 服务端将 iMessage 接入 Hermes。"
+    },
+    {
+      "id": 160,
+      "en": "Webhook routes support HMAC validation, rate limiting, and event filtering.",
+      "zh": "Webhook 路由支持 HMAC 签名校验、速率限制以及事件过滤。"
+    },
+    {
+      "id": 161,
+      "en": "The API server exposes an OpenAI-compatible endpoint compatible with Open WebUI and LibreChat.",
+      "zh": "API 服务端对外提供兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat 等客户端。"
+    },
+    {
+      "id": 162,
+      "en": "Discord voice channel mode: the bot joins VC, transcribes speech, and talks back.",
+      "zh": "Discord 语音频道模式：Bot 加入语音房间（VC），实时转录语音并进行对话交互。"
+    },
+    {
+      "id": 163,
+      "en": "group_sessions_per_user: true gives each person their own session in group chats.",
+      "zh": "group_sessions_per_user: true 允许群聊中的每位成员拥有各自独立的专属会话。"
+    },
+    {
+      "id": 164,
+      "en": "/sethome marks a chat as the home channel for cron job deliveries.",
+      "zh": "/sethome 将当前聊天标记为主频道，用于接收定时任务的推送投递。"
+    },
+    {
+      "id": 165,
+      "en": "The gateway supports inactivity-based timeouts — active agents can run indefinitely.",
+      "zh": "网关支持基于不活跃状态的超时机制——持续活跃的智能体可以无限期运行。"
+    },
+    {
+      "id": 166,
+      "en": "Dangerous command approval has 4 tiers: once, session, always (permanent allowlist), deny.",
+      "zh": "高危命令审批包含 4 个级别：once（单次）、session（本次会话）、always（永久白名单）和 deny（拒绝）。"
+    },
+    {
+      "id": 167,
+      "en": "Smart approval mode uses an LLM to auto-approve safe commands and flag dangerous ones.",
+      "zh": "智能审批模式利用 LLM 自动放行安全命令，并对高危命令标记拦截。"
+    },
+    {
+      "id": 168,
+      "en": "SSRF protection blocks private networks, loopback, link-local, and cloud metadata addresses.",
+      "zh": "SSRF 防护机制会自动拦截私有局域网、回环、链路本地以及云厂商元数据地址。"
+    },
+    {
+      "id": 169,
+      "en": "Tirith pre-exec scanning detects homograph URL spoofing and pipe-to-interpreter patterns.",
+      "zh": "Tirith 预执行扫描可检测同形异义 URL 欺骗以及管道直接传递至解释器的危险代码模式。"
+    },
+    {
+      "id": 170,
+      "en": "MCP subprocesses receive a filtered environment — only safe system vars pass through.",
+      "zh": "MCP 子进程接收过滤后的环境变量——仅允许安全系统变量透传。"
+    },
+    {
+      "id": 171,
+      "en": "Context files (.hermes.md, AGENTS.md) are security-scanned for prompt injection before loading.",
+      "zh": "上下文文件（.hermes.md、AGENTS.md）在加载前均会经过安全扫描，以防范提示词注入风险。"
+    },
+    {
+      "id": 172,
+      "en": "command_allowlist in config.yaml permanently approves specific shell command patterns.",
+      "zh": "config.yaml 中的 command_allowlist 可永久放行特定的 Shell 命令模式。"
+    },
+    {
+      "id": 173,
+      "en": "Context auto-compresses when it reaches the threshold — memories are flushed and history summarized.",
+      "zh": "当上下文达到阈值时会自动触发压缩——记忆被持久化刷入存储，历史记录被浓缩摘要。"
+    },
+    {
+      "id": 174,
+      "en": "The status bar turns yellow, then orange, then red as context fills up.",
+      "zh": "随着上下文逐渐填满，状态栏颜色会依次由黄变橙再变红。"
+    },
+    {
+      "id": 175,
+      "en": "SOUL.md is the agent's primary identity file — customize it to shape behavior.",
+      "zh": "SOUL.md 是智能体的核心人设身份文件——修改它可以深度塑造其行为举止。"
+    },
+    {
+      "id": 176,
+      "en": "Hermes loads project context from .hermes.md, AGENTS.md, CLAUDE.md, or .cursorrules (first match).",
+      "zh": "Hermes 会按优先级从 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 中加载项目上下文（命中首个即生效）。"
+    },
+    {
+      "id": 177,
+      "en": "Subdirectory AGENTS.md files are discovered progressively as the agent navigates into folders.",
+      "zh": "当智能体逐级进入子文件夹时，会按需渐进式发现并加载子目录中的 AGENTS.md 文件。"
+    },
+    {
+      "id": 178,
+      "en": "Context files are capped at 20,000 characters with smart head/tail truncation.",
+      "zh": "上下文文件上限为 20,000 字符，并采用智能首尾保留截断策略。"
+    },
+    {
+      "id": 179,
+      "en": "Five browser providers: local Chromium, Browserbase, Browser Use, Camofox, and Firecrawl.",
+      "zh": "支持 5 种浏览器提供商：本地 Chromium、Browserbase、Browser Use、Camofox 和 Firecrawl。"
+    },
+    {
+      "id": 180,
+      "en": "Camofox is an anti-detection browser — Firefox fork with C++ fingerprint spoofing.",
+      "zh": "Camofox 是一款反指纹检测浏览器——基于 Firefox 定制开发并具备底层 C++ 指纹伪装能力。"
+    },
+    {
+      "id": 181,
+      "en": "browser_navigate returns a page snapshot automatically — no need to call browser_snapshot after.",
+      "zh": "browser_navigate 会自动返回网页快照——无需在导航后重复调用 browser_snapshot。"
+    },
+    {
+      "id": 182,
+      "en": "browser_vision with annotate=true overlays numbered labels on interactive elements.",
+      "zh": "调用 browser_vision 并传入 annotate=true，可在所有可交互元素上叠加带编号的标签。"
+    },
+    {
+      "id": 183,
+      "en": "hermes mcp opens an interactive picker of Nous-approved MCPs you can install in one keystroke.",
+      "zh": "hermes mcp 会打开 Nous 认证 MCP 的交互式选择器，一键即可完成安装。"
+    },
+    {
+      "id": 184,
+      "en": "hermes mcp catalog lists Nous-approved MCP servers shipped with the repo.",
+      "zh": "hermes mcp catalog 列出仓库随附的 Nous 认证 MCP 服务端列表。"
+    },
+    {
+      "id": 185,
+      "en": "hermes mcp install <name> installs a catalog entry, prompts for credentials, and lets you pick which of its tools to enable.",
+      "zh": "hermes mcp install <name> 安装目录中的条目，引导输入凭据，并允许你自选启用其包含的哪些工具。"
+    },
+    {
+      "id": 186,
+      "en": "MCP servers are configured in config.yaml — both stdio and HTTP transports supported.",
+      "zh": "MCP 服务端在 config.yaml 中配置——同时支持 stdio 与 HTTP 两种传输协议。"
+    },
+    {
+      "id": 187,
+      "en": "Per-server tool filtering: tools.include whitelists and tools.exclude blacklists specific tools.",
+      "zh": "单服务端粒度的工具过滤：tools.include 设置白名单，tools.exclude 设置黑名单。"
+    },
+    {
+      "id": 188,
+      "en": "MCP servers auto-generate toolsets at runtime — hermes tools can toggle them per platform.",
+      "zh": "MCP 服务端在运行时自动生成工具集——通过 hermes tools 可按平台分别开关启用。"
+    },
+    {
+      "id": 189,
+      "en": "MCP OAuth support: auth: oauth enables browser-based authorization with PKCE.",
+      "zh": "MCP OAuth 认证支持：配置 auth: oauth 可开启基于 PKCE 的浏览器授权流。"
+    },
+    {
+      "id": 190,
+      "en": "Checkpoints have zero overhead when no files are modified — enabled by default.",
+      "zh": "当未发生文件修改时，检查点机制开销为零——该功能默认已启用。"
+    },
+    {
+      "id": 191,
+      "en": "A pre-rollback snapshot is saved automatically so you can undo the undo.",
+      "zh": "回滚前会自动保存一份快照，以便你撤销“回滚”这一操作。"
+    },
+    {
+      "id": 192,
+      "en": "/rollback also undoes the conversation turn, so the agent doesn't remember rolled-back changes.",
+      "zh": "/rollback 还会同步撤销对应的对话轮次，因此智能体不会保留已回滚改动的记忆。"
+    },
+    {
+      "id": 193,
+      "en": "Checkpoints use shadow repos in ~/.hermes/checkpoints/ — your project's .git is never touched.",
+      "zh": "检查点使用 ~/.hermes/checkpoints/ 下的影子仓库——绝不会触碰你项目本身的 .git。"
+    },
+    {
+      "id": 194,
+      "en": "batch_runner.py processes hundreds of prompts in parallel for training data generation.",
+      "zh": "batch_runner.py 支持并行处理数百条提示词，用于训练数据生成。"
+    },
+    {
+      "id": 195,
+      "en": "hermes chat -Q enables quiet mode for programmatic use — suppresses banner and spinner.",
+      "zh": "hermes chat -Q 为程序化调用开启静默模式——隐藏横幅 Banner 与加载等待动画。"
+    },
+    {
+      "id": 196,
+      "en": "Trajectory saving (--save-trajectories) captures full tool-use traces for model training.",
+      "zh": "保存轨迹功能（--save-trajectories）可捕获完整的工具使用轨迹，用于模型训练。"
+    },
+    {
+      "id": 197,
+      "en": "Three plugin types: general (tools/hooks), memory providers, and context engines.",
+      "zh": "三种插件类型：常规插件（工具/钩子）、记忆提供商以及上下文引擎。"
+    },
+    {
+      "id": 198,
+      "en": "hermes plugins install owner/repo installs plugins directly from GitHub.",
+      "zh": "hermes plugins install owner/repo 可直接从 GitHub 安装插件。"
+    },
+    {
+      "id": 199,
+      "en": "8 external memory providers available: Honcho, OpenViking, Mem0, Hindsight, and more.",
+      "zh": "支持 8 种外部记忆提供商：Honcho、OpenViking、Mem0、Hindsight 等。"
+    },
+    {
+      "id": 200,
+      "en": "Plugin hooks include pre/post_tool_call, pre/post_llm_call, and transform_terminal_output for output canonicalization.",
+      "zh": "插件钩子包括 pre/post_tool_call、pre/post_llm_call 以及用于规范化输出的 transform_terminal_output。"
+    },
+    {
+      "id": 201,
+      "en": "Prompt caching (Anthropic) reduces costs by reusing cached system prompt prefixes.",
+      "zh": "提示词缓存（Anthropic）通过复用已缓存的系统提示词前缀来降低成本。"
+    },
+    {
+      "id": 202,
+      "en": "The agent auto-generates session titles in a background thread — zero latency impact.",
+      "zh": "智能体在后台线程中自动生成会话标题——对前台交互零延迟影响。"
+    },
+    {
+      "id": 203,
+      "en": "Smart model routing can auto-route simple queries to a cheaper model.",
+      "zh": "智能模型路由可将简单查询自动路由至更经济的模型。"
+    },
+    {
+      "id": 204,
+      "en": "Slash commands support prefix matching: /h resolves to /help, /mod to /model.",
+      "zh": "斜杠命令支持前缀匹配：如 /h 自动解析为 /help，/mod 解析为 /model。"
+    },
+    {
+      "id": 205,
+      "en": "Dragging a file path into the terminal auto-attaches images or sends as context.",
+      "zh": "将文件路径直接拖入终端会自动附加图片或将其作为上下文发送。"
+    },
+    {
+      "id": 206,
+      "en": ".worktreeinclude in your repo root lists gitignored files to copy into worktrees.",
+      "zh": "代码仓库根目录下的 .worktreeinclude 可指定需要复制到 Worktree 中的被 gitignore 忽略的文件。"
+    },
+    {
+      "id": 207,
+      "en": "hermes acp runs Hermes as an ACP server for VS Code, Zed, and JetBrains integration.",
+      "zh": "hermes acp 将 Hermes 作为 ACP 服务端运行，以便与 VS Code、Zed 和 JetBrains 等 IDE 集成。"
+    },
+    {
+      "id": 208,
+      "en": "Custom providers: save named endpoints in config.yaml under custom_providers.",
+      "zh": "自定义提供商：可在 config.yaml 的 custom_providers 下保存命名端点。"
+    },
+    {
+      "id": 209,
+      "en": "HERMES_EPHEMERAL_SYSTEM_PROMPT injects a system prompt that's never persisted to history.",
+      "zh": "HERMES_EPHEMERAL_SYSTEM_PROMPT 注入临时系统提示词，该提示词绝不会持久化到历史记录中。"
+    },
+    {
+      "id": 210,
+      "en": "credential_pool_strategies supports fill_first, round_robin, least_used, and random rotation.",
+      "zh": "credential_pool_strategies 凭据池策略支持 fill_first、round_robin、least_used 以及 random 轮换模式。"
+    },
+    {
+      "id": 211,
+      "en": "hermes auth add nous or hermes auth add openai-codex sets up OAuth-based providers.",
+      "zh": "hermes auth add nous 或 hermes auth add openai-codex 可配置基于 OAuth 的提供商。"
+    },
+    {
+      "id": 212,
+      "en": "The API server supports both Chat Completions and Responses API with server-side state.",
+      "zh": "API 服务端同时支持 Chat Completions 与带服务端状态的 Responses API。"
+    },
+    {
+      "id": 213,
+      "en": "tool_preview_length: 0 in config shows full file paths in the spinner's activity feed.",
+      "zh": "在配置中设置 tool_preview_length: 0，可在加载动画的动态活动信息流中显示完整文件路径。"
+    },
+    {
+      "id": 214,
+      "en": "hermes status --deep runs deeper diagnostic checks across all components.",
+      "zh": "hermes status --deep 跨所有组件运行更深度的诊断检查。"
+    },
+    {
+      "id": 215,
+      "en": "Cron jobs can attach a Python script (--script) whose stdout is injected into the prompt as context.",
+      "zh": "定时任务可以附加 Python 脚本（--script），其标准输出（stdout）会被作为上下文注入到提示词中。"
+    },
+    {
+      "id": 216,
+      "en": "Cron scripts live in ~/.hermes/scripts/ and run before the agent — perfect for data collection pipelines.",
+      "zh": "定时任务脚本存放在 ~/.hermes/scripts/ 中并在智能体运行前执行——非常适合用于数据采集流水线。"
+    },
+    {
+      "id": 217,
+      "en": "prefill_messages_file in config.yaml injects few-shot examples into every API call, never saved to history.",
+      "zh": "config.yaml 中的 prefill_messages_file 可在每次 API 调用中注入 Few-shot 示例，且绝不保存至历史记录。"
+    },
+    {
+      "id": 218,
+      "en": "SOUL.md completely replaces the agent's default identity — rewrite it to make Hermes your own.",
+      "zh": "SOUL.md 可完全替代智能体的默认人设身份——重写它即可打造专属你的 Hermes。"
+    },
+    {
+      "id": 219,
+      "en": "SOUL.md is auto-seeded with a default personality on first run. Edit it to customize.",
+      "zh": "首次运行时 SOUL.md 会自动生成默认人设内容。编辑它即可进行个性化定制。"
+    },
+    {
+      "id": 220,
+      "en": "/compress <focus topic> allocates 60-70% of the summary budget to your topic and aggressively trims the rest.",
+      "zh": "/compress <focus topic> 将 60-70% 的摘要额度分配给你指定的主题，并大幅精简裁剪其余内容。"
+    },
+    {
+      "id": 221,
+      "en": "On second+ compression, the compressor updates the previous summary instead of starting from scratch.",
+      "zh": "从第二次压缩开始，压缩器会在上一次摘要的基础上进行增量更新，而非从零开始重做。"
+    },
+    {
+      "id": 222,
+      "en": "Before a gateway session reset, Hermes auto-flushes important facts to memory in the background.",
+      "zh": "在网关会话重置之前，Hermes 会在后台自动将重要事实持久化刷入记忆中。"
+    },
+    {
+      "id": 223,
+      "en": "network.force_ipv4: true in config.yaml fixes hangs on servers with broken IPv6 — monkey-patches socket.",
+      "zh": "在 config.yaml 中设置 network.force_ipv4: true 可解决因 IPv6 配置异常引起的服务器假死挂起——底层动态修补 socket。"
+    },
+    {
+      "id": 224,
+      "en": "The terminal tool annotates common exit codes: grep returning 1 = 'No matches found (not an error)'.",
+      "zh": "terminal 工具会对常见退出码进行批注解释：例如 grep 返回 1 说明 'No matches found (not an error)'（未找到匹配项，非错误）。"
+    },
+    {
+      "id": 225,
+      "en": "Failed foreground terminal commands auto-retry up to 3 times with exponential backoff (2s, 4s, 8s).",
+      "zh": "执行失败的前台终端命令最多自动重试 3 次，并采用指数退避（2s、4s、8s）。"
+    },
+    {
+      "id": 226,
+      "en": "Bare sudo commands are auto-rewritten to pipe SUDO_PASSWORD from .env — no interactive prompt needed.",
+      "zh": "单独的 sudo 命令会自动改写为通过管道传入 .env 中的 SUDO_PASSWORD——无需交互式密码提示。"
+    },
+    {
+      "id": 227,
+      "en": "execute_code helpers require explicit imports: from hermes_tools import json_parse, shell_quote, retry.",
+      "zh": "execute_code 辅助函数需要显式导入：from hermes_tools import json_parse, shell_quote, retry。"
+    },
+    {
+      "id": 228,
+      "en": "execute_code's 7 sandbox tools (web_search, terminal, read/write/search/patch) use RPC — never enter context.",
+      "zh": "execute_code 的 7 种沙箱工具（web_search、terminal、read/write/search/patch）基于 RPC 调用——执行细节绝不会进入上下文。"
+    },
+    {
+      "id": 229,
+      "en": "Reading the same file region 3+ times triggers a warning. At 4+, it's hard-blocked to prevent loops.",
+      "zh": "对同一文件区域读取 3 次及以上将触发警告。达到 4 次及以上时会被强制拦截，以防止死循环。"
+    },
+    {
+      "id": 230,
+      "en": "write_file and patch detect if a file was externally modified since the last read and warn about staleness.",
+      "zh": "write_file 和 patch 会检测文件自上次读取以来是否被外部修改，并在发现过期陈旧时发出警告。"
+    },
+    {
+      "id": 231,
+      "en": "V4A patch format supports Add File, Delete File, and Move File directives — not just Update.",
+      "zh": "V4A 补丁格式不仅支持 Update，还支持 Add File、Delete File 以及 Move File 指令。"
+    },
+    {
+      "id": 232,
+      "en": "MCP servers can request LLM completions back via sampling — the agent becomes a tool for the server.",
+      "zh": "MCP 服务端可通过采样机制反向请求 LLM 补全——此时智能体反过来成为了服务端的工具。"
+    },
+    {
+      "id": 233,
+      "en": "MCP servers send notifications/tools/list_changed to trigger automatic tool re-registration without restart.",
+      "zh": "MCP 服务端可发送 notifications/tools/list_changed 通知，以触发自动重新注册工具而无需重启。"
+    },
+    {
+      "id": 234,
+      "en": "delegate_task with acp_command: 'claude' spawns Claude Code as a child agent from any platform.",
+      "zh": "delegate_task 搭配 acp_command: 'claude' 可在任意平台上将 Claude Code 作为子智能体衍生启动。"
+    },
+    {
+      "id": 235,
+      "en": "Delegation has a heartbeat thread — child activity propagates to the parent, preventing gateway timeouts.",
+      "zh": "委派机制具备心跳线程——子智能体的活动会向上同步传递给父级，从而防止网关超时。"
+    },
+    {
+      "id": 236,
+      "en": "When a provider returns HTTP 402 (payment required), the auxiliary client auto-falls back to the next one.",
+      "zh": "当提供商返回 HTTP 402（需要付款）时，辅助客户端会自动故障转移回退至下一个可用提供商。"
+    },
+    {
+      "id": 237,
+      "en": "agent.tool_use_enforcement steers models that describe actions instead of calling tools — auto for GPT/Codex.",
+      "zh": "agent.tool_use_enforcement 用于纠正那些仅描述动作而不实际调用工具的模型——对 GPT/Codex 默认自动开启。"
+    },
+    {
+      "id": 238,
+      "en": "agent.restart_after_turn_timeout lets in-flight turns finish before /restart enters stop(); restart_drain_timeout is only the force-interrupt budget once stop() begins.",
+      "zh": "agent.restart_after_turn_timeout 允许在 /restart 进入 stop() 之前让正在进行的轮次先执行完毕；restart_drain_timeout 则仅在 stop() 开始后作为强制中断的时间预算。"
+    },
+    {
+      "id": 239,
+      "en": "agent.api_max_retries (default 3) controls how many times the agent retries a failed API call before surfacing the error — lower it for fast fallback.",
+      "zh": "agent.api_max_retries（默认 3）控制智能体在抛出错误之前对失败 API 调用的重试次数——调小该值可加快故障回退速度。"
+    },
+    {
+      "id": 240,
+      "en": "The gateway caches AIAgent instances per session — destroying this cache breaks Anthropic prompt caching.",
+      "zh": "网关按会话缓存 AIAgent 实例——销毁该缓存会导致 Anthropic 提示词缓存失效。"
+    },
+    {
+      "id": 241,
+      "en": "Any website can expose skills via /.well-known/skills/index.json — the skills hub discovers them automatically.",
+      "zh": "任何网站均可通过 /.well-known/skills/index.json 暴露技能——技能中心会自动发现它们。"
+    },
+    {
+      "id": 242,
+      "en": "The skills audit log at ~/.hermes/skills/.hub/audit.log tracks every install and removal operation.",
+      "zh": "位于 ~/.hermes/skills/.hub/audit.log 的技能审计日志会记录每次安装与移除操作。"
+    },
+    {
+      "id": 243,
+      "en": "Stale git worktrees are auto-cleaned on startup: clean, fully-merged trees get pruned; dirty or unpushed work is always preserved.",
+      "zh": "陈旧的 Git Worktree 会在启动时自动清理：干净且已完全合并的工作树会被修剪清理；包含未提交或未推送改动的工作树始终会被保留。"
+    },
+    {
+      "id": 244,
+      "en": "Profiles scope Hermes state via HERMES_HOME; host tool subprocesses keep your real HOME unless terminal.home_mode is profile.",
+      "zh": "配置文件通过 HERMES_HOME 隔离限定 Hermes 状态；宿主工具子进程保持你的真实 HOME，除非将 terminal.home_mode 设置为 profile。"
+    },
+    {
+      "id": 245,
+      "en": "HERMES_HOME_MODE env var (octal, e.g. 0701) sets custom directory permissions for web server traversal.",
+      "zh": "环境变量 HERMES_HOME_MODE（八进制，如 0701）可为 Web 服务器遍历访问设置自定义目录权限。"
+    },
+    {
+      "id": 246,
+      "en": "Container mode: place .container-mode in HERMES_HOME and the host CLI auto-execs into the container.",
+      "zh": "容器模式：在 HERMES_HOME 中放置 .container-mode 文件，宿主 CLI 将自动进入容器内执行。"
+    },
+    {
+      "id": 247,
+      "en": "Ctrl+C has 5 priority tiers: cancel recording → cancel prompts → cancel picker → interrupt agent → exit.",
+      "zh": "Ctrl+C 拥有 5 级优先级：取消录音 → 取消输入提示 → 取消选择器 → 中断智能体 → 退出程序。"
+    },
+    {
+      "id": 248,
+      "en": "Every interrupt during an agent run is logged to ~/.hermes/interrupt_debug.log with timestamps.",
+      "zh": "智能体运行期间的每次中断都会记录到带有时间戳的 ~/.hermes/interrupt_debug.log 中。"
+    },
+    {
+      "id": 249,
+      "en": "BROWSER_CDP_URL connects browser tools to any running Chromium-family browser — accepts WebSocket, HTTP, or host:port.",
+      "zh": "BROWSER_CDP_URL 可将浏览器工具连接至任意正在运行的 Chromium 家族浏览器——支持传入 WebSocket、HTTP 或 host:port。"
+    },
+    {
+      "id": 250,
+      "en": "BROWSERBASE_ADVANCED_STEALTH=true enables advanced anti-detection with custom Chromium (Scale Plan).",
+      "zh": "BROWSERBASE_ADVANCED_STEALTH=true 可开启基于定制 Chromium 的高级反指纹检测（Scale 套餐）。"
+    },
+    {
+      "id": 251,
+      "en": "The CLI auto-switches to compact mode in terminals narrower than 80 columns.",
+      "zh": "当终端宽度小于 80 列时，CLI 会自动切换为紧凑显示模式。"
+    },
+    {
+      "id": 252,
+      "en": "Quick commands support two types: exec (run shell command directly) and alias (redirect to another command).",
+      "zh": "快捷命令支持两种类型：exec（直接执行 Shell 命令）与 alias（重定向至另一条命令）。"
+    },
+    {
+      "id": 253,
+      "en": "Per-task delegation model: delegation.model and delegation.provider in config route subagents to cheaper models.",
+      "zh": "按任务粒度配置委派模型：配置中的 delegation.model 与 delegation.provider 可将子智能体路由至更经济的模型。"
+    },
+    {
+      "id": 254,
+      "en": "delegation.reasoning_effort independently controls thinking depth for subagents.",
+      "zh": "delegation.reasoning_effort 可独立控制子智能体的思考深度。"
+    },
+    {
+      "id": 255,
+      "en": "display.platforms in config.yaml allows per-platform display overrides: {telegram: {tool_progress: all}}.",
+      "zh": "config.yaml 中的 display.platforms 允许针对特定平台覆盖显示配置：如 {telegram: {tool_progress: all}}。"
+    },
+    {
+      "id": 256,
+      "en": "human_delay.mode in config simulates human typing speed — configurable min_ms/max_ms range.",
+      "zh": "配置中的 human_delay.mode 用于模拟人类打字速度——支持自定义 min_ms/max_ms 延迟范围。"
+    },
+    {
+      "id": 257,
+      "en": "Config version migrations run automatically on load — new config keys appear without manual intervention.",
+      "zh": "配置版本迁移在加载时自动执行——新增的配置项键名无需手动干预即可自动补全。"
+    },
+    {
+      "id": 258,
+      "en": "GPT and Codex models get special system prompt guidance for tool discipline and mandatory tool use.",
+      "zh": "GPT 和 Codex 模型会获得专门的系统提示词引导，以强化工具使用规范与强制工具调用。"
+    },
+    {
+      "id": 259,
+      "en": "Gemini models get tailored directives for absolute paths, parallel tool calls, and non-interactive commands.",
+      "zh": "Gemini 模型会获得针对绝对路径、并行工具调用和非交互式命令的量身定制指令。"
+    },
+    {
+      "id": 260,
+      "en": "context.engine in config.yaml can be set to a plugin name for alternative context management strategies.",
+      "zh": "config.yaml 中的 context.engine 可设置为插件名称，以使用替代的上下文管理策略。"
+    },
+    {
+      "id": 261,
+      "en": "Browser page snapshots over 15,000 characters are truncated or auto-summarized; the full snapshot is saved to cache/web for read_file paging.",
+      "zh": "超过 15,000 字符的浏览器页面快照会被截断或自动浓缩；完整快照会保存在 cache/web 中供 read_file 分页查看。"
+    },
+    {
+      "id": 262,
+      "en": "The compressor does a cheap pre-pass: tool outputs over 200 chars are replaced with placeholders before the LLM runs.",
+      "zh": "压缩器会先进行轻量级的预处理：在 LLM 运行前，将超过 200 字符的工具输出替换为占位符。"
+    },
+    {
+      "id": 263,
+      "en": "When compression fails, further attempts are paused for 10 minutes to avoid API hammering.",
+      "zh": "当压缩失败时，会暂停后续压缩尝试 10 分钟，以避免频繁冲击 API。"
+    },
+    {
+      "id": 264,
+      "en": "Long dangerous commands (>70 chars) get a 'view' option in the approval prompt to see the full text first.",
+      "zh": "超长高危命令（>70 字符）在审批提示中会提供 'view' 选项，以便先查看完整文本。"
+    },
+    {
+      "id": 265,
+      "en": "Audio level visualization shows ▁▂▃▄▅▆▇ bars during voice recording based on microphone RMS levels.",
+      "zh": "语音录制期间会根据麦克风的有效值（RMS）电平，通过 ▁▂▃▄▅▆▇ 柱状条展示音频音量可视化。"
+    },
+    {
+      "id": 266,
+      "en": "Profile names cannot collide with existing PATH binaries — 'hermes profile create ls' would be rejected.",
+      "zh": "配置文件名不能与系统 PATH 中的已有可执行文件冲突——例如 'hermes profile create ls' 将被拒绝。"
+    },
+    {
+      "id": 267,
+      "en": "hermes profile create backup --clone-all copies everything (config, keys, SOUL.md, memories, skills, sessions).",
+      "zh": "hermes profile create backup --clone-all 会完整克隆所有数据（配置、密钥、SOUL.md、记忆、技能与会话）。"
+    },
+    {
+      "id": 268,
+      "en": "The voice record key is configurable via voice.record_key in config.yaml — not just Ctrl+B.",
+      "zh": "语音录音快捷键可通过 config.yaml 中的 voice.record_key 进行配置——不仅限于 Ctrl+B。"
+    },
+    {
+      "id": 269,
+      "en": ".cursorrules and .cursor/rules/*.mdc files are auto-detected and loaded as project context.",
+      "zh": ".cursorrules 与 .cursor/rules/*.mdc 文件会被自动检测并作为项目上下文加载。"
+    },
+    {
+      "id": 270,
+      "en": "Context files support 10+ prompt injection patterns — invisible Unicode, 'ignore instructions', exfil attempts.",
+      "zh": "上下文文件安全防护支持识别 10 余种提示词注入模式——不可见 Unicode、'ignore instructions'、数据外泄尝试等。"
+    },
+    {
+      "id": 271,
+      "en": "GPT-5 and Codex use 'developer' role instead of 'system' in the message format.",
+      "zh": "GPT-5 和 Codex 在消息格式中使用 'developer' 角色来替代 'system'。"
+    },
+    {
+      "id": 272,
+      "en": "Per-task auxiliary overrides: auxiliary.vision.provider, auxiliary.compression.model, etc. in config.yaml.",
+      "zh": "按任务粒度的辅助模型覆盖：可在 config.yaml 中配置 auxiliary.vision.provider、auxiliary.compression.model 等。"
+    },
+    {
+      "id": 273,
+      "en": "The auxiliary client treats 'main' as a provider alias — resolves to your actual primary provider + model.",
+      "zh": "辅助客户端将 'main' 视为提供商别名——会自动解析为你实际的主提供商与模型。"
+    },
+    {
+      "id": 274,
+      "en": "hermes claw migrate --dry-run previews OpenClaw migration without writing anything.",
+      "zh": "hermes claw migrate --dry-run 预览 OpenClaw 迁移效果，且不会写入任何内容。"
+    },
+    {
+      "id": 275,
+      "en": "File paths pasted with quotes or escaped spaces are handled automatically — no manual cleanup needed.",
+      "zh": "粘贴带引号或含转义空格的文件路径时会自动清洗规范化——无需手动处理。"
+    },
+    {
+      "id": 276,
+      "en": "Slash commands never trigger the large-paste collapse — /command with big arguments works correctly.",
+      "zh": "斜杠命令绝不会触发大段粘贴折叠机制——带超长参数的 /command 可以正常执行。"
+    },
+    {
+      "id": 277,
+      "en": "In interrupt mode, slash commands typed during agent execution bypass interrupt logic and run immediately.",
+      "zh": "在中断模式下，智能体执行期间输入的斜杠命令会绕过中断逻辑并立即运行。"
+    },
+    {
+      "id": 278,
+      "en": "HERMES_DEV=1 bypasses container mode detection for local development.",
+      "zh": "设置 HERMES_DEV=1 可绕过容器模式检测，以便进行本地开发调试。"
+    },
+    {
+      "id": 279,
+      "en": "Each MCP server gets its own toolset (mcp-servername) that can be toggled independently via hermes tools.",
+      "zh": "每个 MCP 服务端都拥有独立的工具集（mcp-servername），可通过 hermes tools 分别独立开关。"
+    },
+    {
+      "id": 280,
+      "en": "MCP ${ENV_VAR} placeholders in config are resolved at server spawn — including vars from ~/.hermes/.env.",
+      "zh": "配置中 MCP 的 ${ENV_VAR} 占位符会在服务端衍生启动时解析——包括来自 ~/.hermes/.env 的变量。"
+    },
+    {
+      "id": 281,
+      "en": "Skills from trusted repos (NousResearch) get a 'trusted' security level; community skills get extra scanning.",
+      "zh": "来自可信仓库（NousResearch）的技能会被赋予 'trusted' 安全等级；社区技能则会接受额外的安全扫描。"
+    },
+    {
+      "id": 282,
+      "en": "The skills quarantine at ~/.hermes/skills/.hub/quarantine/ holds skills pending security review.",
+      "zh": "位于 ~/.hermes/skills/.hub/quarantine/ 的技能隔离区用于存放待安全审查的技能。"
+    },
+    {
+      "id": 283,
+      "en": "/steer <prompt> injects a note after the next tool call — nudge direction mid-task without interrupting.",
+      "zh": "/steer <prompt> 在下一次工具调用后注入提示指导——无需中断即可在任务中途微调方向。"
+    },
+    {
+      "id": 284,
+      "en": "/goal <text> sets a standing Ralph-loop objective — Hermes auto-continues turn after turn until a judge says done.",
+      "zh": "/goal <text> 设定持续的 Ralph-loop 循环目标——Hermes 将一轮接一轮自动推进，直至评判机制判定完成。"
+    },
+    {
+      "id": 285,
+      "en": "/snapshot create [label] saves a full state snapshot of Hermes config; /snapshot restore <id> reverts later.",
+      "zh": "/snapshot create [label] 保存 Hermes 配置的完整状态快照；之后可通过 /snapshot restore <id> 恢复还原。"
+    },
+    {
+      "id": 286,
+      "en": "/copy [N] copies the last assistant response to your clipboard, or the Nth-from-last with a number.",
+      "zh": "/copy [N] 将助手的最后一条回复复制到剪贴板，若带数字 N 则复制倒数第 N 条回复。"
+    },
+    {
+      "id": 287,
+      "en": "/redraw forces a full UI repaint, fixing terminal drift after tmux resize or mouse selection artifacts.",
+      "zh": "/redraw 强制完整重绘 UI，修复 tmux 调整窗口大小或鼠标划选引起的终端文字漂移花屏。"
+    },
+    {
+      "id": 288,
+      "en": "/agents (alias /tasks) shows active agents and running background tasks across the current session.",
+      "zh": "/agents（别名 /tasks）显示当前会话中处于活跃状态的智能体以及正在运行的后台任务。"
+    },
+    {
+      "id": 289,
+      "en": "/footer toggles the gateway footer on final replies showing model, context %, and cwd.",
+      "zh": "/footer 切换最终回复底部的网关页脚显示，展示模型、上下文占用百分比（%）以及当前工作目录（cwd）。"
+    },
+    {
+      "id": 290,
+      "en": "/busy queue|steer|interrupt controls what pressing Enter does while Hermes is working.",
+      "zh": "/busy queue|steer|interrupt 控制在 Hermes 工作期间按下回车键的行为模式。"
+    },
+    {
+      "id": 291,
+      "en": "/topic in Telegram DMs enables user-managed multi-session topic mode — /topic <id> restores past sessions inline.",
+      "zh": "Telegram 私聊中的 /topic 可开启用户自主管理的多会话话题模式——/topic <id> 可内联恢复历史会话。"
+    },
+    {
+      "id": 292,
+      "en": "/approve session|always runs a pending dangerous command with your chosen trust scope; /deny rejects it.",
+      "zh": "/approve session|always 以你指定的信任范围运行待审批的高危命令；/deny 则拒绝执行。"
+    },
+    {
+      "id": 293,
+      "en": "/restart gracefully restarts the gateway after draining active runs, then pings the requester when back up.",
+      "zh": "/restart 在排空并等待活跃运行任务结束后优雅重启网关，恢复就绪后会向发起者发送提示通知。"
+    },
+    {
+      "id": 294,
+      "en": "/kanban boards switch <slug> changes the active multi-project Kanban board from inside chat.",
+      "zh": "/kanban boards switch <slug> 可在聊天内部切换当前激活的多项目看板。"
+    },
+    {
+      "id": 295,
+      "en": "/reload reloads ~/.hermes/.env into the running session — pick up new API keys without restarting.",
+      "zh": "/reload 将 ~/.hermes/.env 重新加载到当前运行的会话中——无需重启即可热读取新的 API Key。"
+    },
+    {
+      "id": 296,
+      "en": "cronjob with no_agent=True runs a script on schedule and sends its stdout directly — zero tokens, zero LLM.",
+      "zh": "设置 no_agent=True 的定时任务按计划调度执行脚本并直接发送其标准输出——零 Token 消耗、零 LLM 参与。"
+    },
+    {
+      "id": 297,
+      "en": "An empty cron script stdout means silent tick — nothing is delivered, perfect for threshold watchdogs.",
+      "zh": "定时任务脚本的标准输出为空代表静默轮询——不会投递任何内容，非常适合阈值看门狗监控。"
+    },
+    {
+      "id": 298,
+      "en": "HERMES_CRON_MAX_PARALLEL (default 4) caps how many cron jobs run per tick so bursts don't saturate your keys.",
+      "zh": "HERMES_CRON_MAX_PARALLEL（默认 4）限制每个 Tick 并行执行的定时任务上限，防止并发洪峰耗尽你的密钥额度。"
+    },
+    {
+      "id": 299,
+      "en": "Gateway hooks live under ~/.hermes/hooks/<name>/ with HOOK.yaml + handler.py — handler must be named `handle`.",
+      "zh": "网关钩子位于 ~/.hermes/hooks/<name>/ 下，由 HOOK.yaml 和 handler.py 组成——处理函数必须命名为 handle。"
+    },
+    {
+      "id": 300,
+      "en": "Hook events include gateway:startup, session:start, agent:step, and command:* wildcard subscriptions.",
+      "zh": "钩子事件支持包括 gateway:startup、session:start、agent:step 以及 command:* 通配符订阅。"
+    },
+    {
+      "id": 301,
+      "en": "Drop a ~/.hermes/BOOT.md checklist and a gateway:startup hook runs it as a one-shot agent every boot.",
+      "zh": "在 ~/.hermes/BOOT.md 中放置检查清单，gateway:startup 钩子将在每次开机启动时将其作为单次任务智能体运行。"
+    },
+    {
+      "id": 302,
+      "en": "hermes curator run --dry-run previews what the curator would archive or consolidate without mutating anything.",
+      "zh": "hermes curator run --dry-run 预览 Curator 拟归档或整合的内容，且不会对实际数据做任何改动。"
+    },
+    {
+      "id": 303,
+      "en": "hermes curator pin <skill> hard-fences a skill against both auto-archival and the agent's skill_manage tool.",
+      "zh": "hermes curator pin <skill> 锁定保护指定技能，防止被自动归档以及被智能体的 skill_manage 工具修改。"
+    },
+    {
+      "id": 304,
+      "en": "hermes curator rollback restores skills from a pre-run snapshot — backups live under skills/.curator_backups/.",
+      "zh": "hermes curator rollback 从运行前快照恢复技能——备份存放在 skills/.curator_backups/ 目录下。"
+    },
+    {
+      "id": 305,
+      "en": "hermes auth reset <provider> [target] clears cooldowns and exhaustion flags on a whole credential pool, or on one credential by index, id, or label.",
+      "zh": "hermes auth reset <provider> [target] 清除整个凭据池或按索引、ID、标签指定的单个凭据的冷却与耗尽标记。"
+    },
+    {
+      "id": 306,
+      "en": "credential_pool_strategies.<provider>: round_robin cycles keys evenly instead of the fill_first default.",
+      "zh": "配置 credential_pool_strategies.<provider>: round_robin 可均匀轮换密钥，替代默认的 fill_first 优先耗尽策略。"
+    },
+    {
+      "id": 307,
+      "en": "use_gateway: true per-tool routes web, image, tts, or browser through your Nous subscription — no extra keys.",
+      "zh": "单工具维度的 use_gateway: true 可将网络搜索、图像、TTS 或浏览器流量路由至 Nous 订阅——无需额外配置密钥。"
+    },
+    {
+      "id": 308,
+      "en": "provider_routing.data_collection: deny excludes data-storing providers on OpenRouter.",
+      "zh": "provider_routing.data_collection: deny 会在 OpenRouter 上排除会存储用户数据的模型提供商。"
+    },
+    {
+      "id": 309,
+      "en": "provider_routing.require_parameters: true only routes to providers that support every param in your request.",
+      "zh": "provider_routing.require_parameters: true 仅路由至完全支持你请求中所有参数的提供商。"
+    },
+    {
+      "id": 310,
+      "en": "HERMES_TUI_RESUME=1 auto-re-attaches to the most recent TUI session on launch — handy after SSH drops.",
+      "zh": "HERMES_TUI_RESUME=1 启动时自动重新挂载到最近的 TUI 会话——在 SSH 意外掉线后极为方便。"
+    },
+    {
+      "id": 311,
+      "en": "HERMES_TUI_THEME=light|dark|<hex> forces the TUI theme on terminals that don't set COLORFGBG.",
+      "zh": "HERMES_TUI_THEME=light|dark|<hex> 可在未设置 COLORFGBG 的终端中强制指定 TUI 主题。"
+    },
+    {
+      "id": 312,
+      "en": "Ctrl+G or Ctrl+X Ctrl+E in the TUI opens the input buffer in $EDITOR for long multi-line prompts.",
+      "zh": "在 TUI 中按下 Ctrl+G 或 Ctrl+X Ctrl+E 可在 $EDITOR 中打开输入缓冲区，用于编辑长篇多行提示词。"
+    },
+    {
+      "id": 313,
+      "en": "The TUI renders LaTeX inline — $E=mc^2$ becomes Unicode math instead of raw TeX.",
+      "zh": "TUI 支持内联渲染 LaTeX——如 $E=mc^2$ 会渲染为漂亮的 Unicode 数学符号而非原始 TeX 代码。"
+    },
+    {
+      "id": 314,
+      "en": "hermes dashboard launches a local web UI at 127.0.0.1:9119 — zero data leaves localhost.",
+      "zh": "hermes dashboard 在 127.0.0.1:9119 启动本地 Web 控制台——所有数据完全保留在本地，绝不上云。"
+    },
+    {
+      "id": 315,
+      "en": "hermes dashboard embeds the full Hermes TUI in your browser via xterm.js and a WebSocket PTY.",
+      "zh": "hermes dashboard 通过 xterm.js 和 WebSocket PTY 将完整的 Hermes TUI 无缝嵌入浏览器中。"
+    },
+    {
+      "id": 316,
+      "en": "Drop a YAML in ~/.hermes/dashboard-themes/ with two palette colors to reskin the entire dashboard.",
+      "zh": "在 ~/.hermes/dashboard-themes/ 下放置一个指定两色调色板的 YAML 文件，即可为整个控制台更换新皮肤主题。"
+    },
+    {
+      "id": 317,
+      "en": "Dashboard plugins are drop-in: manifest.json + JS bundle in ~/.hermes/dashboard-plugins/ — no npm build required.",
+      "zh": "控制台插件即插即用：只需在 ~/.hermes/dashboard-plugins/ 放入 manifest.json 和 JS 打包文件——无需 npm 构建。"
+    },
+    {
+      "id": 318,
+      "en": "layoutVariant: cockpit in a dashboard theme adds a 260px left rail that plugins can populate via the sidebar slot.",
+      "zh": "控制台主题中的 layoutVariant: cockpit 会添加 260px 宽的左侧导航轨，插件可通过 sidebar 插槽进行内容扩展。"
+    },
+    {
+      "id": 319,
+      "en": "display.tool_progress_command: true exposes /verbose on messaging platforms; it's CLI-only by default.",
+      "zh": "display.tool_progress_command: true 允许在即时通讯平台上使用 /verbose 命令；该命令默认仅限 CLI。"
+    },
+    {
+      "id": 320,
+      "en": "HERMES_BACKGROUND_NOTIFICATIONS=result only pings when background tasks finish (vs concise/all/error/off).",
+      "zh": "HERMES_BACKGROUND_NOTIFICATIONS=result 仅在后台任务执行完成时发送提示（可选 concise/all/error/off）。"
+    },
+    {
+      "id": 321,
+      "en": "HERMES_WRITE_SAFE_ROOT restricts write_file/patch to directory prefixes; multiple paths via os.pathsep (: or ;).",
+      "zh": "HERMES_WRITE_SAFE_ROOT 将 write_file/patch 限制在指定目录前缀内；多个路径可用 os.pathsep（: 或 ;）分隔。"
+    },
+    {
+      "id": 322,
+      "en": "HERMES_IGNORE_RULES skips auto-injection of AGENTS.md, SOUL.md, .cursorrules, memory, and preloaded skills.",
+      "zh": "HERMES_IGNORE_RULES 会跳过 AGENTS.md、SOUL.md、.cursorrules、记忆以及预加载技能的自动注入。"
+    },
+    {
+      "id": 323,
+      "en": "HERMES_ACCEPT_HOOKS auto-approves unseen shell hooks declared in config.yaml without a TTY prompt.",
+      "zh": "HERMES_ACCEPT_HOOKS 自动批准 config.yaml 中声明的未见过的 Shell 钩子，无需弹出 TTY 交互提示。"
+    },
+    {
+      "id": 324,
+      "en": "auxiliary.goal_judge.model routes the /goal judge to a cheap fast model to keep loop cost near zero.",
+      "zh": "auxiliary.goal_judge.model 将 /goal 的结果评判路由到快速且廉价的模型，使循环执行成本接近于零。"
+    },
+    {
+      "id": 325,
+      "en": "Checkpoints skip directories with more than 50,000 files to avoid slow git operations on massive monorepos.",
+      "zh": "检查点功能会自动跳过包含超过 50,000 个文件的目录，以避免在超大型单体代码仓库中执行缓慢的 Git 操作。"
+    },
+    {
+      "id": 326,
+      "en": "tts.provider: piper runs 44-language local TTS on CPU — voices auto-download to ~/.hermes/cache/piper-voices/.",
+      "zh": "tts.provider: piper 可在 CPU 上运行支持 44 种语言的本地 TTS——语音包会自动下载至 ~/.hermes/cache/piper-voices/。"
+    },
+    {
+      "id": 327,
+      "en": "tts.providers.<name>.type: command wires any CLI TTS engine with {input_path} and {output_path} placeholders.",
+      "zh": "tts.providers.<name>.type: command 可通过 {input_path} 和 {output_path} 占位符无缝接入任意 CLI 语音合成引擎。"
+    },
+    {
+      "id": 328,
+      "en": "API_SERVER_ENABLED=true runs an OpenAI-compatible endpoint alongside the gateway for Open WebUI and LibreChat.",
+      "zh": "API_SERVER_ENABLED=true 可在网关旁同步运行兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat。"
+    },
+    {
+      "id": 329,
+      "en": "GATEWAY_PROXY_URL runs a split setup: platform I/O locally, agent work delegated to a remote API server.",
+      "zh": "GATEWAY_PROXY_URL 支持分离式架构：本地处理平台消息收发 I/O，将智能体核心工作委派给远程 API 服务端。"
+    },
+    {
+      "id": 330,
+      "en": "MATRIX_DEVICE_ID pins a stable device ID for E2EE — without it, keys rotate every start and historic decrypt breaks.",
+      "zh": "MATRIX_DEVICE_ID 为端到端加密（E2EE）固定稳定的设备 ID——若不配置，密钥每次启动都会轮换导致无法解密历史消息。"
+    },
+    {
+      "id": 331,
+      "en": "TELEGRAM_WEBHOOK_SECRET is required whenever TELEGRAM_WEBHOOK_URL is set — generate with openssl rand -hex 32.",
+      "zh": "凡是设置了 TELEGRAM_WEBHOOK_URL 就必须提供 TELEGRAM_WEBHOOK_SECRET——可使用 openssl rand -hex 32 命令生成。"
+    },
+    {
+      "id": 332,
+      "en": "batch_runner.py --resume content-matches completed prompts by text so dataset reorders don't re-run finished work.",
+      "zh": "batch_runner.py --resume 按文本内容精准比对已完成的提示词，因此数据集顺序调整不会重复运行已完成的任务。"
+    },
+    {
+      "id": 333,
+      "en": "/new starts a fresh session in place (alias /reset) — fresh session ID, clean history, CLI stays open.",
+      "zh": "/new 原地开启全新会话（别名 /reset）——分配新会话 ID、清空历史，且 CLI 终端保持开启。"
+    },
+    {
+      "id": 334,
+      "en": "/clear wipes the terminal screen AND starts a new session — one shortcut for a visual reset.",
+      "zh": "/clear 清空终端屏幕并同步开启新会话——一个快捷命令即可完成视觉与会话的双重重置。"
+    },
+    {
+      "id": 335,
+      "en": "/history prints the current conversation in-line without leaving the CLI — useful for a quick re-read.",
+      "zh": "/history 在不离开 CLI 的情况下内联打印当前完整对话记录——非常便于快速复盘重读。"
+    },
+    {
+      "id": 336,
+      "en": "/save writes the current conversation to disk without ending the session.",
+      "zh": "/save 将当前对话写入磁盘保存，且不会结束会话。"
+    },
+    {
+      "id": 337,
+      "en": "/status shows session info at a glance: ID, title, model, token usage, and elapsed time.",
+      "zh": "/status 一目了然地展示会话信息：ID、标题、模型、Token 使用量以及已耗费时长。"
+    },
+    {
+      "id": 338,
+      "en": "/image <path> attaches a local image file for your next prompt without pasting or drag-and-drop.",
+      "zh": "/image <path> 为你的下一条提示词附加本地图片文件，无需手动粘贴或拖拽。"
+    },
+    {
+      "id": 339,
+      "en": "/platforms shows gateway and messaging-platform connection status right from inside chat.",
+      "zh": "/platforms 直接在聊天内部展示网关以及各个即时通讯平台的连接状态。"
+    },
+    {
+      "id": 340,
+      "en": "/commands paginates the full slash-command + installed-skill list — useful on platforms without tab completion.",
+      "zh": "/commands 分页展示全部斜杠命令及已安装技能列表——在不支持 Tab 自动补全的平台上极为实用。"
+    },
+    {
+      "id": 341,
+      "en": "/toolsets lists every available toolset so you know what -t/--toolsets accepts.",
+      "zh": "/toolsets 列出所有可用的工具集，方便你了解 -t/--toolsets 可接受的参数。"
+    },
+    {
+      "id": 342,
+      "en": "/voice tts toggles TTS-only mode — agent replies out loud but you still type your prompts.",
+      "zh": "/voice tts 切换仅朗读模式——智能体大声朗读回复，而你依然通过打字输入提示词。"
+    },
+    {
+      "id": 343,
+      "en": "/reload-skills re-scans ~/.hermes/skills/ so drop-in skills appear without restarting the session.",
+      "zh": "/reload-skills 重新扫描 ~/.hermes/skills/，使直接放入目录的新技能无需重启会话即可生效。"
+    },
+    {
+      "id": 344,
+      "en": "/indicator kaomoji|emoji|unicode|ascii picks the TUI busy-indicator style shown during agent runs.",
+      "zh": "/indicator kaomoji|emoji|unicode|ascii 选择智能体运行期间 TUI 显示的忙碌指示器样式。"
+    },
+    {
+      "id": 345,
+      "en": "/debug uploads a support bundle (system info + logs) and returns shareable links — works in chat too.",
+      "zh": "/debug 上传支持诊断包（系统信息 + 日志）并返回可分享的链接——在即时聊天中同样可用。"
+    },
+    {
+      "id": 346,
+      "en": "hermes -z \"<prompt>\" is the purest one-shot: final answer on stdout, nothing else — ideal for piping in scripts.",
+      "zh": "hermes -z \"<prompt>\" 是最纯粹的单次执行：标准输出仅输出最终答案，绝无杂质——非常适合在脚本中通过管道传输。"
+    },
+    {
+      "id": 347,
+      "en": "hermes chat --pass-session-id injects the session ID into the system prompt so the agent can self-reference it.",
+      "zh": "hermes chat --pass-session-id 将会话 ID 注入系统提示词中，使智能体能够自引用该 ID。"
+    },
+    {
+      "id": 348,
+      "en": "hermes chat --image path/to/pic.png attaches a local image to a single -q query without a separate upload step.",
+      "zh": "hermes chat --image path/to/pic.png 为单次 -q 查询直接附加本地图片，无需单独的上传步骤。"
+    },
+    {
+      "id": 349,
+      "en": "hermes chat --ignore-user-config skips the active user config — reproducible bug reports and CI runs.",
+      "zh": "hermes chat --ignore-user-config 跳过当前用户配置——用于可复现的 Bug 报告与 CI 持续集成运行。"
+    },
+    {
+      "id": 350,
+      "en": "hermes chat --source tool tags programmatic chats so they don't clutter hermes sessions list.",
+      "zh": "hermes chat --source tool 为程序化发起的会话打上标签，避免污染扰乱 hermes sessions list。"
+    },
+    {
+      "id": 351,
+      "en": "hermes dump --show-keys includes redacted API key fingerprints for deeper support debugging.",
+      "zh": "hermes dump --show-keys 包含脱敏后的 API Key 指纹，便于更深层次的排错与技术支持。"
+    },
+    {
+      "id": 352,
+      "en": "hermes sessions rename <ID> \"new title\" renames any past session; hermes sessions delete <ID> removes one.",
+      "zh": "hermes sessions rename <ID> \"new title\" 可重命名任意历史会话；hermes sessions delete <ID> 则删除该会话。"
+    },
+    {
+      "id": 353,
+      "en": "hermes import restores a full Hermes backup zip; session JSON/JSONL exports import from the dashboard Sessions page.",
+      "zh": "hermes import 可完整恢复 Hermes 备份 zip 压缩包；导出的 JSON/JSONL 格式会话可在控制台的 Sessions 页面中导入。"
+    },
+    {
+      "id": 354,
+      "en": "hermes fallback manages the fallback_model chain interactively — no hand-editing config.yaml.",
+      "zh": "hermes fallback 支持交互式管理 fallback_model 备用模型链——无需手动编辑 config.yaml。"
+    },
+    {
+      "id": 355,
+      "en": "hermes pairing rotates the DM pairing token — the first messager after rotation claims access to the bot.",
+      "zh": "hermes pairing 轮换私聊配对令牌——轮换后首个发送消息的用户将获得该 Bot 的访问权限。"
+    },
+    {
+      "id": 356,
+      "en": "hermes setup walks first-time users through provider, keys, and platform wiring in one interactive flow.",
+      "zh": "hermes setup 以交互式向导带领新用户一步步完成提供商配置、密钥录入以及平台连通。"
+    },
+    {
+      "id": 357,
+      "en": "hermes status --deep runs the full health sweep across every component; plain hermes status is the quick view.",
+      "zh": "hermes status --deep 对所有组件执行全面的健康体检扫描；纯 hermes status 则是快速概览视图。"
+    },
+    {
+      "id": 358,
+      "en": "HERMES_AGENT_TIMEOUT=0 disables the gateway inactivity kill for a running agent — use for long research runs.",
+      "zh": "HERMES_AGENT_TIMEOUT=0 禁用网关因不活跃而终止运行中智能体的机制——适用于耗时较长的深度研究任务。"
+    },
+    {
+      "id": 359,
+      "en": "HERMES_ENABLE_PROJECT_PLUGINS=1 auto-loads repo-local plugins from ./.hermes/plugins/ — trust-gated by design.",
+      "zh": "HERMES_ENABLE_PROJECT_PLUGINS=1 自动加载来自 ./.hermes/plugins/ 的项目本地插件——设计上具备信任安全门禁。"
+    },
+    {
+      "id": 360,
+      "en": "HERMES_DISABLE_FILE_STATE_GUARD=1 turns off the 'file changed since you read it' guard on patch and write_file.",
+      "zh": "HERMES_DISABLE_FILE_STATE_GUARD=1 关闭 patch 和 write_file 针对“文件在读取后已被外部修改”的状态防冲突保护。"
+    },
+    {
+      "id": 361,
+      "en": "HERMES_ALLOW_PRIVATE_URLS=true lets web tools hit localhost and private networks — off by default in gateway mode.",
+      "zh": "HERMES_ALLOW_PRIVATE_URLS=true 允许网络工具访问 localhost 及私有内网——在网关模式下默认禁用。"
+    },
+    {
+      "id": 362,
+      "en": "HERMES_OPTIONAL_SKILLS=name1,name2 auto-installs extra optional-catalog skills on first run per profile.",
+      "zh": "HERMES_OPTIONAL_SKILLS=name1,name2 会在每个配置文件首次运行时自动安装额外的可选目录技能。"
+    },
+    {
+      "id": 363,
+      "en": "HERMES_BUNDLED_SKILLS points at a custom bundled-skill tree — used by Homebrew and Nix packaging.",
+      "zh": "HERMES_BUNDLED_SKILLS 指向自定义的捆绑技能目录树——常用于 Homebrew 与 Nix 打包分发。"
+    },
+    {
+      "id": 364,
+      "en": "HERMES_DUMP_REQUEST_STDOUT=1 dumps every API request payload to stdout instead of log files.",
+      "zh": "HERMES_DUMP_REQUEST_STDOUT=1 将每次 API 请求的完整负载直接打印到标准输出，而非写入日志文件。"
+    },
+    {
+      "id": 365,
+      "en": "HERMES_OAUTH_TRACE=1 logs redacted OAuth token exchange and refresh attempts for debugging provider auth.",
+      "zh": "HERMES_OAUTH_TRACE=1 记录脱敏后的 OAuth 令牌交换与刷新尝试日志，便于排查提供商授权问题。"
+    },
+    {
+      "id": 366,
+      "en": "HERMES_STREAM_RETRIES (default 3) controls mid-stream reconnect attempts on transient network errors.",
+      "zh": "HERMES_STREAM_RETRIES（默认 3）控制在遭遇偶发网络故障时流式传输中断的重连尝试次数。"
+    },
+    {
+      "id": 367,
+      "en": "HERMES_GATEWAY_BUSY_ACK_ENABLED=false silences the ⚡/⏳/⏩ ack messages when a user messages a busy agent.",
+      "zh": "HERMES_GATEWAY_BUSY_ACK_ENABLED=false 会在用户向忙碌中的智能体发送消息时静默屏蔽 ⚡/⏳/⏩ 确认提示消息。"
+    },
+    {
+      "id": 368,
+      "en": "HERMES_AGENT_NOTIFY_INTERVAL (default 180s) sets how often the gateway pings with progress on long turns.",
+      "zh": "HERMES_AGENT_NOTIFY_INTERVAL（默认 180s）设置在长耗时轮次中网关同步进度的通知时间间隔。"
+    },
+    {
+      "id": 369,
+      "en": "HERMES_RESTART_DRAIN_TIMEOUT (default 900s) caps how long /restart waits for in-flight runs before forcing.",
+      "zh": "HERMES_RESTART_DRAIN_TIMEOUT（默认 900s）限制 /restart 在强制终止前等待正在进行的任务排空的最大时长。"
+    },
+    {
+      "id": 370,
+      "en": "HERMES_CHECKPOINT_TIMEOUT (default 30s) caps filesystem checkpoint creation — raise it on huge monorepos.",
+      "zh": "HERMES_CHECKPOINT_TIMEOUT（默认 30s）限制文件系统检查点创建的最长时间——在超大单体仓库中可适当调大。"
+    },
+    {
+      "id": 371,
+      "en": "image_gen.model in config.yaml picks the FAL model: flux-2/klein, gpt-image-2, nano-banana-pro, and more.",
+      "zh": "config.yaml 中的 image_gen.model 用于选择 FAL 模型：如 flux-2/klein、gpt-image-2、nano-banana-pro 等。"
+    },
+    {
+      "id": 372,
+      "en": "image_gen.provider routes image generation through a plugin (OpenAI Images, Codex, FAL) instead of the default.",
+      "zh": "image_gen.provider 可通过插件（OpenAI Images、Codex、FAL）路由图像生成任务，以替代默认服务。"
+    },
+    {
+      "id": 373,
+      "en": "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY point vision analysis at any OpenAI-compatible endpoint.",
+      "zh": "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY 将视觉分析请求指向任意兼容 OpenAI 的接口端点。"
+    },
+    {
+      "id": 374,
+      "en": "security.tirith_fail_open: false makes Hermes block commands when the tirith scanner itself errors out.",
+      "zh": "security.tirith_fail_open: false 会在 tirith 扫描器本身发生异常报错时让 Hermes 拦截阻止命令执行。"
+    },
+    {
+      "id": 375,
+      "en": "TIRITH_FAIL_OPEN env var overrides the tirith_fail_open config — a quick toggle without editing config.yaml.",
+      "zh": "环境变量 TIRITH_FAIL_OPEN 可覆盖 tirith_fail_open 配置——无需编辑 config.yaml 即可快速切换开关。"
+    },
+    {
+      "id": 376,
+      "en": "--source tool chats are excluded from hermes sessions list by default — set --source explicitly to see them.",
+      "zh": "带有 --source tool 的会话默认在 hermes sessions list 中被隐藏——显式指定 --source 参数方可查看它们。"
+    },
+    {
+      "id": 377,
+      "en": "Session IDs are timestamp-prefixed (20250305_091523_abcd) so sorting works naturally in ls and jq.",
+      "zh": "会话 ID 带有时间戳前缀（如 20250305_091523_abcd），便于在 ls 和 jq 中自然按时间先后排序。"
+    },
+    {
+      "id": 378,
+      "en": "API_SERVER_MODEL_NAME customizes the model name on /v1/models — essential for multi-profile Open WebUI setups.",
+      "zh": "API_SERVER_MODEL_NAME 可自定义 /v1/models 返回的模型名称——对于多配置文件 Open WebUI 环境至关重要。"
+    },
+    {
+      "id": 379,
+      "en": "Dashboard plugins are served from /dashboard-plugins/<name>/ — drop files into ~/.hermes/dashboard-plugins/.",
+      "zh": "控制台插件通过 /dashboard-plugins/<name>/ 对外服务——只需将文件放入 ~/.hermes/dashboard-plugins/ 目录即可。"
+    }
+  ],
+  "map": {
+    "/bg <prompt> runs a task in a separate session while your current one stays free; /btw <question> answers a side question about this conversation without interrupting it.": "/bg <prompt> 在独立会话中运行任务，同时保持当前会话空闲；/btw <question> 则可在不中断当前对话的前提下回答附带问题。",
+    "/branch forks the current session so you can explore a different direction without losing progress.": "/branch 分叉当前会话，便于你在不丢失现有进度的情况下探索不同方向。",
+    "/compress manually compresses conversation context when things get long.": "/compress 在对话内容过长时手动压缩对话上下文。",
+    "/rollback lists filesystem checkpoints — restore files the agent modified to any prior state.": "/rollback 列出文件系统检查点——可将智能体修改过的文件恢复到任意历史状态。",
+    "/rollback diff 2 previews what changed since checkpoint 2 without restoring anything.": "/rollback diff 2 预览自检查点 2 以来的所有变动，且不会恢复任何内容。",
+    "/rollback 2 src/file.py restores a single file from a specific checkpoint.": "/rollback 2 src/file.py 从指定检查点仅恢复单个文件。",
+    "/title \"my project\" names your session — resume it later with /resume or hermes -c.": "/title \"my project\" 为当前会话命名——之后可通过 /resume 或 hermes -c 恢复该会话。",
+    "/resume picks up where you left off in a previously named session.": "/resume 继续之前已命名的会话，从上次离开的地方接着进行。",
+    "/queue <prompt> queues a message for the next turn without interrupting the current one.": "/queue <prompt> 将消息加入下一轮排队队列，不会中断当前轮次。",
+    "/undo removes the last user/assistant exchange from the conversation.": "/undo 从对话中移除上一轮用户与助手的问答交互。",
+    "/retry resends your last message — useful when the agent's response wasn't quite right.": "/retry 重新发送你上一条消息——当智能体的回复不甚理想时非常有用。",
+    "/verbose cycles tool progress display: off → new → all → verbose.": "/verbose 循环切换工具执行进度显示：off → new → all → verbose。",
+    "/reasoning high increases the model's thinking depth. /reasoning show displays the reasoning.": "/reasoning high 可提高模型的思考深度。/reasoning show 则显示具体推理过程。",
+    "/fast toggles priority processing for faster API responses (provider-dependent).": "/fast 切换优先处理模式以获得更快的 API 响应速度（取决于提供商）。",
+    "/yolo skips all dangerous command approval prompts for the rest of the session.": "/yolo 在当前会话后续操作中跳过所有高危命令的确认提示。",
+    "/model lets you switch models mid-session — try /model sonnet or /model gpt-5.": "/model 支持会话中途切换模型——例如尝试 /model sonnet 或 /model gpt-5。",
+    "/model --global changes your default model permanently.": "/model --global 永久修改你的默认模型。",
+    "/personality pirate sets a fun personality — 14 built-in options from kawaii to shakespeare.": "/personality pirate 可设置趣味人设——内置 14 种人设选项，涵盖 kawaii 到 shakespeare。",
+    "/skin changes the CLI theme — try ares, mono, slate, poseidon, or charizard.": "/skin 切换 CLI 主题——可尝试 ares、mono、slate、poseidon 或 charizard。",
+    "/statusbar toggles a persistent bar showing model, tokens, context fill %, cost, and duration.": "/statusbar 切换常驻状态栏，显示模型、Token、上下文填充比例（%）、费用和运行耗时。",
+    "/tools disable browser temporarily removes browser tools for the current session.": "/tools disable browser 会在当前会话中临时禁用浏览器工具。",
+    "/browser connect attaches browser tools to your running Chromium-family browser via CDP.": "/browser connect 通过 CDP 将浏览器工具连接至正在运行的 Chromium 家族浏览器。",
+    "/plugins lists installed plugins and their status.": "/plugins 列出已安装的插件及其运行状态。",
+    "/cron manages scheduled tasks — set up recurring prompts with delivery to any platform.": "/cron 管理定时任务——设置周期性执行的提示词，并推送到任意目标平台。",
+    "/reload-mcp hot-reloads MCP server configuration without restarting.": "/reload-mcp 无需重启即可热重载 MCP 服务端配置。",
+    "/usage shows token usage, cost breakdown, and session duration.": "/usage 查看 Token 使用量、费用明细以及会话耗时。",
+    "/insights shows usage analytics for the last 30 days.": "/insights 展示最近 30 天的使用分析统计数据。",
+    "/paste checks your clipboard for an image and attaches it to your next message.": "/paste 检查剪贴板中的图片并附加到下一条消息中。",
+    "/profile shows which profile is active and its home directory.": "/profile 显示当前处于激活状态的配置文件及其用户主目录。",
+    "/config shows your current configuration at a glance.": "/config 一目了然地查看你当前的完整配置。",
+    "/stop kills all running background processes spawned by the agent.": "/stop 终止由智能体衍生出的所有正在运行的后台进程。",
+    "@file:path/to/file.py injects file contents directly into your message.": "@file:path/to/file.py 将文件内容直接注入到你的消息中。",
+    "@file:main.py:10-50 injects only lines 10-50 of a file.": "@file:main.py:10-50 仅注入文件的第 10 至 50 行。",
+    "@folder:src/ injects a directory tree listing.": "@folder:src/ 注入目录树结构列表。",
+    "@diff injects your unstaged git changes into the message.": "@diff 将尚未暂存的 Git 改动注入消息中。",
+    "@staged injects your staged git changes (git diff --staged).": "@staged 将已暂存的 Git 改动（git diff --staged）注入消息中。",
+    "@git:5 injects the last 5 commits with full patches.": "@git:5 注入最近 5 次提交记录及完整补丁。",
+    "@url:https://example.com fetches and injects a web page's content.": "@url:https://example.com 抓取网页内容并注入消息中。",
+    "Typing @ triggers filesystem path completion — navigate to any file interactively.": "输入 @ 会触发文件系统路径补全——支持交互式定位导航到任意文件。",
+    "Combine multiple references: \"Review @file:main.py and @file:test.py for consistency.\"": "可组合多个引用：\"Review @file:main.py and @file:test.py for consistency.\"",
+    "Alt+Enter inserts a newline for multi-line input. (Windows Terminal intercepts Alt+Enter — use Ctrl+Enter instead.)": "Alt+Enter 插入换行符以进行多行输入。（Windows Terminal 会拦截 Alt+Enter，此时请改用 Ctrl+Enter。）",
+    "Ctrl+C interrupts the agent. Double-press within 2 seconds to force exit.": "Ctrl+C 可中断智能体运行。2 秒内连按两次将强制退出。",
+    "Ctrl+Z suspends Hermes to the background — run fg in your shell to resume.": "Ctrl+Z 将 Hermes 挂起至后台——在 Shell 中执行 fg 命令即可恢复。",
+    "Tab accepts auto-suggestion ghost text or autocompletes slash commands.": "Tab 键可采纳自动建议的幽灵文本，或自动补全斜杠命令。",
+    "Type a new message while the agent is working to interrupt and redirect it.": "在智能体工作期间直接输入新消息，可立即中断并重定向它的行为。",
+    "Alt+V pastes an image from your clipboard into the conversation.": "Alt+V 将剪贴板中的图片直接粘贴至对话中。",
+    "Pasting 5+ lines auto-saves to a file and inserts a compact reference instead.": "粘贴 5 行及以上内容时会自动保存为文件，并替换为精简的引用标记。",
+    "hermes -c resumes your most recent CLI session. hermes -c \"project name\" resumes by title.": "hermes -c 恢复你最近一次的 CLI 会话。hermes -c \"project name\" 则按标题恢复指定会话。",
+    "hermes -w creates an isolated git worktree — perfect for parallel agent workflows.": "hermes -w 创建一个独立的 Git Worktree——非常适合并行的智能体工作流。",
+    "hermes -w -q \"Fix issue #42\" combines worktree isolation with a one-shot query.": "hermes -w -q \"Fix issue #42\" 将 Worktree 隔离与单次查询相结合。",
+    "hermes chat -t web,terminal enables only specific toolsets for a focused session.": "hermes chat -t web,terminal 仅启用特定的工具集，以打造专注的会话。",
+    "hermes chat -s github-pr-workflow preloads a skill at launch.": "hermes chat -s github-pr-workflow 启动时预加载指定技能。",
+    "hermes chat -q \"query\" runs a single non-interactive query and exits.": "hermes chat -q \"query\" 运行单次非交互式查询并退出。",
+    "hermes chat --max-turns 1000 overrides the default 500-iteration limit per turn.": "hermes chat --max-turns 1000 覆盖每轮交互默认的 500 次迭代上限。",
+    "hermes chat --checkpoints enables filesystem snapshots before every destructive file change.": "hermes chat --checkpoints 在每次发生破坏性文件修改前启用文件系统快照。",
+    "hermes --yolo bypasses all dangerous command approval prompts for the entire session.": "hermes --yolo 在整个会话中绕过所有高危命令的确认提示。",
+    "hermes chat --source telegram tags the session for filtering in hermes sessions list.": "hermes chat --source telegram 为会话打上标签，以便在 hermes sessions list 中进行筛选。",
+    "hermes -p work chat runs under a specific profile without changing your default.": "hermes -p work chat 在指定配置文件下运行，且不会更改你的默认配置。",
+    "hermes doctor --fix diagnoses and auto-repairs config and dependency issues.": "hermes doctor --fix 诊断并自动修复配置与依赖项问题。",
+    "hermes dump outputs a compact setup summary — great for bug reports.": "hermes dump 输出紧凑的环境配置摘要——非常适合用于提交 Bug 报告。",
+    "hermes config set KEY VALUE auto-routes secrets to .env and everything else to config.yaml.": "hermes config set KEY VALUE 自动将机密信息路由保存至 .env，其余内容写入 config.yaml。",
+    "hermes config edit opens config.yaml in your default editor.": "hermes config edit 在你的默认编辑器中打开 config.yaml。",
+    "hermes config check scans for missing or stale configuration options.": "hermes config check 扫描缺失或陈旧过期的配置选项。",
+    "hermes sessions browse opens an interactive session picker with search.": "hermes sessions browse 打开带有搜索功能的交互式会话选择器。",
+    "hermes sessions stats shows session counts by platform and database size.": "hermes sessions stats 按平台展示会话总数以及数据库文件大小。",
+    "hermes sessions prune --older-than 30 cleans up old sessions.": "hermes sessions prune --older-than 30 清理陈旧的历史会话。",
+    "hermes skills search react --source skills-sh searches the skills.sh public directory.": "hermes skills search react --source skills-sh 在 skills.sh 公共目录中搜索技能。",
+    "hermes skills check scans installed hub skills for upstream updates.": "hermes skills check 扫描已安装的 Hub 技能是否存在上游更新。",
+    "hermes skills tap add myorg/skills-repo adds a custom GitHub skill source.": "hermes skills tap add myorg/skills-repo 添加自定义的 GitHub 技能源。",
+    "hermes skills snapshot export setup.json exports your skill configuration for backup or sharing.": "hermes skills snapshot export setup.json 导出你的技能配置快照，用于备份或共享。",
+    "hermes mcp add github --command npx adds MCP servers from the command line.": "hermes mcp add github --command npx 从命令行添加 MCP 服务端。",
+    "hermes mcp serve runs Hermes itself as an MCP server for other agents.": "hermes mcp serve 将 Hermes 本身作为 MCP 服务端运行，供其他智能体调用。",
+    "hermes auth add lets you add multiple API keys for credential pool rotation.": "hermes auth add 支持添加多个 API Key，用于凭据池轮换。",
+    "hermes completion bash >> ~/.bashrc enables tab completion for all commands and profiles.": "hermes completion bash >> ~/.bashrc 为所有命令和配置文件开启 Tab 自动补全。",
+    "hermes logs -f follows agent.log in real time. --level WARNING --since 1h filters output.": "hermes logs -f 实时跟踪 agent.log。可搭配 --level WARNING --since 1h 筛选输出。",
+    "hermes backup creates a zip backup of your entire Hermes home directory.": "hermes backup 为你的整个 Hermes 主目录创建 zip 格式备份压缩包。",
+    "hermes profile create coder creates an isolated profile that becomes its own command.": "hermes profile create coder 创建独立的配置文件，且会生成对应的专属独立命令。",
+    "hermes profile create work --clone copies your current config and keys to a new profile.": "hermes profile create work --clone 将你当前的配置与密钥完整克隆到新配置文件中。",
+    "hermes update syncs new bundled skills to ALL profiles automatically.": "hermes update 自动将新捆绑的内置技能同步到所有配置文件。",
+    "hermes gateway install sets up Hermes as a system service (systemd/launchd).": "hermes gateway install 将 Hermes 配置为系统服务（systemd/launchd）。",
+    "hermes memory setup lets you configure an external memory provider (Honcho, Mem0, etc.).": "hermes memory setup 支持配置外部记忆提供商（如 Honcho、Mem0 等）。",
+    "hermes webhook subscribe creates event-driven webhook routes with HMAC validation.": "hermes webhook subscribe 创建带有 HMAC 验证的事件驱动型 Webhook 路由。",
+    "Save money: hermes tools disables unused tools, hermes skills config trims skills down.": "节省成本：使用 hermes tools 禁用未使用的工具，使用 hermes skills config 精简技能。",
+    "/reasoning low or /reasoning minimal cuts thinking depth below the default (medium) — faster, cheaper responses.": "/reasoning low 或 /reasoning minimal 将思考深度降至默认（medium）以下——响应更快且成本更低。",
+    "hermes models routes vision, compression, and aux tasks to cheaper models — cuts background token cost 85%+ without downgrading your main chat model.": "hermes models 将视觉、上下文压缩和辅助任务路由至更经济的模型——在不降低主对话模型规格的前提下，削减 85% 以上的后台 Token 成本。",
+    "Set display.bell_on_complete: true in config.yaml to hear a bell when long tasks finish.": "在 config.yaml 中设置 display.bell_on_complete: true，以便在耗时任务完成时响起提示音。",
+    "Set display.streaming: true to see tokens appear in real time as the model generates.": "设置 display.streaming: true，即可在模型生成内容时实时看到逐字流式输出的 Token。",
+    "Set display.show_reasoning: true to watch the model's chain-of-thought reasoning.": "设置 display.show_reasoning: true，可实时查看模型的思维链推理过程。",
+    "Set display.compact: true to reduce whitespace in output for denser information.": "设置 display.compact: true，可减少输出中的空白行与留白，提升信息显示密度。",
+    "Set display.busy_input_mode: queue to queue messages instead of interrupting the agent, or steer to inject them mid-run via /steer.": "设置 display.busy_input_mode: queue 可让新消息排队而不是中断智能体，或设为 steer 以通过 /steer 在运行途中注入指导。",
+    "Set display.resume_display: minimal to skip the full conversation recap on session resume.": "设置 display.resume_display: minimal，可在恢复会话时跳过完整对话内容回顾。",
+    "Set compression.threshold: 0.50 to control when auto-compression fires (default: 50% of context).": "设置 compression.threshold: 0.50 可控制何时触发自动压缩（默认：上下文的 50%）。",
+    "Set agent.max_turns: 1000 to let the agent take more tool-calling steps per turn.": "设置 agent.max_turns: 1000，可允许智能体在单轮交互中执行更多的工具调用步数。",
+    "Set file_read_max_chars: 200000 to increase the max content per read_file call.": "设置 file_read_max_chars: 200000，可增加每次 read_file 调用所能读取的最大字符数。",
+    "Set approvals.mode: smart to let an LLM auto-approve safe commands and auto-deny dangerous ones.": "设置 approvals.mode: smart，可让 LLM 自动批准安全命令并自动拦截高危命令。",
+    "Set fallback_model in config.yaml to automatically fail over to a backup provider.": "在 config.yaml 中设置 fallback_model，可在主提供商故障时自动故障转移至备用提供商。",
+    "Set privacy.redact_pii: true to hash user IDs and phone numbers before sending to the LLM.": "设置 privacy.redact_pii: true 可在将数据发送给 LLM 之前，对用户 ID 和手机号进行哈希脱敏。",
+    "Set browser.record_sessions: true to auto-record browser sessions as WebM videos.": "设置 browser.record_sessions: true 可将浏览器操作会话自动录制为 WebM 视频。",
+    "Set worktree: true in config.yaml to always create a git worktree (same as hermes -w).": "在 config.yaml 中设置 worktree: true 可始终创建 Git Worktree（效果同 hermes -w）。",
+    "Set security.website_blocklist.enabled: true to block specific domains from web tools.": "设置 security.website_blocklist.enabled: true 可禁止网络工具访问特定的域名。",
+    "Set cron.wrap_response: false to deliver raw agent output without the cron header/footer.": "设置 cron.wrap_response: false 可直接推送原始智能体输出，不附加定时任务的页眉/页脚。",
+    "HERMES_TIMEZONE overrides the server timezone with any IANA timezone string.": "HERMES_TIMEZONE 可使用任意 IANA 时区字符串覆盖服务器默认时区。",
+    "Environment variable substitution works in config.yaml: use ${VAR_NAME} syntax.": "config.yaml 支持环境变量替换：使用 ${VAR_NAME} 语法即可。",
+    "Quick commands in config.yaml run shell commands instantly with zero token usage.": "config.yaml 中的快捷命令（Quick commands）可即时执行 Shell 命令，且不消耗任何 Token。",
+    "Custom personalities can be defined in config.yaml under agent.personalities.": "可在 config.yaml 的 agent.personalities 下定义自定义人设。",
+    "provider_routing controls OpenRouter provider sorting, whitelisting, and blacklisting.": "provider_routing 用于控制 OpenRouter 提供商的排序、白名单以及黑名单。",
+    "execute_code runs Python scripts that call Hermes tools programmatically — results stay out of context.": "execute_code 可运行以编程方式调用 Hermes 工具的 Python 脚本——执行结果不会占用上下文。",
+    "delegate_task spawns up to 10 concurrent sub-agents by default (delegation.max_concurrent_children) with isolated contexts for parallel work.": "delegate_task 默认最多衍生出 10 个并发子智能体（受 delegation.max_concurrent_children 控制），并具备独立上下文以进行并行作业。",
+    "web_extract works on PDF URLs — pass any PDF link and it converts to markdown.": "web_extract 支持 PDF 链接——传入任意 PDF URL 即可自动转换为 Markdown。",
+    "search_files is ripgrep-backed and faster than grep — use it instead of terminal grep.": "search_files 基于 ripgrep 构建且速度显著优于 grep——建议优先使用它来替代终端 grep。",
+    "patch uses 9 fuzzy matching strategies so minor whitespace differences won't break edits.": "patch 采用 9 种模糊匹配策略，微小的空白符差异不会导致修改失败。",
+    "patch supports V4A format for bulk multi-file edits in a single call.": "patch 支持 V4A 格式，可在单次调用中批量修改多个文件。",
+    "read_file suggests similar filenames when a file isn't found.": "未找到目标文件时，read_file 会智能推荐相似的文件名。",
+    "read_file auto-deduplicates — re-reading an unchanged file returns a lightweight stub.": "read_file 具备自动去重机制——重新读取未变动的文件仅返回轻量存根。",
+    "browser_vision takes a screenshot and analyzes it with AI — works for CAPTCHAs and visual content.": "browser_vision 支持网页截屏并通过 AI 进行视觉分析——适用于验证码识别与视觉内容理解。",
+    "browser_console can evaluate JavaScript expressions in the page context.": "browser_console 可以在当前页面上下文中直接执行并求值 JavaScript 表达式。",
+    "image_generate creates images with FLUX 2 Pro and automatic 2x upscaling.": "image_generate 基于 FLUX 2 Pro 生成图像，并支持自动 2 倍无损放大。",
+    "text_to_speech converts text to audio — plays as voice bubbles on Telegram.": "text_to_speech 将文本转换为语音音频——在 Telegram 上可直接以语音气泡播放。",
+    "send_message can reach any connected messaging platform from within a session.": "send_message 可在会话内部向任意已连接的即时通讯平台发送消息。",
+    "The todo tool helps the agent track complex multi-step tasks during a session.": "todo 工具可帮助智能体在会话期间跟踪管理复杂的多步骤任务。",
+    "session_search performs full-text search across ALL past conversations.": "session_search 支持在所有历史对话中进行全文检索。",
+    "The agent automatically saves preferences, corrections, and environment facts to memory.": "智能体会自动将用户偏好、纠错反馈以及环境事实持久化保存至记忆库中。",
+    "/moa routes one hard prompt through your configured Mixture of Agents model set.": "/moa 将高难度提示词路由至已配置的混合智能体（Mixture of Agents）模型组进行协同处理。",
+    "Terminal commands support background mode with notify_on_complete for long-running tasks.": "终端命令支持后台运行模式，并提供 notify_on_complete 用于耗时任务完成时的通知。",
+    "Terminal background processes support watch_patterns to alert on specific output lines.": "终端后台进程支持 watch_patterns，可在匹配到特定输出行时发出告警。",
+    "The terminal tool supports 6 backends: local, Docker, SSH, Modal, Daytona, and Singularity.": "terminal 工具支持 6 种执行后端：local、Docker、SSH、Modal、Daytona 以及 Singularity。",
+    "Each profile gets its own config, API keys, memory, sessions, skills, and cron jobs.": "每个配置文件都拥有独立的配置、API Key、记忆、会话、技能以及定时任务。",
+    "Profile names become shell commands — 'hermes profile create coder' creates the 'coder' command.": "配置文件名会映射为独立的 Shell 命令——例如 'hermes profile create coder' 会生成 'coder' 命令。",
+    "hermes profile export coder -o backup.tar.gz creates a portable profile archive.": "hermes profile export coder -o backup.tar.gz 可生成便携式的配置文件归档压缩包。",
+    "If two profiles accidentally share a bot token, the second gateway is blocked with a clear error.": "如果两个配置文件意外共享了同一个 Bot Token，第二个网关将被拦截并抛出明确错误提示。",
+    "Sessions auto-generate descriptive titles after the first exchange — no manual naming needed.": "会话在首轮交互后会自动生成描述性标题——无需手动命名。",
+    "Session titles support lineage: \"my project\" → \"my project #2\" → \"my project #3\".": "会话标题支持血统继承演化：如 \"my project\" → \"my project #2\" → \"my project #3\"。",
+    "When exiting, Hermes prints a resume command with session ID and stats.": "退出时，Hermes 会打印附带会话 ID 与统计信息的恢复命令。",
+    "hermes sessions export backup.jsonl exports all sessions for backup or analysis.": "hermes sessions export backup.jsonl 可导出全部会话，用于数据备份或离线分析。",
+    "hermes -r SESSION_ID resumes any specific past session by its ID.": "hermes -r SESSION_ID 可通过会话 ID 精确恢复任意指定的历史会话。",
+    "Memory is a frozen snapshot — changes appear in the system prompt only at next session start.": "记忆采用冻结快照机制——所做修改仅在下一次新会话启动时才会注入系统提示词。",
+    "Memory entries are automatically scanned for prompt injection and exfiltration patterns.": "记忆条目会自动经过安全扫描，以检测防范提示词注入与数据外泄模式。",
+    "The agent has two memory stores: personal notes (~2200 chars) and user profile (~1375 chars).": "智能体拥有两类记忆存储：个人笔记（约 2200 字符）与用户画像（约 1375 字符）。",
+    "Corrections you give the agent (\"no, do it this way\") are often auto-saved to memory.": "你对智能体提出的纠错指导（如“不对，按这种方式做”）通常会自动持久化到记忆中。",
+    "Over 80 bundled skills covering github, creative, mlops, productivity, research, and more.": "内置超过 80 种捆绑技能，涵盖 github、creative、mlops、productivity、research 等诸多领域。",
+    "Every installed skill automatically becomes a slash command — type / to see them all.": "每个已安装的技能都会自动注册为斜杠命令——输入 / 即可查看完整列表。",
+    "hermes skills install official/security/1password installs optional skills from the repo.": "hermes skills install official/security/1password 可从官方仓库安装可选技能。",
+    "Skills can restrict to specific OS platforms — some only load on macOS or Linux.": "技能可限制运行在特定操作系统平台——部分技能仅在 macOS 或 Linux 上加载。",
+    "skills.external_dirs in config.yaml lets you load skills from custom directories.": "config.yaml 中的 skills.external_dirs 允许你从自定义目录加载外部技能。",
+    "The agent can create its own skills as procedural memory using skill_manage.": "智能体可通过 skill_manage 自主创建技能，将其作为程序性记忆。",
+    "/plan writes a markdown implementation plan to .hermes/plans/ without executing anything.": "/plan 将 Markdown 格式的实施计划写入 .hermes/plans/，且不会执行任何操作。",
+    "Cron jobs can attach skills: hermes cron add --skill blogwatcher \"Check for new posts\".": "定时任务可以附加技能：hermes cron add --skill blogwatcher \"Check for new posts\"。",
+    "Cron delivery targets include telegram, discord, slack, email, sms, and 12+ more platforms.": "定时任务投递目标涵盖 Telegram、Discord、Slack、邮件、短信以及 12 种以上的其他平台。",
+    "If a cron response starts with [SILENT], delivery is suppressed — useful for monitoring-only jobs.": "如果定时任务的响应以 [SILENT] 开头，则会抑制投递——这对于纯监控类任务非常有用。",
+    "Cron supports relative delays (30m), intervals (every 2h), cron expressions, and ISO timestamps.": "定时任务支持相对延迟（30m）、周期性间隔（every 2h）、Cron 表达式以及 ISO 时间戳。",
+    "Cron jobs run in completely fresh agent sessions — prompts must be self-contained.": "定时任务均在完全崭新的智能体会话中运行——提示词必须自包含完整上下文。",
+    "Voice mode works with zero API keys if faster-whisper is installed (free local speech-to-text).": "若安装了 faster-whisper（免费本地语音转文本），无需任何 API Key 即可使用语音模式。",
+    "Five TTS providers available: Edge TTS (free), ElevenLabs, OpenAI, NeuTTS (free local), MiniMax.": "支持 5 种 TTS 语音合成提供商：Edge TTS（免费）、ElevenLabs、OpenAI、NeuTTS（免费本地）和 MiniMax。",
+    "/voice on enables voice mode in the CLI. Ctrl+B toggles push-to-talk recording.": "/voice on 可在 CLI 中开启语音模式。Ctrl+B 切换按键通话录音。",
+    "Streaming TTS plays sentences as they generate — you don't wait for the full response.": "流式 TTS 随句子生成即时播放——无需等待完整回复全部输出。",
+    "Voice messages on Telegram, Discord, WhatsApp, and Slack are auto-transcribed.": "Telegram、Discord、WhatsApp 和 Slack 上的语音留言会自动转录为文本。",
+    "Hermes runs on 21 messaging platforms: Telegram, Discord, Slack, WhatsApp, Signal, Matrix, IRC, Microsoft Teams, email, and more.": "Hermes 支持 21 个即时通讯平台：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、邮件等。",
+    "hermes gateway install sets it up as a system service that starts on boot.": "hermes gateway install 将其配置为开机自启的系统服务。",
+    "DingTalk uses Stream Mode — no webhooks or public URL needed.": "钉钉（DingTalk）采用 Stream 模式——无需配置 Webhook 或公网 URL。",
+    "BlueBubbles brings iMessage to Hermes via a local macOS server.": "BlueBubbles 通过本地 macOS 服务端将 iMessage 接入 Hermes。",
+    "Webhook routes support HMAC validation, rate limiting, and event filtering.": "Webhook 路由支持 HMAC 签名校验、速率限制以及事件过滤。",
+    "The API server exposes an OpenAI-compatible endpoint compatible with Open WebUI and LibreChat.": "API 服务端对外提供兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat 等客户端。",
+    "Discord voice channel mode: the bot joins VC, transcribes speech, and talks back.": "Discord 语音频道模式：Bot 加入语音房间（VC），实时转录语音并进行对话交互。",
+    "group_sessions_per_user: true gives each person their own session in group chats.": "group_sessions_per_user: true 允许群聊中的每位成员拥有各自独立的专属会话。",
+    "/sethome marks a chat as the home channel for cron job deliveries.": "/sethome 将当前聊天标记为主频道，用于接收定时任务的推送投递。",
+    "The gateway supports inactivity-based timeouts — active agents can run indefinitely.": "网关支持基于不活跃状态的超时机制——持续活跃的智能体可以无限期运行。",
+    "Dangerous command approval has 4 tiers: once, session, always (permanent allowlist), deny.": "高危命令审批包含 4 个级别：once（单次）、session（本次会话）、always（永久白名单）和 deny（拒绝）。",
+    "Smart approval mode uses an LLM to auto-approve safe commands and flag dangerous ones.": "智能审批模式利用 LLM 自动放行安全命令，并对高危命令标记拦截。",
+    "SSRF protection blocks private networks, loopback, link-local, and cloud metadata addresses.": "SSRF 防护机制会自动拦截私有局域网、回环、链路本地以及云厂商元数据地址。",
+    "Tirith pre-exec scanning detects homograph URL spoofing and pipe-to-interpreter patterns.": "Tirith 预执行扫描可检测同形异义 URL 欺骗以及管道直接传递至解释器的危险代码模式。",
+    "MCP subprocesses receive a filtered environment — only safe system vars pass through.": "MCP 子进程接收过滤后的环境变量——仅允许安全系统变量透传。",
+    "Context files (.hermes.md, AGENTS.md) are security-scanned for prompt injection before loading.": "上下文文件（.hermes.md、AGENTS.md）在加载前均会经过安全扫描，以防范提示词注入风险。",
+    "command_allowlist in config.yaml permanently approves specific shell command patterns.": "config.yaml 中的 command_allowlist 可永久放行特定的 Shell 命令模式。",
+    "Context auto-compresses when it reaches the threshold — memories are flushed and history summarized.": "当上下文达到阈值时会自动触发压缩——记忆被持久化刷入存储，历史记录被浓缩摘要。",
+    "The status bar turns yellow, then orange, then red as context fills up.": "随着上下文逐渐填满，状态栏颜色会依次由黄变橙再变红。",
+    "SOUL.md is the agent's primary identity file — customize it to shape behavior.": "SOUL.md 是智能体的核心人设身份文件——修改它可以深度塑造其行为举止。",
+    "Hermes loads project context from .hermes.md, AGENTS.md, CLAUDE.md, or .cursorrules (first match).": "Hermes 会按优先级从 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 中加载项目上下文（命中首个即生效）。",
+    "Subdirectory AGENTS.md files are discovered progressively as the agent navigates into folders.": "当智能体逐级进入子文件夹时，会按需渐进式发现并加载子目录中的 AGENTS.md 文件。",
+    "Context files are capped at 20,000 characters with smart head/tail truncation.": "上下文文件上限为 20,000 字符，并采用智能首尾保留截断策略。",
+    "Five browser providers: local Chromium, Browserbase, Browser Use, Camofox, and Firecrawl.": "支持 5 种浏览器提供商：本地 Chromium、Browserbase、Browser Use、Camofox 和 Firecrawl。",
+    "Camofox is an anti-detection browser — Firefox fork with C++ fingerprint spoofing.": "Camofox 是一款反指纹检测浏览器——基于 Firefox 定制开发并具备底层 C++ 指纹伪装能力。",
+    "browser_navigate returns a page snapshot automatically — no need to call browser_snapshot after.": "browser_navigate 会自动返回网页快照——无需在导航后重复调用 browser_snapshot。",
+    "browser_vision with annotate=true overlays numbered labels on interactive elements.": "调用 browser_vision 并传入 annotate=true，可在所有可交互元素上叠加带编号的标签。",
+    "hermes mcp opens an interactive picker of Nous-approved MCPs you can install in one keystroke.": "hermes mcp 会打开 Nous 认证 MCP 的交互式选择器，一键即可完成安装。",
+    "hermes mcp catalog lists Nous-approved MCP servers shipped with the repo.": "hermes mcp catalog 列出仓库随附的 Nous 认证 MCP 服务端列表。",
+    "hermes mcp install <name> installs a catalog entry, prompts for credentials, and lets you pick which of its tools to enable.": "hermes mcp install <name> 安装目录中的条目，引导输入凭据，并允许你自选启用其包含的哪些工具。",
+    "MCP servers are configured in config.yaml — both stdio and HTTP transports supported.": "MCP 服务端在 config.yaml 中配置——同时支持 stdio 与 HTTP 两种传输协议。",
+    "Per-server tool filtering: tools.include whitelists and tools.exclude blacklists specific tools.": "单服务端粒度的工具过滤：tools.include 设置白名单，tools.exclude 设置黑名单。",
+    "MCP servers auto-generate toolsets at runtime — hermes tools can toggle them per platform.": "MCP 服务端在运行时自动生成工具集——通过 hermes tools 可按平台分别开关启用。",
+    "MCP OAuth support: auth: oauth enables browser-based authorization with PKCE.": "MCP OAuth 认证支持：配置 auth: oauth 可开启基于 PKCE 的浏览器授权流。",
+    "Checkpoints have zero overhead when no files are modified — enabled by default.": "当未发生文件修改时，检查点机制开销为零——该功能默认已启用。",
+    "A pre-rollback snapshot is saved automatically so you can undo the undo.": "回滚前会自动保存一份快照，以便你撤销“回滚”这一操作。",
+    "/rollback also undoes the conversation turn, so the agent doesn't remember rolled-back changes.": "/rollback 还会同步撤销对应的对话轮次，因此智能体不会保留已回滚改动的记忆。",
+    "Checkpoints use shadow repos in ~/.hermes/checkpoints/ — your project's .git is never touched.": "检查点使用 ~/.hermes/checkpoints/ 下的影子仓库——绝不会触碰你项目本身的 .git。",
+    "batch_runner.py processes hundreds of prompts in parallel for training data generation.": "batch_runner.py 支持并行处理数百条提示词，用于训练数据生成。",
+    "hermes chat -Q enables quiet mode for programmatic use — suppresses banner and spinner.": "hermes chat -Q 为程序化调用开启静默模式——隐藏横幅 Banner 与加载等待动画。",
+    "Trajectory saving (--save-trajectories) captures full tool-use traces for model training.": "保存轨迹功能（--save-trajectories）可捕获完整的工具使用轨迹，用于模型训练。",
+    "Three plugin types: general (tools/hooks), memory providers, and context engines.": "三种插件类型：常规插件（工具/钩子）、记忆提供商以及上下文引擎。",
+    "hermes plugins install owner/repo installs plugins directly from GitHub.": "hermes plugins install owner/repo 可直接从 GitHub 安装插件。",
+    "8 external memory providers available: Honcho, OpenViking, Mem0, Hindsight, and more.": "支持 8 种外部记忆提供商：Honcho、OpenViking、Mem0、Hindsight 等。",
+    "Plugin hooks include pre/post_tool_call, pre/post_llm_call, and transform_terminal_output for output canonicalization.": "插件钩子包括 pre/post_tool_call、pre/post_llm_call 以及用于规范化输出的 transform_terminal_output。",
+    "Prompt caching (Anthropic) reduces costs by reusing cached system prompt prefixes.": "提示词缓存（Anthropic）通过复用已缓存的系统提示词前缀来降低成本。",
+    "The agent auto-generates session titles in a background thread — zero latency impact.": "智能体在后台线程中自动生成会话标题——对前台交互零延迟影响。",
+    "Smart model routing can auto-route simple queries to a cheaper model.": "智能模型路由可将简单查询自动路由至更经济的模型。",
+    "Slash commands support prefix matching: /h resolves to /help, /mod to /model.": "斜杠命令支持前缀匹配：如 /h 自动解析为 /help，/mod 解析为 /model。",
+    "Dragging a file path into the terminal auto-attaches images or sends as context.": "将文件路径直接拖入终端会自动附加图片或将其作为上下文发送。",
+    ".worktreeinclude in your repo root lists gitignored files to copy into worktrees.": "代码仓库根目录下的 .worktreeinclude 可指定需要复制到 Worktree 中的被 gitignore 忽略的文件。",
+    "hermes acp runs Hermes as an ACP server for VS Code, Zed, and JetBrains integration.": "hermes acp 将 Hermes 作为 ACP 服务端运行，以便与 VS Code、Zed 和 JetBrains 等 IDE 集成。",
+    "Custom providers: save named endpoints in config.yaml under custom_providers.": "自定义提供商：可在 config.yaml 的 custom_providers 下保存命名端点。",
+    "HERMES_EPHEMERAL_SYSTEM_PROMPT injects a system prompt that's never persisted to history.": "HERMES_EPHEMERAL_SYSTEM_PROMPT 注入临时系统提示词，该提示词绝不会持久化到历史记录中。",
+    "credential_pool_strategies supports fill_first, round_robin, least_used, and random rotation.": "credential_pool_strategies 凭据池策略支持 fill_first、round_robin、least_used 以及 random 轮换模式。",
+    "hermes auth add nous or hermes auth add openai-codex sets up OAuth-based providers.": "hermes auth add nous 或 hermes auth add openai-codex 可配置基于 OAuth 的提供商。",
+    "The API server supports both Chat Completions and Responses API with server-side state.": "API 服务端同时支持 Chat Completions 与带服务端状态的 Responses API。",
+    "tool_preview_length: 0 in config shows full file paths in the spinner's activity feed.": "在配置中设置 tool_preview_length: 0，可在加载动画的动态活动信息流中显示完整文件路径。",
+    "hermes status --deep runs deeper diagnostic checks across all components.": "hermes status --deep 跨所有组件运行更深度的诊断检查。",
+    "Cron jobs can attach a Python script (--script) whose stdout is injected into the prompt as context.": "定时任务可以附加 Python 脚本（--script），其标准输出（stdout）会被作为上下文注入到提示词中。",
+    "Cron scripts live in ~/.hermes/scripts/ and run before the agent — perfect for data collection pipelines.": "定时任务脚本存放在 ~/.hermes/scripts/ 中并在智能体运行前执行——非常适合用于数据采集流水线。",
+    "prefill_messages_file in config.yaml injects few-shot examples into every API call, never saved to history.": "config.yaml 中的 prefill_messages_file 可在每次 API 调用中注入 Few-shot 示例，且绝不保存至历史记录。",
+    "SOUL.md completely replaces the agent's default identity — rewrite it to make Hermes your own.": "SOUL.md 可完全替代智能体的默认人设身份——重写它即可打造专属你的 Hermes。",
+    "SOUL.md is auto-seeded with a default personality on first run. Edit it to customize.": "首次运行时 SOUL.md 会自动生成默认人设内容。编辑它即可进行个性化定制。",
+    "/compress <focus topic> allocates 60-70% of the summary budget to your topic and aggressively trims the rest.": "/compress <focus topic> 将 60-70% 的摘要额度分配给你指定的主题，并大幅精简裁剪其余内容。",
+    "On second+ compression, the compressor updates the previous summary instead of starting from scratch.": "从第二次压缩开始，压缩器会在上一次摘要的基础上进行增量更新，而非从零开始重做。",
+    "Before a gateway session reset, Hermes auto-flushes important facts to memory in the background.": "在网关会话重置之前，Hermes 会在后台自动将重要事实持久化刷入记忆中。",
+    "network.force_ipv4: true in config.yaml fixes hangs on servers with broken IPv6 — monkey-patches socket.": "在 config.yaml 中设置 network.force_ipv4: true 可解决因 IPv6 配置异常引起的服务器假死挂起——底层动态修补 socket。",
+    "The terminal tool annotates common exit codes: grep returning 1 = 'No matches found (not an error)'.": "terminal 工具会对常见退出码进行批注解释：例如 grep 返回 1 说明 'No matches found (not an error)'（未找到匹配项，非错误）。",
+    "Failed foreground terminal commands auto-retry up to 3 times with exponential backoff (2s, 4s, 8s).": "执行失败的前台终端命令最多自动重试 3 次，并采用指数退避（2s、4s、8s）。",
+    "Bare sudo commands are auto-rewritten to pipe SUDO_PASSWORD from .env — no interactive prompt needed.": "单独的 sudo 命令会自动改写为通过管道传入 .env 中的 SUDO_PASSWORD——无需交互式密码提示。",
+    "execute_code helpers require explicit imports: from hermes_tools import json_parse, shell_quote, retry.": "execute_code 辅助函数需要显式导入：from hermes_tools import json_parse, shell_quote, retry。",
+    "execute_code's 7 sandbox tools (web_search, terminal, read/write/search/patch) use RPC — never enter context.": "execute_code 的 7 种沙箱工具（web_search、terminal、read/write/search/patch）基于 RPC 调用——执行细节绝不会进入上下文。",
+    "Reading the same file region 3+ times triggers a warning. At 4+, it's hard-blocked to prevent loops.": "对同一文件区域读取 3 次及以上将触发警告。达到 4 次及以上时会被强制拦截，以防止死循环。",
+    "write_file and patch detect if a file was externally modified since the last read and warn about staleness.": "write_file 和 patch 会检测文件自上次读取以来是否被外部修改，并在发现过期陈旧时发出警告。",
+    "V4A patch format supports Add File, Delete File, and Move File directives — not just Update.": "V4A 补丁格式不仅支持 Update，还支持 Add File、Delete File 以及 Move File 指令。",
+    "MCP servers can request LLM completions back via sampling — the agent becomes a tool for the server.": "MCP 服务端可通过采样机制反向请求 LLM 补全——此时智能体反过来成为了服务端的工具。",
+    "MCP servers send notifications/tools/list_changed to trigger automatic tool re-registration without restart.": "MCP 服务端可发送 notifications/tools/list_changed 通知，以触发自动重新注册工具而无需重启。",
+    "delegate_task with acp_command: 'claude' spawns Claude Code as a child agent from any platform.": "delegate_task 搭配 acp_command: 'claude' 可在任意平台上将 Claude Code 作为子智能体衍生启动。",
+    "Delegation has a heartbeat thread — child activity propagates to the parent, preventing gateway timeouts.": "委派机制具备心跳线程——子智能体的活动会向上同步传递给父级，从而防止网关超时。",
+    "When a provider returns HTTP 402 (payment required), the auxiliary client auto-falls back to the next one.": "当提供商返回 HTTP 402（需要付款）时，辅助客户端会自动故障转移回退至下一个可用提供商。",
+    "agent.tool_use_enforcement steers models that describe actions instead of calling tools — auto for GPT/Codex.": "agent.tool_use_enforcement 用于纠正那些仅描述动作而不实际调用工具的模型——对 GPT/Codex 默认自动开启。",
+    "agent.restart_after_turn_timeout lets in-flight turns finish before /restart enters stop(); restart_drain_timeout is only the force-interrupt budget once stop() begins.": "agent.restart_after_turn_timeout 允许在 /restart 进入 stop() 之前让正在进行的轮次先执行完毕；restart_drain_timeout 则仅在 stop() 开始后作为强制中断的时间预算。",
+    "agent.api_max_retries (default 3) controls how many times the agent retries a failed API call before surfacing the error — lower it for fast fallback.": "agent.api_max_retries（默认 3）控制智能体在抛出错误之前对失败 API 调用的重试次数——调小该值可加快故障回退速度。",
+    "The gateway caches AIAgent instances per session — destroying this cache breaks Anthropic prompt caching.": "网关按会话缓存 AIAgent 实例——销毁该缓存会导致 Anthropic 提示词缓存失效。",
+    "Any website can expose skills via /.well-known/skills/index.json — the skills hub discovers them automatically.": "任何网站均可通过 /.well-known/skills/index.json 暴露技能——技能中心会自动发现它们。",
+    "The skills audit log at ~/.hermes/skills/.hub/audit.log tracks every install and removal operation.": "位于 ~/.hermes/skills/.hub/audit.log 的技能审计日志会记录每次安装与移除操作。",
+    "Stale git worktrees are auto-cleaned on startup: clean, fully-merged trees get pruned; dirty or unpushed work is always preserved.": "陈旧的 Git Worktree 会在启动时自动清理：干净且已完全合并的工作树会被修剪清理；包含未提交或未推送改动的工作树始终会被保留。",
+    "Profiles scope Hermes state via HERMES_HOME; host tool subprocesses keep your real HOME unless terminal.home_mode is profile.": "配置文件通过 HERMES_HOME 隔离限定 Hermes 状态；宿主工具子进程保持你的真实 HOME，除非将 terminal.home_mode 设置为 profile。",
+    "HERMES_HOME_MODE env var (octal, e.g. 0701) sets custom directory permissions for web server traversal.": "环境变量 HERMES_HOME_MODE（八进制，如 0701）可为 Web 服务器遍历访问设置自定义目录权限。",
+    "Container mode: place .container-mode in HERMES_HOME and the host CLI auto-execs into the container.": "容器模式：在 HERMES_HOME 中放置 .container-mode 文件，宿主 CLI 将自动进入容器内执行。",
+    "Ctrl+C has 5 priority tiers: cancel recording → cancel prompts → cancel picker → interrupt agent → exit.": "Ctrl+C 拥有 5 级优先级：取消录音 → 取消输入提示 → 取消选择器 → 中断智能体 → 退出程序。",
+    "Every interrupt during an agent run is logged to ~/.hermes/interrupt_debug.log with timestamps.": "智能体运行期间的每次中断都会记录到带有时间戳的 ~/.hermes/interrupt_debug.log 中。",
+    "BROWSER_CDP_URL connects browser tools to any running Chromium-family browser — accepts WebSocket, HTTP, or host:port.": "BROWSER_CDP_URL 可将浏览器工具连接至任意正在运行的 Chromium 家族浏览器——支持传入 WebSocket、HTTP 或 host:port。",
+    "BROWSERBASE_ADVANCED_STEALTH=true enables advanced anti-detection with custom Chromium (Scale Plan).": "BROWSERBASE_ADVANCED_STEALTH=true 可开启基于定制 Chromium 的高级反指纹检测（Scale 套餐）。",
+    "The CLI auto-switches to compact mode in terminals narrower than 80 columns.": "当终端宽度小于 80 列时，CLI 会自动切换为紧凑显示模式。",
+    "Quick commands support two types: exec (run shell command directly) and alias (redirect to another command).": "快捷命令支持两种类型：exec（直接执行 Shell 命令）与 alias（重定向至另一条命令）。",
+    "Per-task delegation model: delegation.model and delegation.provider in config route subagents to cheaper models.": "按任务粒度配置委派模型：配置中的 delegation.model 与 delegation.provider 可将子智能体路由至更经济的模型。",
+    "delegation.reasoning_effort independently controls thinking depth for subagents.": "delegation.reasoning_effort 可独立控制子智能体的思考深度。",
+    "display.platforms in config.yaml allows per-platform display overrides: {telegram: {tool_progress: all}}.": "config.yaml 中的 display.platforms 允许针对特定平台覆盖显示配置：如 {telegram: {tool_progress: all}}。",
+    "human_delay.mode in config simulates human typing speed — configurable min_ms/max_ms range.": "配置中的 human_delay.mode 用于模拟人类打字速度——支持自定义 min_ms/max_ms 延迟范围。",
+    "Config version migrations run automatically on load — new config keys appear without manual intervention.": "配置版本迁移在加载时自动执行——新增的配置项键名无需手动干预即可自动补全。",
+    "GPT and Codex models get special system prompt guidance for tool discipline and mandatory tool use.": "GPT 和 Codex 模型会获得专门的系统提示词引导，以强化工具使用规范与强制工具调用。",
+    "Gemini models get tailored directives for absolute paths, parallel tool calls, and non-interactive commands.": "Gemini 模型会获得针对绝对路径、并行工具调用和非交互式命令的量身定制指令。",
+    "context.engine in config.yaml can be set to a plugin name for alternative context management strategies.": "config.yaml 中的 context.engine 可设置为插件名称，以使用替代的上下文管理策略。",
+    "Browser page snapshots over 15,000 characters are truncated or auto-summarized; the full snapshot is saved to cache/web for read_file paging.": "超过 15,000 字符的浏览器页面快照会被截断或自动浓缩；完整快照会保存在 cache/web 中供 read_file 分页查看。",
+    "The compressor does a cheap pre-pass: tool outputs over 200 chars are replaced with placeholders before the LLM runs.": "压缩器会先进行轻量级的预处理：在 LLM 运行前，将超过 200 字符的工具输出替换为占位符。",
+    "When compression fails, further attempts are paused for 10 minutes to avoid API hammering.": "当压缩失败时，会暂停后续压缩尝试 10 分钟，以避免频繁冲击 API。",
+    "Long dangerous commands (>70 chars) get a 'view' option in the approval prompt to see the full text first.": "超长高危命令（>70 字符）在审批提示中会提供 'view' 选项，以便先查看完整文本。",
+    "Audio level visualization shows ▁▂▃▄▅▆▇ bars during voice recording based on microphone RMS levels.": "语音录制期间会根据麦克风的有效值（RMS）电平，通过 ▁▂▃▄▅▆▇ 柱状条展示音频音量可视化。",
+    "Profile names cannot collide with existing PATH binaries — 'hermes profile create ls' would be rejected.": "配置文件名不能与系统 PATH 中的已有可执行文件冲突——例如 'hermes profile create ls' 将被拒绝。",
+    "hermes profile create backup --clone-all copies everything (config, keys, SOUL.md, memories, skills, sessions).": "hermes profile create backup --clone-all 会完整克隆所有数据（配置、密钥、SOUL.md、记忆、技能与会话）。",
+    "The voice record key is configurable via voice.record_key in config.yaml — not just Ctrl+B.": "语音录音快捷键可通过 config.yaml 中的 voice.record_key 进行配置——不仅限于 Ctrl+B。",
+    ".cursorrules and .cursor/rules/*.mdc files are auto-detected and loaded as project context.": ".cursorrules 与 .cursor/rules/*.mdc 文件会被自动检测并作为项目上下文加载。",
+    "Context files support 10+ prompt injection patterns — invisible Unicode, 'ignore instructions', exfil attempts.": "上下文文件安全防护支持识别 10 余种提示词注入模式——不可见 Unicode、'ignore instructions'、数据外泄尝试等。",
+    "GPT-5 and Codex use 'developer' role instead of 'system' in the message format.": "GPT-5 和 Codex 在消息格式中使用 'developer' 角色来替代 'system'。",
+    "Per-task auxiliary overrides: auxiliary.vision.provider, auxiliary.compression.model, etc. in config.yaml.": "按任务粒度的辅助模型覆盖：可在 config.yaml 中配置 auxiliary.vision.provider、auxiliary.compression.model 等。",
+    "The auxiliary client treats 'main' as a provider alias — resolves to your actual primary provider + model.": "辅助客户端将 'main' 视为提供商别名——会自动解析为你实际的主提供商与模型。",
+    "hermes claw migrate --dry-run previews OpenClaw migration without writing anything.": "hermes claw migrate --dry-run 预览 OpenClaw 迁移效果，且不会写入任何内容。",
+    "File paths pasted with quotes or escaped spaces are handled automatically — no manual cleanup needed.": "粘贴带引号或含转义空格的文件路径时会自动清洗规范化——无需手动处理。",
+    "Slash commands never trigger the large-paste collapse — /command with big arguments works correctly.": "斜杠命令绝不会触发大段粘贴折叠机制——带超长参数的 /command 可以正常执行。",
+    "In interrupt mode, slash commands typed during agent execution bypass interrupt logic and run immediately.": "在中断模式下，智能体执行期间输入的斜杠命令会绕过中断逻辑并立即运行。",
+    "HERMES_DEV=1 bypasses container mode detection for local development.": "设置 HERMES_DEV=1 可绕过容器模式检测，以便进行本地开发调试。",
+    "Each MCP server gets its own toolset (mcp-servername) that can be toggled independently via hermes tools.": "每个 MCP 服务端都拥有独立的工具集（mcp-servername），可通过 hermes tools 分别独立开关。",
+    "MCP ${ENV_VAR} placeholders in config are resolved at server spawn — including vars from ~/.hermes/.env.": "配置中 MCP 的 ${ENV_VAR} 占位符会在服务端衍生启动时解析——包括来自 ~/.hermes/.env 的变量。",
+    "Skills from trusted repos (NousResearch) get a 'trusted' security level; community skills get extra scanning.": "来自可信仓库（NousResearch）的技能会被赋予 'trusted' 安全等级；社区技能则会接受额外的安全扫描。",
+    "The skills quarantine at ~/.hermes/skills/.hub/quarantine/ holds skills pending security review.": "位于 ~/.hermes/skills/.hub/quarantine/ 的技能隔离区用于存放待安全审查的技能。",
+    "/steer <prompt> injects a note after the next tool call — nudge direction mid-task without interrupting.": "/steer <prompt> 在下一次工具调用后注入提示指导——无需中断即可在任务中途微调方向。",
+    "/goal <text> sets a standing Ralph-loop objective — Hermes auto-continues turn after turn until a judge says done.": "/goal <text> 设定持续的 Ralph-loop 循环目标——Hermes 将一轮接一轮自动推进，直至评判机制判定完成。",
+    "/snapshot create [label] saves a full state snapshot of Hermes config; /snapshot restore <id> reverts later.": "/snapshot create [label] 保存 Hermes 配置的完整状态快照；之后可通过 /snapshot restore <id> 恢复还原。",
+    "/copy [N] copies the last assistant response to your clipboard, or the Nth-from-last with a number.": "/copy [N] 将助手的最后一条回复复制到剪贴板，若带数字 N 则复制倒数第 N 条回复。",
+    "/redraw forces a full UI repaint, fixing terminal drift after tmux resize or mouse selection artifacts.": "/redraw 强制完整重绘 UI，修复 tmux 调整窗口大小或鼠标划选引起的终端文字漂移花屏。",
+    "/agents (alias /tasks) shows active agents and running background tasks across the current session.": "/agents（别名 /tasks）显示当前会话中处于活跃状态的智能体以及正在运行的后台任务。",
+    "/footer toggles the gateway footer on final replies showing model, context %, and cwd.": "/footer 切换最终回复底部的网关页脚显示，展示模型、上下文占用百分比（%）以及当前工作目录（cwd）。",
+    "/busy queue|steer|interrupt controls what pressing Enter does while Hermes is working.": "/busy queue|steer|interrupt 控制在 Hermes 工作期间按下回车键的行为模式。",
+    "/topic in Telegram DMs enables user-managed multi-session topic mode — /topic <id> restores past sessions inline.": "Telegram 私聊中的 /topic 可开启用户自主管理的多会话话题模式——/topic <id> 可内联恢复历史会话。",
+    "/approve session|always runs a pending dangerous command with your chosen trust scope; /deny rejects it.": "/approve session|always 以你指定的信任范围运行待审批的高危命令；/deny 则拒绝执行。",
+    "/restart gracefully restarts the gateway after draining active runs, then pings the requester when back up.": "/restart 在排空并等待活跃运行任务结束后优雅重启网关，恢复就绪后会向发起者发送提示通知。",
+    "/kanban boards switch <slug> changes the active multi-project Kanban board from inside chat.": "/kanban boards switch <slug> 可在聊天内部切换当前激活的多项目看板。",
+    "/reload reloads ~/.hermes/.env into the running session — pick up new API keys without restarting.": "/reload 将 ~/.hermes/.env 重新加载到当前运行的会话中——无需重启即可热读取新的 API Key。",
+    "cronjob with no_agent=True runs a script on schedule and sends its stdout directly — zero tokens, zero LLM.": "设置 no_agent=True 的定时任务按计划调度执行脚本并直接发送其标准输出——零 Token 消耗、零 LLM 参与。",
+    "An empty cron script stdout means silent tick — nothing is delivered, perfect for threshold watchdogs.": "定时任务脚本的标准输出为空代表静默轮询——不会投递任何内容，非常适合阈值看门狗监控。",
+    "HERMES_CRON_MAX_PARALLEL (default 4) caps how many cron jobs run per tick so bursts don't saturate your keys.": "HERMES_CRON_MAX_PARALLEL（默认 4）限制每个 Tick 并行执行的定时任务上限，防止并发洪峰耗尽你的密钥额度。",
+    "Gateway hooks live under ~/.hermes/hooks/<name>/ with HOOK.yaml + handler.py — handler must be named `handle`.": "网关钩子位于 ~/.hermes/hooks/<name>/ 下，由 HOOK.yaml 和 handler.py 组成——处理函数必须命名为 handle。",
+    "Hook events include gateway:startup, session:start, agent:step, and command:* wildcard subscriptions.": "钩子事件支持包括 gateway:startup、session:start、agent:step 以及 command:* 通配符订阅。",
+    "Drop a ~/.hermes/BOOT.md checklist and a gateway:startup hook runs it as a one-shot agent every boot.": "在 ~/.hermes/BOOT.md 中放置检查清单，gateway:startup 钩子将在每次开机启动时将其作为单次任务智能体运行。",
+    "hermes curator run --dry-run previews what the curator would archive or consolidate without mutating anything.": "hermes curator run --dry-run 预览 Curator 拟归档或整合的内容，且不会对实际数据做任何改动。",
+    "hermes curator pin <skill> hard-fences a skill against both auto-archival and the agent's skill_manage tool.": "hermes curator pin <skill> 锁定保护指定技能，防止被自动归档以及被智能体的 skill_manage 工具修改。",
+    "hermes curator rollback restores skills from a pre-run snapshot — backups live under skills/.curator_backups/.": "hermes curator rollback 从运行前快照恢复技能——备份存放在 skills/.curator_backups/ 目录下。",
+    "hermes auth reset <provider> [target] clears cooldowns and exhaustion flags on a whole credential pool, or on one credential by index, id, or label.": "hermes auth reset <provider> [target] 清除整个凭据池或按索引、ID、标签指定的单个凭据的冷却与耗尽标记。",
+    "credential_pool_strategies.<provider>: round_robin cycles keys evenly instead of the fill_first default.": "配置 credential_pool_strategies.<provider>: round_robin 可均匀轮换密钥，替代默认的 fill_first 优先耗尽策略。",
+    "use_gateway: true per-tool routes web, image, tts, or browser through your Nous subscription — no extra keys.": "单工具维度的 use_gateway: true 可将网络搜索、图像、TTS 或浏览器流量路由至 Nous 订阅——无需额外配置密钥。",
+    "provider_routing.data_collection: deny excludes data-storing providers on OpenRouter.": "provider_routing.data_collection: deny 会在 OpenRouter 上排除会存储用户数据的模型提供商。",
+    "provider_routing.require_parameters: true only routes to providers that support every param in your request.": "provider_routing.require_parameters: true 仅路由至完全支持你请求中所有参数的提供商。",
+    "HERMES_TUI_RESUME=1 auto-re-attaches to the most recent TUI session on launch — handy after SSH drops.": "HERMES_TUI_RESUME=1 启动时自动重新挂载到最近的 TUI 会话——在 SSH 意外掉线后极为方便。",
+    "HERMES_TUI_THEME=light|dark|<hex> forces the TUI theme on terminals that don't set COLORFGBG.": "HERMES_TUI_THEME=light|dark|<hex> 可在未设置 COLORFGBG 的终端中强制指定 TUI 主题。",
+    "Ctrl+G or Ctrl+X Ctrl+E in the TUI opens the input buffer in $EDITOR for long multi-line prompts.": "在 TUI 中按下 Ctrl+G 或 Ctrl+X Ctrl+E 可在 $EDITOR 中打开输入缓冲区，用于编辑长篇多行提示词。",
+    "The TUI renders LaTeX inline — $E=mc^2$ becomes Unicode math instead of raw TeX.": "TUI 支持内联渲染 LaTeX——如 $E=mc^2$ 会渲染为漂亮的 Unicode 数学符号而非原始 TeX 代码。",
+    "hermes dashboard launches a local web UI at 127.0.0.1:9119 — zero data leaves localhost.": "hermes dashboard 在 127.0.0.1:9119 启动本地 Web 控制台——所有数据完全保留在本地，绝不上云。",
+    "hermes dashboard embeds the full Hermes TUI in your browser via xterm.js and a WebSocket PTY.": "hermes dashboard 通过 xterm.js 和 WebSocket PTY 将完整的 Hermes TUI 无缝嵌入浏览器中。",
+    "Drop a YAML in ~/.hermes/dashboard-themes/ with two palette colors to reskin the entire dashboard.": "在 ~/.hermes/dashboard-themes/ 下放置一个指定两色调色板的 YAML 文件，即可为整个控制台更换新皮肤主题。",
+    "Dashboard plugins are drop-in: manifest.json + JS bundle in ~/.hermes/dashboard-plugins/ — no npm build required.": "控制台插件即插即用：只需在 ~/.hermes/dashboard-plugins/ 放入 manifest.json 和 JS 打包文件——无需 npm 构建。",
+    "layoutVariant: cockpit in a dashboard theme adds a 260px left rail that plugins can populate via the sidebar slot.": "控制台主题中的 layoutVariant: cockpit 会添加 260px 宽的左侧导航轨，插件可通过 sidebar 插槽进行内容扩展。",
+    "display.tool_progress_command: true exposes /verbose on messaging platforms; it's CLI-only by default.": "display.tool_progress_command: true 允许在即时通讯平台上使用 /verbose 命令；该命令默认仅限 CLI。",
+    "HERMES_BACKGROUND_NOTIFICATIONS=result only pings when background tasks finish (vs concise/all/error/off).": "HERMES_BACKGROUND_NOTIFICATIONS=result 仅在后台任务执行完成时发送提示（可选 concise/all/error/off）。",
+    "HERMES_WRITE_SAFE_ROOT restricts write_file/patch to directory prefixes; multiple paths via os.pathsep (: or ;).": "HERMES_WRITE_SAFE_ROOT 将 write_file/patch 限制在指定目录前缀内；多个路径可用 os.pathsep（: 或 ;）分隔。",
+    "HERMES_IGNORE_RULES skips auto-injection of AGENTS.md, SOUL.md, .cursorrules, memory, and preloaded skills.": "HERMES_IGNORE_RULES 会跳过 AGENTS.md、SOUL.md、.cursorrules、记忆以及预加载技能的自动注入。",
+    "HERMES_ACCEPT_HOOKS auto-approves unseen shell hooks declared in config.yaml without a TTY prompt.": "HERMES_ACCEPT_HOOKS 自动批准 config.yaml 中声明的未见过的 Shell 钩子，无需弹出 TTY 交互提示。",
+    "auxiliary.goal_judge.model routes the /goal judge to a cheap fast model to keep loop cost near zero.": "auxiliary.goal_judge.model 将 /goal 的结果评判路由到快速且廉价的模型，使循环执行成本接近于零。",
+    "Checkpoints skip directories with more than 50,000 files to avoid slow git operations on massive monorepos.": "检查点功能会自动跳过包含超过 50,000 个文件的目录，以避免在超大型单体代码仓库中执行缓慢的 Git 操作。",
+    "tts.provider: piper runs 44-language local TTS on CPU — voices auto-download to ~/.hermes/cache/piper-voices/.": "tts.provider: piper 可在 CPU 上运行支持 44 种语言的本地 TTS——语音包会自动下载至 ~/.hermes/cache/piper-voices/。",
+    "tts.providers.<name>.type: command wires any CLI TTS engine with {input_path} and {output_path} placeholders.": "tts.providers.<name>.type: command 可通过 {input_path} 和 {output_path} 占位符无缝接入任意 CLI 语音合成引擎。",
+    "API_SERVER_ENABLED=true runs an OpenAI-compatible endpoint alongside the gateway for Open WebUI and LibreChat.": "API_SERVER_ENABLED=true 可在网关旁同步运行兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat。",
+    "GATEWAY_PROXY_URL runs a split setup: platform I/O locally, agent work delegated to a remote API server.": "GATEWAY_PROXY_URL 支持分离式架构：本地处理平台消息收发 I/O，将智能体核心工作委派给远程 API 服务端。",
+    "MATRIX_DEVICE_ID pins a stable device ID for E2EE — without it, keys rotate every start and historic decrypt breaks.": "MATRIX_DEVICE_ID 为端到端加密（E2EE）固定稳定的设备 ID——若不配置，密钥每次启动都会轮换导致无法解密历史消息。",
+    "TELEGRAM_WEBHOOK_SECRET is required whenever TELEGRAM_WEBHOOK_URL is set — generate with openssl rand -hex 32.": "凡是设置了 TELEGRAM_WEBHOOK_URL 就必须提供 TELEGRAM_WEBHOOK_SECRET——可使用 openssl rand -hex 32 命令生成。",
+    "batch_runner.py --resume content-matches completed prompts by text so dataset reorders don't re-run finished work.": "batch_runner.py --resume 按文本内容精准比对已完成的提示词，因此数据集顺序调整不会重复运行已完成的任务。",
+    "/new starts a fresh session in place (alias /reset) — fresh session ID, clean history, CLI stays open.": "/new 原地开启全新会话（别名 /reset）——分配新会话 ID、清空历史，且 CLI 终端保持开启。",
+    "/clear wipes the terminal screen AND starts a new session — one shortcut for a visual reset.": "/clear 清空终端屏幕并同步开启新会话——一个快捷命令即可完成视觉与会话的双重重置。",
+    "/history prints the current conversation in-line without leaving the CLI — useful for a quick re-read.": "/history 在不离开 CLI 的情况下内联打印当前完整对话记录——非常便于快速复盘重读。",
+    "/save writes the current conversation to disk without ending the session.": "/save 将当前对话写入磁盘保存，且不会结束会话。",
+    "/status shows session info at a glance: ID, title, model, token usage, and elapsed time.": "/status 一目了然地展示会话信息：ID、标题、模型、Token 使用量以及已耗费时长。",
+    "/image <path> attaches a local image file for your next prompt without pasting or drag-and-drop.": "/image <path> 为你的下一条提示词附加本地图片文件，无需手动粘贴或拖拽。",
+    "/platforms shows gateway and messaging-platform connection status right from inside chat.": "/platforms 直接在聊天内部展示网关以及各个即时通讯平台的连接状态。",
+    "/commands paginates the full slash-command + installed-skill list — useful on platforms without tab completion.": "/commands 分页展示全部斜杠命令及已安装技能列表——在不支持 Tab 自动补全的平台上极为实用。",
+    "/toolsets lists every available toolset so you know what -t/--toolsets accepts.": "/toolsets 列出所有可用的工具集，方便你了解 -t/--toolsets 可接受的参数。",
+    "/voice tts toggles TTS-only mode — agent replies out loud but you still type your prompts.": "/voice tts 切换仅朗读模式——智能体大声朗读回复，而你依然通过打字输入提示词。",
+    "/reload-skills re-scans ~/.hermes/skills/ so drop-in skills appear without restarting the session.": "/reload-skills 重新扫描 ~/.hermes/skills/，使直接放入目录的新技能无需重启会话即可生效。",
+    "/indicator kaomoji|emoji|unicode|ascii picks the TUI busy-indicator style shown during agent runs.": "/indicator kaomoji|emoji|unicode|ascii 选择智能体运行期间 TUI 显示的忙碌指示器样式。",
+    "/debug uploads a support bundle (system info + logs) and returns shareable links — works in chat too.": "/debug 上传支持诊断包（系统信息 + 日志）并返回可分享的链接——在即时聊天中同样可用。",
+    "hermes -z \"<prompt>\" is the purest one-shot: final answer on stdout, nothing else — ideal for piping in scripts.": "hermes -z \"<prompt>\" 是最纯粹的单次执行：标准输出仅输出最终答案，绝无杂质——非常适合在脚本中通过管道传输。",
+    "hermes chat --pass-session-id injects the session ID into the system prompt so the agent can self-reference it.": "hermes chat --pass-session-id 将会话 ID 注入系统提示词中，使智能体能够自引用该 ID。",
+    "hermes chat --image path/to/pic.png attaches a local image to a single -q query without a separate upload step.": "hermes chat --image path/to/pic.png 为单次 -q 查询直接附加本地图片，无需单独的上传步骤。",
+    "hermes chat --ignore-user-config skips the active user config — reproducible bug reports and CI runs.": "hermes chat --ignore-user-config 跳过当前用户配置——用于可复现的 Bug 报告与 CI 持续集成运行。",
+    "hermes chat --source tool tags programmatic chats so they don't clutter hermes sessions list.": "hermes chat --source tool 为程序化发起的会话打上标签，避免污染扰乱 hermes sessions list。",
+    "hermes dump --show-keys includes redacted API key fingerprints for deeper support debugging.": "hermes dump --show-keys 包含脱敏后的 API Key 指纹，便于更深层次的排错与技术支持。",
+    "hermes sessions rename <ID> \"new title\" renames any past session; hermes sessions delete <ID> removes one.": "hermes sessions rename <ID> \"new title\" 可重命名任意历史会话；hermes sessions delete <ID> 则删除该会话。",
+    "hermes import restores a full Hermes backup zip; session JSON/JSONL exports import from the dashboard Sessions page.": "hermes import 可完整恢复 Hermes 备份 zip 压缩包；导出的 JSON/JSONL 格式会话可在控制台的 Sessions 页面中导入。",
+    "hermes fallback manages the fallback_model chain interactively — no hand-editing config.yaml.": "hermes fallback 支持交互式管理 fallback_model 备用模型链——无需手动编辑 config.yaml。",
+    "hermes pairing rotates the DM pairing token — the first messager after rotation claims access to the bot.": "hermes pairing 轮换私聊配对令牌——轮换后首个发送消息的用户将获得该 Bot 的访问权限。",
+    "hermes setup walks first-time users through provider, keys, and platform wiring in one interactive flow.": "hermes setup 以交互式向导带领新用户一步步完成提供商配置、密钥录入以及平台连通。",
+    "hermes status --deep runs the full health sweep across every component; plain hermes status is the quick view.": "hermes status --deep 对所有组件执行全面的健康体检扫描；纯 hermes status 则是快速概览视图。",
+    "HERMES_AGENT_TIMEOUT=0 disables the gateway inactivity kill for a running agent — use for long research runs.": "HERMES_AGENT_TIMEOUT=0 禁用网关因不活跃而终止运行中智能体的机制——适用于耗时较长的深度研究任务。",
+    "HERMES_ENABLE_PROJECT_PLUGINS=1 auto-loads repo-local plugins from ./.hermes/plugins/ — trust-gated by design.": "HERMES_ENABLE_PROJECT_PLUGINS=1 自动加载来自 ./.hermes/plugins/ 的项目本地插件——设计上具备信任安全门禁。",
+    "HERMES_DISABLE_FILE_STATE_GUARD=1 turns off the 'file changed since you read it' guard on patch and write_file.": "HERMES_DISABLE_FILE_STATE_GUARD=1 关闭 patch 和 write_file 针对“文件在读取后已被外部修改”的状态防冲突保护。",
+    "HERMES_ALLOW_PRIVATE_URLS=true lets web tools hit localhost and private networks — off by default in gateway mode.": "HERMES_ALLOW_PRIVATE_URLS=true 允许网络工具访问 localhost 及私有内网——在网关模式下默认禁用。",
+    "HERMES_OPTIONAL_SKILLS=name1,name2 auto-installs extra optional-catalog skills on first run per profile.": "HERMES_OPTIONAL_SKILLS=name1,name2 会在每个配置文件首次运行时自动安装额外的可选目录技能。",
+    "HERMES_BUNDLED_SKILLS points at a custom bundled-skill tree — used by Homebrew and Nix packaging.": "HERMES_BUNDLED_SKILLS 指向自定义的捆绑技能目录树——常用于 Homebrew 与 Nix 打包分发。",
+    "HERMES_DUMP_REQUEST_STDOUT=1 dumps every API request payload to stdout instead of log files.": "HERMES_DUMP_REQUEST_STDOUT=1 将每次 API 请求的完整负载直接打印到标准输出，而非写入日志文件。",
+    "HERMES_OAUTH_TRACE=1 logs redacted OAuth token exchange and refresh attempts for debugging provider auth.": "HERMES_OAUTH_TRACE=1 记录脱敏后的 OAuth 令牌交换与刷新尝试日志，便于排查提供商授权问题。",
+    "HERMES_STREAM_RETRIES (default 3) controls mid-stream reconnect attempts on transient network errors.": "HERMES_STREAM_RETRIES（默认 3）控制在遭遇偶发网络故障时流式传输中断的重连尝试次数。",
+    "HERMES_GATEWAY_BUSY_ACK_ENABLED=false silences the ⚡/⏳/⏩ ack messages when a user messages a busy agent.": "HERMES_GATEWAY_BUSY_ACK_ENABLED=false 会在用户向忙碌中的智能体发送消息时静默屏蔽 ⚡/⏳/⏩ 确认提示消息。",
+    "HERMES_AGENT_NOTIFY_INTERVAL (default 180s) sets how often the gateway pings with progress on long turns.": "HERMES_AGENT_NOTIFY_INTERVAL（默认 180s）设置在长耗时轮次中网关同步进度的通知时间间隔。",
+    "HERMES_RESTART_DRAIN_TIMEOUT (default 900s) caps how long /restart waits for in-flight runs before forcing.": "HERMES_RESTART_DRAIN_TIMEOUT（默认 900s）限制 /restart 在强制终止前等待正在进行的任务排空的最大时长。",
+    "HERMES_CHECKPOINT_TIMEOUT (default 30s) caps filesystem checkpoint creation — raise it on huge monorepos.": "HERMES_CHECKPOINT_TIMEOUT（默认 30s）限制文件系统检查点创建的最长时间——在超大单体仓库中可适当调大。",
+    "image_gen.model in config.yaml picks the FAL model: flux-2/klein, gpt-image-2, nano-banana-pro, and more.": "config.yaml 中的 image_gen.model 用于选择 FAL 模型：如 flux-2/klein、gpt-image-2、nano-banana-pro 等。",
+    "image_gen.provider routes image generation through a plugin (OpenAI Images, Codex, FAL) instead of the default.": "image_gen.provider 可通过插件（OpenAI Images、Codex、FAL）路由图像生成任务，以替代默认服务。",
+    "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY point vision analysis at any OpenAI-compatible endpoint.": "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY 将视觉分析请求指向任意兼容 OpenAI 的接口端点。",
+    "security.tirith_fail_open: false makes Hermes block commands when the tirith scanner itself errors out.": "security.tirith_fail_open: false 会在 tirith 扫描器本身发生异常报错时让 Hermes 拦截阻止命令执行。",
+    "TIRITH_FAIL_OPEN env var overrides the tirith_fail_open config — a quick toggle without editing config.yaml.": "环境变量 TIRITH_FAIL_OPEN 可覆盖 tirith_fail_open 配置——无需编辑 config.yaml 即可快速切换开关。",
+    "--source tool chats are excluded from hermes sessions list by default — set --source explicitly to see them.": "带有 --source tool 的会话默认在 hermes sessions list 中被隐藏——显式指定 --source 参数方可查看它们。",
+    "Session IDs are timestamp-prefixed (20250305_091523_abcd) so sorting works naturally in ls and jq.": "会话 ID 带有时间戳前缀（如 20250305_091523_abcd），便于在 ls 和 jq 中自然按时间先后排序。",
+    "API_SERVER_MODEL_NAME customizes the model name on /v1/models — essential for multi-profile Open WebUI setups.": "API_SERVER_MODEL_NAME 可自定义 /v1/models 返回的模型名称——对于多配置文件 Open WebUI 环境至关重要。",
+    "Dashboard plugins are served from /dashboard-plugins/<name>/ — drop files into ~/.hermes/dashboard-plugins/.": "控制台插件通过 /dashboard-plugins/<name>/ 对外服务——只需将文件放入 ~/.hermes/dashboard-plugins/ 目录即可。"
+  },
+  "tips": [
+    "/bg <prompt> 在独立会话中运行任务，同时保持当前会话空闲；/btw <question> 则可在不中断当前对话的前提下回答附带问题。",
+    "/branch 分叉当前会话，便于你在不丢失现有进度的情况下探索不同方向。",
+    "/compress 在对话内容过长时手动压缩对话上下文。",
+    "/rollback 列出文件系统检查点——可将智能体修改过的文件恢复到任意历史状态。",
+    "/rollback diff 2 预览自检查点 2 以来的所有变动，且不会恢复任何内容。",
+    "/rollback 2 src/file.py 从指定检查点仅恢复单个文件。",
+    "/title \"my project\" 为当前会话命名——之后可通过 /resume 或 hermes -c 恢复该会话。",
+    "/resume 继续之前已命名的会话，从上次离开的地方接着进行。",
+    "/queue <prompt> 将消息加入下一轮排队队列，不会中断当前轮次。",
+    "/undo 从对话中移除上一轮用户与助手的问答交互。",
+    "/retry 重新发送你上一条消息——当智能体的回复不甚理想时非常有用。",
+    "/verbose 循环切换工具执行进度显示：off → new → all → verbose。",
+    "/reasoning high 可提高模型的思考深度。/reasoning show 则显示具体推理过程。",
+    "/fast 切换优先处理模式以获得更快的 API 响应速度（取决于提供商）。",
+    "/yolo 在当前会话后续操作中跳过所有高危命令的确认提示。",
+    "/model 支持会话中途切换模型——例如尝试 /model sonnet 或 /model gpt-5。",
+    "/model --global 永久修改你的默认模型。",
+    "/personality pirate 可设置趣味人设——内置 14 种人设选项，涵盖 kawaii 到 shakespeare。",
+    "/skin 切换 CLI 主题——可尝试 ares、mono、slate、poseidon 或 charizard。",
+    "/statusbar 切换常驻状态栏，显示模型、Token、上下文填充比例（%）、费用和运行耗时。",
+    "/tools disable browser 会在当前会话中临时禁用浏览器工具。",
+    "/browser connect 通过 CDP 将浏览器工具连接至正在运行的 Chromium 家族浏览器。",
+    "/plugins 列出已安装的插件及其运行状态。",
+    "/cron 管理定时任务——设置周期性执行的提示词，并推送到任意目标平台。",
+    "/reload-mcp 无需重启即可热重载 MCP 服务端配置。",
+    "/usage 查看 Token 使用量、费用明细以及会话耗时。",
+    "/insights 展示最近 30 天的使用分析统计数据。",
+    "/paste 检查剪贴板中的图片并附加到下一条消息中。",
+    "/profile 显示当前处于激活状态的配置文件及其用户主目录。",
+    "/config 一目了然地查看你当前的完整配置。",
+    "/stop 终止由智能体衍生出的所有正在运行的后台进程。",
+    "@file:path/to/file.py 将文件内容直接注入到你的消息中。",
+    "@file:main.py:10-50 仅注入文件的第 10 至 50 行。",
+    "@folder:src/ 注入目录树结构列表。",
+    "@diff 将尚未暂存的 Git 改动注入消息中。",
+    "@staged 将已暂存的 Git 改动（git diff --staged）注入消息中。",
+    "@git:5 注入最近 5 次提交记录及完整补丁。",
+    "@url:https://example.com 抓取网页内容并注入消息中。",
+    "输入 @ 会触发文件系统路径补全——支持交互式定位导航到任意文件。",
+    "可组合多个引用：\"Review @file:main.py and @file:test.py for consistency.\"",
+    "Alt+Enter 插入换行符以进行多行输入。（Windows Terminal 会拦截 Alt+Enter，此时请改用 Ctrl+Enter。）",
+    "Ctrl+C 可中断智能体运行。2 秒内连按两次将强制退出。",
+    "Ctrl+Z 将 Hermes 挂起至后台——在 Shell 中执行 fg 命令即可恢复。",
+    "Tab 键可采纳自动建议的幽灵文本，或自动补全斜杠命令。",
+    "在智能体工作期间直接输入新消息，可立即中断并重定向它的行为。",
+    "Alt+V 将剪贴板中的图片直接粘贴至对话中。",
+    "粘贴 5 行及以上内容时会自动保存为文件，并替换为精简的引用标记。",
+    "hermes -c 恢复你最近一次的 CLI 会话。hermes -c \"project name\" 则按标题恢复指定会话。",
+    "hermes -w 创建一个独立的 Git Worktree——非常适合并行的智能体工作流。",
+    "hermes -w -q \"Fix issue #42\" 将 Worktree 隔离与单次查询相结合。",
+    "hermes chat -t web,terminal 仅启用特定的工具集，以打造专注的会话。",
+    "hermes chat -s github-pr-workflow 启动时预加载指定技能。",
+    "hermes chat -q \"query\" 运行单次非交互式查询并退出。",
+    "hermes chat --max-turns 1000 覆盖每轮交互默认的 500 次迭代上限。",
+    "hermes chat --checkpoints 在每次发生破坏性文件修改前启用文件系统快照。",
+    "hermes --yolo 在整个会话中绕过所有高危命令的确认提示。",
+    "hermes chat --source telegram 为会话打上标签，以便在 hermes sessions list 中进行筛选。",
+    "hermes -p work chat 在指定配置文件下运行，且不会更改你的默认配置。",
+    "hermes doctor --fix 诊断并自动修复配置与依赖项问题。",
+    "hermes dump 输出紧凑的环境配置摘要——非常适合用于提交 Bug 报告。",
+    "hermes config set KEY VALUE 自动将机密信息路由保存至 .env，其余内容写入 config.yaml。",
+    "hermes config edit 在你的默认编辑器中打开 config.yaml。",
+    "hermes config check 扫描缺失或陈旧过期的配置选项。",
+    "hermes sessions browse 打开带有搜索功能的交互式会话选择器。",
+    "hermes sessions stats 按平台展示会话总数以及数据库文件大小。",
+    "hermes sessions prune --older-than 30 清理陈旧的历史会话。",
+    "hermes skills search react --source skills-sh 在 skills.sh 公共目录中搜索技能。",
+    "hermes skills check 扫描已安装的 Hub 技能是否存在上游更新。",
+    "hermes skills tap add myorg/skills-repo 添加自定义的 GitHub 技能源。",
+    "hermes skills snapshot export setup.json 导出你的技能配置快照，用于备份或共享。",
+    "hermes mcp add github --command npx 从命令行添加 MCP 服务端。",
+    "hermes mcp serve 将 Hermes 本身作为 MCP 服务端运行，供其他智能体调用。",
+    "hermes auth add 支持添加多个 API Key，用于凭据池轮换。",
+    "hermes completion bash >> ~/.bashrc 为所有命令和配置文件开启 Tab 自动补全。",
+    "hermes logs -f 实时跟踪 agent.log。可搭配 --level WARNING --since 1h 筛选输出。",
+    "hermes backup 为你的整个 Hermes 主目录创建 zip 格式备份压缩包。",
+    "hermes profile create coder 创建独立的配置文件，且会生成对应的专属独立命令。",
+    "hermes profile create work --clone 将你当前的配置与密钥完整克隆到新配置文件中。",
+    "hermes update 自动将新捆绑的内置技能同步到所有配置文件。",
+    "hermes gateway install 将 Hermes 配置为系统服务（systemd/launchd）。",
+    "hermes memory setup 支持配置外部记忆提供商（如 Honcho、Mem0 等）。",
+    "hermes webhook subscribe 创建带有 HMAC 验证的事件驱动型 Webhook 路由。",
+    "节省成本：使用 hermes tools 禁用未使用的工具，使用 hermes skills config 精简技能。",
+    "/reasoning low 或 /reasoning minimal 将思考深度降至默认（medium）以下——响应更快且成本更低。",
+    "hermes models 将视觉、上下文压缩和辅助任务路由至更经济的模型——在不降低主对话模型规格的前提下，削减 85% 以上的后台 Token 成本。",
+    "在 config.yaml 中设置 display.bell_on_complete: true，以便在耗时任务完成时响起提示音。",
+    "设置 display.streaming: true，即可在模型生成内容时实时看到逐字流式输出的 Token。",
+    "设置 display.show_reasoning: true，可实时查看模型的思维链推理过程。",
+    "设置 display.compact: true，可减少输出中的空白行与留白，提升信息显示密度。",
+    "设置 display.busy_input_mode: queue 可让新消息排队而不是中断智能体，或设为 steer 以通过 /steer 在运行途中注入指导。",
+    "设置 display.resume_display: minimal，可在恢复会话时跳过完整对话内容回顾。",
+    "设置 compression.threshold: 0.50 可控制何时触发自动压缩（默认：上下文的 50%）。",
+    "设置 agent.max_turns: 1000，可允许智能体在单轮交互中执行更多的工具调用步数。",
+    "设置 file_read_max_chars: 200000，可增加每次 read_file 调用所能读取的最大字符数。",
+    "设置 approvals.mode: smart，可让 LLM 自动批准安全命令并自动拦截高危命令。",
+    "在 config.yaml 中设置 fallback_model，可在主提供商故障时自动故障转移至备用提供商。",
+    "设置 privacy.redact_pii: true 可在将数据发送给 LLM 之前，对用户 ID 和手机号进行哈希脱敏。",
+    "设置 browser.record_sessions: true 可将浏览器操作会话自动录制为 WebM 视频。",
+    "在 config.yaml 中设置 worktree: true 可始终创建 Git Worktree（效果同 hermes -w）。",
+    "设置 security.website_blocklist.enabled: true 可禁止网络工具访问特定的域名。",
+    "设置 cron.wrap_response: false 可直接推送原始智能体输出，不附加定时任务的页眉/页脚。",
+    "HERMES_TIMEZONE 可使用任意 IANA 时区字符串覆盖服务器默认时区。",
+    "config.yaml 支持环境变量替换：使用 ${VAR_NAME} 语法即可。",
+    "config.yaml 中的快捷命令（Quick commands）可即时执行 Shell 命令，且不消耗任何 Token。",
+    "可在 config.yaml 的 agent.personalities 下定义自定义人设。",
+    "provider_routing 用于控制 OpenRouter 提供商的排序、白名单以及黑名单。",
+    "execute_code 可运行以编程方式调用 Hermes 工具的 Python 脚本——执行结果不会占用上下文。",
+    "delegate_task 默认最多衍生出 10 个并发子智能体（受 delegation.max_concurrent_children 控制），并具备独立上下文以进行并行作业。",
+    "web_extract 支持 PDF 链接——传入任意 PDF URL 即可自动转换为 Markdown。",
+    "search_files 基于 ripgrep 构建且速度显著优于 grep——建议优先使用它来替代终端 grep。",
+    "patch 采用 9 种模糊匹配策略，微小的空白符差异不会导致修改失败。",
+    "patch 支持 V4A 格式，可在单次调用中批量修改多个文件。",
+    "未找到目标文件时，read_file 会智能推荐相似的文件名。",
+    "read_file 具备自动去重机制——重新读取未变动的文件仅返回轻量存根。",
+    "browser_vision 支持网页截屏并通过 AI 进行视觉分析——适用于验证码识别与视觉内容理解。",
+    "browser_console 可以在当前页面上下文中直接执行并求值 JavaScript 表达式。",
+    "image_generate 基于 FLUX 2 Pro 生成图像，并支持自动 2 倍无损放大。",
+    "text_to_speech 将文本转换为语音音频——在 Telegram 上可直接以语音气泡播放。",
+    "send_message 可在会话内部向任意已连接的即时通讯平台发送消息。",
+    "todo 工具可帮助智能体在会话期间跟踪管理复杂的多步骤任务。",
+    "session_search 支持在所有历史对话中进行全文检索。",
+    "智能体会自动将用户偏好、纠错反馈以及环境事实持久化保存至记忆库中。",
+    "/moa 将高难度提示词路由至已配置的混合智能体（Mixture of Agents）模型组进行协同处理。",
+    "终端命令支持后台运行模式，并提供 notify_on_complete 用于耗时任务完成时的通知。",
+    "终端后台进程支持 watch_patterns，可在匹配到特定输出行时发出告警。",
+    "terminal 工具支持 6 种执行后端：local、Docker、SSH、Modal、Daytona 以及 Singularity。",
+    "每个配置文件都拥有独立的配置、API Key、记忆、会话、技能以及定时任务。",
+    "配置文件名会映射为独立的 Shell 命令——例如 'hermes profile create coder' 会生成 'coder' 命令。",
+    "hermes profile export coder -o backup.tar.gz 可生成便携式的配置文件归档压缩包。",
+    "如果两个配置文件意外共享了同一个 Bot Token，第二个网关将被拦截并抛出明确错误提示。",
+    "会话在首轮交互后会自动生成描述性标题——无需手动命名。",
+    "会话标题支持血统继承演化：如 \"my project\" → \"my project #2\" → \"my project #3\"。",
+    "退出时，Hermes 会打印附带会话 ID 与统计信息的恢复命令。",
+    "hermes sessions export backup.jsonl 可导出全部会话，用于数据备份或离线分析。",
+    "hermes -r SESSION_ID 可通过会话 ID 精确恢复任意指定的历史会话。",
+    "记忆采用冻结快照机制——所做修改仅在下一次新会话启动时才会注入系统提示词。",
+    "记忆条目会自动经过安全扫描，以检测防范提示词注入与数据外泄模式。",
+    "智能体拥有两类记忆存储：个人笔记（约 2200 字符）与用户画像（约 1375 字符）。",
+    "你对智能体提出的纠错指导（如“不对，按这种方式做”）通常会自动持久化到记忆中。",
+    "内置超过 80 种捆绑技能，涵盖 github、creative、mlops、productivity、research 等诸多领域。",
+    "每个已安装的技能都会自动注册为斜杠命令——输入 / 即可查看完整列表。",
+    "hermes skills install official/security/1password 可从官方仓库安装可选技能。",
+    "技能可限制运行在特定操作系统平台——部分技能仅在 macOS 或 Linux 上加载。",
+    "config.yaml 中的 skills.external_dirs 允许你从自定义目录加载外部技能。",
+    "智能体可通过 skill_manage 自主创建技能，将其作为程序性记忆。",
+    "/plan 将 Markdown 格式的实施计划写入 .hermes/plans/，且不会执行任何操作。",
+    "定时任务可以附加技能：hermes cron add --skill blogwatcher \"Check for new posts\"。",
+    "定时任务投递目标涵盖 Telegram、Discord、Slack、邮件、短信以及 12 种以上的其他平台。",
+    "如果定时任务的响应以 [SILENT] 开头，则会抑制投递——这对于纯监控类任务非常有用。",
+    "定时任务支持相对延迟（30m）、周期性间隔（every 2h）、Cron 表达式以及 ISO 时间戳。",
+    "定时任务均在完全崭新的智能体会话中运行——提示词必须自包含完整上下文。",
+    "若安装了 faster-whisper（免费本地语音转文本），无需任何 API Key 即可使用语音模式。",
+    "支持 5 种 TTS 语音合成提供商：Edge TTS（免费）、ElevenLabs、OpenAI、NeuTTS（免费本地）和 MiniMax。",
+    "/voice on 可在 CLI 中开启语音模式。Ctrl+B 切换按键通话录音。",
+    "流式 TTS 随句子生成即时播放——无需等待完整回复全部输出。",
+    "Telegram、Discord、WhatsApp 和 Slack 上的语音留言会自动转录为文本。",
+    "Hermes 支持 21 个即时通讯平台：Telegram、Discord、Slack、WhatsApp、Signal、Matrix、IRC、Microsoft Teams、邮件等。",
+    "hermes gateway install 将其配置为开机自启的系统服务。",
+    "钉钉（DingTalk）采用 Stream 模式——无需配置 Webhook 或公网 URL。",
+    "BlueBubbles 通过本地 macOS 服务端将 iMessage 接入 Hermes。",
+    "Webhook 路由支持 HMAC 签名校验、速率限制以及事件过滤。",
+    "API 服务端对外提供兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat 等客户端。",
+    "Discord 语音频道模式：Bot 加入语音房间（VC），实时转录语音并进行对话交互。",
+    "group_sessions_per_user: true 允许群聊中的每位成员拥有各自独立的专属会话。",
+    "/sethome 将当前聊天标记为主频道，用于接收定时任务的推送投递。",
+    "网关支持基于不活跃状态的超时机制——持续活跃的智能体可以无限期运行。",
+    "高危命令审批包含 4 个级别：once（单次）、session（本次会话）、always（永久白名单）和 deny（拒绝）。",
+    "智能审批模式利用 LLM 自动放行安全命令，并对高危命令标记拦截。",
+    "SSRF 防护机制会自动拦截私有局域网、回环、链路本地以及云厂商元数据地址。",
+    "Tirith 预执行扫描可检测同形异义 URL 欺骗以及管道直接传递至解释器的危险代码模式。",
+    "MCP 子进程接收过滤后的环境变量——仅允许安全系统变量透传。",
+    "上下文文件（.hermes.md、AGENTS.md）在加载前均会经过安全扫描，以防范提示词注入风险。",
+    "config.yaml 中的 command_allowlist 可永久放行特定的 Shell 命令模式。",
+    "当上下文达到阈值时会自动触发压缩——记忆被持久化刷入存储，历史记录被浓缩摘要。",
+    "随着上下文逐渐填满，状态栏颜色会依次由黄变橙再变红。",
+    "SOUL.md 是智能体的核心人设身份文件——修改它可以深度塑造其行为举止。",
+    "Hermes 会按优先级从 .hermes.md、AGENTS.md、CLAUDE.md 或 .cursorrules 中加载项目上下文（命中首个即生效）。",
+    "当智能体逐级进入子文件夹时，会按需渐进式发现并加载子目录中的 AGENTS.md 文件。",
+    "上下文文件上限为 20,000 字符，并采用智能首尾保留截断策略。",
+    "支持 5 种浏览器提供商：本地 Chromium、Browserbase、Browser Use、Camofox 和 Firecrawl。",
+    "Camofox 是一款反指纹检测浏览器——基于 Firefox 定制开发并具备底层 C++ 指纹伪装能力。",
+    "browser_navigate 会自动返回网页快照——无需在导航后重复调用 browser_snapshot。",
+    "调用 browser_vision 并传入 annotate=true，可在所有可交互元素上叠加带编号的标签。",
+    "hermes mcp 会打开 Nous 认证 MCP 的交互式选择器，一键即可完成安装。",
+    "hermes mcp catalog 列出仓库随附的 Nous 认证 MCP 服务端列表。",
+    "hermes mcp install <name> 安装目录中的条目，引导输入凭据，并允许你自选启用其包含的哪些工具。",
+    "MCP 服务端在 config.yaml 中配置——同时支持 stdio 与 HTTP 两种传输协议。",
+    "单服务端粒度的工具过滤：tools.include 设置白名单，tools.exclude 设置黑名单。",
+    "MCP 服务端在运行时自动生成工具集——通过 hermes tools 可按平台分别开关启用。",
+    "MCP OAuth 认证支持：配置 auth: oauth 可开启基于 PKCE 的浏览器授权流。",
+    "当未发生文件修改时，检查点机制开销为零——该功能默认已启用。",
+    "回滚前会自动保存一份快照，以便你撤销“回滚”这一操作。",
+    "/rollback 还会同步撤销对应的对话轮次，因此智能体不会保留已回滚改动的记忆。",
+    "检查点使用 ~/.hermes/checkpoints/ 下的影子仓库——绝不会触碰你项目本身的 .git。",
+    "batch_runner.py 支持并行处理数百条提示词，用于训练数据生成。",
+    "hermes chat -Q 为程序化调用开启静默模式——隐藏横幅 Banner 与加载等待动画。",
+    "保存轨迹功能（--save-trajectories）可捕获完整的工具使用轨迹，用于模型训练。",
+    "三种插件类型：常规插件（工具/钩子）、记忆提供商以及上下文引擎。",
+    "hermes plugins install owner/repo 可直接从 GitHub 安装插件。",
+    "支持 8 种外部记忆提供商：Honcho、OpenViking、Mem0、Hindsight 等。",
+    "插件钩子包括 pre/post_tool_call、pre/post_llm_call 以及用于规范化输出的 transform_terminal_output。",
+    "提示词缓存（Anthropic）通过复用已缓存的系统提示词前缀来降低成本。",
+    "智能体在后台线程中自动生成会话标题——对前台交互零延迟影响。",
+    "智能模型路由可将简单查询自动路由至更经济的模型。",
+    "斜杠命令支持前缀匹配：如 /h 自动解析为 /help，/mod 解析为 /model。",
+    "将文件路径直接拖入终端会自动附加图片或将其作为上下文发送。",
+    "代码仓库根目录下的 .worktreeinclude 可指定需要复制到 Worktree 中的被 gitignore 忽略的文件。",
+    "hermes acp 将 Hermes 作为 ACP 服务端运行，以便与 VS Code、Zed 和 JetBrains 等 IDE 集成。",
+    "自定义提供商：可在 config.yaml 的 custom_providers 下保存命名端点。",
+    "HERMES_EPHEMERAL_SYSTEM_PROMPT 注入临时系统提示词，该提示词绝不会持久化到历史记录中。",
+    "credential_pool_strategies 凭据池策略支持 fill_first、round_robin、least_used 以及 random 轮换模式。",
+    "hermes auth add nous 或 hermes auth add openai-codex 可配置基于 OAuth 的提供商。",
+    "API 服务端同时支持 Chat Completions 与带服务端状态的 Responses API。",
+    "在配置中设置 tool_preview_length: 0，可在加载动画的动态活动信息流中显示完整文件路径。",
+    "hermes status --deep 跨所有组件运行更深度的诊断检查。",
+    "定时任务可以附加 Python 脚本（--script），其标准输出（stdout）会被作为上下文注入到提示词中。",
+    "定时任务脚本存放在 ~/.hermes/scripts/ 中并在智能体运行前执行——非常适合用于数据采集流水线。",
+    "config.yaml 中的 prefill_messages_file 可在每次 API 调用中注入 Few-shot 示例，且绝不保存至历史记录。",
+    "SOUL.md 可完全替代智能体的默认人设身份——重写它即可打造专属你的 Hermes。",
+    "首次运行时 SOUL.md 会自动生成默认人设内容。编辑它即可进行个性化定制。",
+    "/compress <focus topic> 将 60-70% 的摘要额度分配给你指定的主题，并大幅精简裁剪其余内容。",
+    "从第二次压缩开始，压缩器会在上一次摘要的基础上进行增量更新，而非从零开始重做。",
+    "在网关会话重置之前，Hermes 会在后台自动将重要事实持久化刷入记忆中。",
+    "在 config.yaml 中设置 network.force_ipv4: true 可解决因 IPv6 配置异常引起的服务器假死挂起——底层动态修补 socket。",
+    "terminal 工具会对常见退出码进行批注解释：例如 grep 返回 1 说明 'No matches found (not an error)'（未找到匹配项，非错误）。",
+    "执行失败的前台终端命令最多自动重试 3 次，并采用指数退避（2s、4s、8s）。",
+    "单独的 sudo 命令会自动改写为通过管道传入 .env 中的 SUDO_PASSWORD——无需交互式密码提示。",
+    "execute_code 辅助函数需要显式导入：from hermes_tools import json_parse, shell_quote, retry。",
+    "execute_code 的 7 种沙箱工具（web_search、terminal、read/write/search/patch）基于 RPC 调用——执行细节绝不会进入上下文。",
+    "对同一文件区域读取 3 次及以上将触发警告。达到 4 次及以上时会被强制拦截，以防止死循环。",
+    "write_file 和 patch 会检测文件自上次读取以来是否被外部修改，并在发现过期陈旧时发出警告。",
+    "V4A 补丁格式不仅支持 Update，还支持 Add File、Delete File 以及 Move File 指令。",
+    "MCP 服务端可通过采样机制反向请求 LLM 补全——此时智能体反过来成为了服务端的工具。",
+    "MCP 服务端可发送 notifications/tools/list_changed 通知，以触发自动重新注册工具而无需重启。",
+    "delegate_task 搭配 acp_command: 'claude' 可在任意平台上将 Claude Code 作为子智能体衍生启动。",
+    "委派机制具备心跳线程——子智能体的活动会向上同步传递给父级，从而防止网关超时。",
+    "当提供商返回 HTTP 402（需要付款）时，辅助客户端会自动故障转移回退至下一个可用提供商。",
+    "agent.tool_use_enforcement 用于纠正那些仅描述动作而不实际调用工具的模型——对 GPT/Codex 默认自动开启。",
+    "agent.restart_after_turn_timeout 允许在 /restart 进入 stop() 之前让正在进行的轮次先执行完毕；restart_drain_timeout 则仅在 stop() 开始后作为强制中断的时间预算。",
+    "agent.api_max_retries（默认 3）控制智能体在抛出错误之前对失败 API 调用的重试次数——调小该值可加快故障回退速度。",
+    "网关按会话缓存 AIAgent 实例——销毁该缓存会导致 Anthropic 提示词缓存失效。",
+    "任何网站均可通过 /.well-known/skills/index.json 暴露技能——技能中心会自动发现它们。",
+    "位于 ~/.hermes/skills/.hub/audit.log 的技能审计日志会记录每次安装与移除操作。",
+    "陈旧的 Git Worktree 会在启动时自动清理：干净且已完全合并的工作树会被修剪清理；包含未提交或未推送改动的工作树始终会被保留。",
+    "配置文件通过 HERMES_HOME 隔离限定 Hermes 状态；宿主工具子进程保持你的真实 HOME，除非将 terminal.home_mode 设置为 profile。",
+    "环境变量 HERMES_HOME_MODE（八进制，如 0701）可为 Web 服务器遍历访问设置自定义目录权限。",
+    "容器模式：在 HERMES_HOME 中放置 .container-mode 文件，宿主 CLI 将自动进入容器内执行。",
+    "Ctrl+C 拥有 5 级优先级：取消录音 → 取消输入提示 → 取消选择器 → 中断智能体 → 退出程序。",
+    "智能体运行期间的每次中断都会记录到带有时间戳的 ~/.hermes/interrupt_debug.log 中。",
+    "BROWSER_CDP_URL 可将浏览器工具连接至任意正在运行的 Chromium 家族浏览器——支持传入 WebSocket、HTTP 或 host:port。",
+    "BROWSERBASE_ADVANCED_STEALTH=true 可开启基于定制 Chromium 的高级反指纹检测（Scale 套餐）。",
+    "当终端宽度小于 80 列时，CLI 会自动切换为紧凑显示模式。",
+    "快捷命令支持两种类型：exec（直接执行 Shell 命令）与 alias（重定向至另一条命令）。",
+    "按任务粒度配置委派模型：配置中的 delegation.model 与 delegation.provider 可将子智能体路由至更经济的模型。",
+    "delegation.reasoning_effort 可独立控制子智能体的思考深度。",
+    "config.yaml 中的 display.platforms 允许针对特定平台覆盖显示配置：如 {telegram: {tool_progress: all}}。",
+    "配置中的 human_delay.mode 用于模拟人类打字速度——支持自定义 min_ms/max_ms 延迟范围。",
+    "配置版本迁移在加载时自动执行——新增的配置项键名无需手动干预即可自动补全。",
+    "GPT 和 Codex 模型会获得专门的系统提示词引导，以强化工具使用规范与强制工具调用。",
+    "Gemini 模型会获得针对绝对路径、并行工具调用和非交互式命令的量身定制指令。",
+    "config.yaml 中的 context.engine 可设置为插件名称，以使用替代的上下文管理策略。",
+    "超过 15,000 字符的浏览器页面快照会被截断或自动浓缩；完整快照会保存在 cache/web 中供 read_file 分页查看。",
+    "压缩器会先进行轻量级的预处理：在 LLM 运行前，将超过 200 字符的工具输出替换为占位符。",
+    "当压缩失败时，会暂停后续压缩尝试 10 分钟，以避免频繁冲击 API。",
+    "超长高危命令（>70 字符）在审批提示中会提供 'view' 选项，以便先查看完整文本。",
+    "语音录制期间会根据麦克风的有效值（RMS）电平，通过 ▁▂▃▄▅▆▇ 柱状条展示音频音量可视化。",
+    "配置文件名不能与系统 PATH 中的已有可执行文件冲突——例如 'hermes profile create ls' 将被拒绝。",
+    "hermes profile create backup --clone-all 会完整克隆所有数据（配置、密钥、SOUL.md、记忆、技能与会话）。",
+    "语音录音快捷键可通过 config.yaml 中的 voice.record_key 进行配置——不仅限于 Ctrl+B。",
+    ".cursorrules 与 .cursor/rules/*.mdc 文件会被自动检测并作为项目上下文加载。",
+    "上下文文件安全防护支持识别 10 余种提示词注入模式——不可见 Unicode、'ignore instructions'、数据外泄尝试等。",
+    "GPT-5 和 Codex 在消息格式中使用 'developer' 角色来替代 'system'。",
+    "按任务粒度的辅助模型覆盖：可在 config.yaml 中配置 auxiliary.vision.provider、auxiliary.compression.model 等。",
+    "辅助客户端将 'main' 视为提供商别名——会自动解析为你实际的主提供商与模型。",
+    "hermes claw migrate --dry-run 预览 OpenClaw 迁移效果，且不会写入任何内容。",
+    "粘贴带引号或含转义空格的文件路径时会自动清洗规范化——无需手动处理。",
+    "斜杠命令绝不会触发大段粘贴折叠机制——带超长参数的 /command 可以正常执行。",
+    "在中断模式下，智能体执行期间输入的斜杠命令会绕过中断逻辑并立即运行。",
+    "设置 HERMES_DEV=1 可绕过容器模式检测，以便进行本地开发调试。",
+    "每个 MCP 服务端都拥有独立的工具集（mcp-servername），可通过 hermes tools 分别独立开关。",
+    "配置中 MCP 的 ${ENV_VAR} 占位符会在服务端衍生启动时解析——包括来自 ~/.hermes/.env 的变量。",
+    "来自可信仓库（NousResearch）的技能会被赋予 'trusted' 安全等级；社区技能则会接受额外的安全扫描。",
+    "位于 ~/.hermes/skills/.hub/quarantine/ 的技能隔离区用于存放待安全审查的技能。",
+    "/steer <prompt> 在下一次工具调用后注入提示指导——无需中断即可在任务中途微调方向。",
+    "/goal <text> 设定持续的 Ralph-loop 循环目标——Hermes 将一轮接一轮自动推进，直至评判机制判定完成。",
+    "/snapshot create [label] 保存 Hermes 配置的完整状态快照；之后可通过 /snapshot restore <id> 恢复还原。",
+    "/copy [N] 将助手的最后一条回复复制到剪贴板，若带数字 N 则复制倒数第 N 条回复。",
+    "/redraw 强制完整重绘 UI，修复 tmux 调整窗口大小或鼠标划选引起的终端文字漂移花屏。",
+    "/agents（别名 /tasks）显示当前会话中处于活跃状态的智能体以及正在运行的后台任务。",
+    "/footer 切换最终回复底部的网关页脚显示，展示模型、上下文占用百分比（%）以及当前工作目录（cwd）。",
+    "/busy queue|steer|interrupt 控制在 Hermes 工作期间按下回车键的行为模式。",
+    "Telegram 私聊中的 /topic 可开启用户自主管理的多会话话题模式——/topic <id> 可内联恢复历史会话。",
+    "/approve session|always 以你指定的信任范围运行待审批的高危命令；/deny 则拒绝执行。",
+    "/restart 在排空并等待活跃运行任务结束后优雅重启网关，恢复就绪后会向发起者发送提示通知。",
+    "/kanban boards switch <slug> 可在聊天内部切换当前激活的多项目看板。",
+    "/reload 将 ~/.hermes/.env 重新加载到当前运行的会话中——无需重启即可热读取新的 API Key。",
+    "设置 no_agent=True 的定时任务按计划调度执行脚本并直接发送其标准输出——零 Token 消耗、零 LLM 参与。",
+    "定时任务脚本的标准输出为空代表静默轮询——不会投递任何内容，非常适合阈值看门狗监控。",
+    "HERMES_CRON_MAX_PARALLEL（默认 4）限制每个 Tick 并行执行的定时任务上限，防止并发洪峰耗尽你的密钥额度。",
+    "网关钩子位于 ~/.hermes/hooks/<name>/ 下，由 HOOK.yaml 和 handler.py 组成——处理函数必须命名为 handle。",
+    "钩子事件支持包括 gateway:startup、session:start、agent:step 以及 command:* 通配符订阅。",
+    "在 ~/.hermes/BOOT.md 中放置检查清单，gateway:startup 钩子将在每次开机启动时将其作为单次任务智能体运行。",
+    "hermes curator run --dry-run 预览 Curator 拟归档或整合的内容，且不会对实际数据做任何改动。",
+    "hermes curator pin <skill> 锁定保护指定技能，防止被自动归档以及被智能体的 skill_manage 工具修改。",
+    "hermes curator rollback 从运行前快照恢复技能——备份存放在 skills/.curator_backups/ 目录下。",
+    "hermes auth reset <provider> [target] 清除整个凭据池或按索引、ID、标签指定的单个凭据的冷却与耗尽标记。",
+    "配置 credential_pool_strategies.<provider>: round_robin 可均匀轮换密钥，替代默认的 fill_first 优先耗尽策略。",
+    "单工具维度的 use_gateway: true 可将网络搜索、图像、TTS 或浏览器流量路由至 Nous 订阅——无需额外配置密钥。",
+    "provider_routing.data_collection: deny 会在 OpenRouter 上排除会存储用户数据的模型提供商。",
+    "provider_routing.require_parameters: true 仅路由至完全支持你请求中所有参数的提供商。",
+    "HERMES_TUI_RESUME=1 启动时自动重新挂载到最近的 TUI 会话——在 SSH 意外掉线后极为方便。",
+    "HERMES_TUI_THEME=light|dark|<hex> 可在未设置 COLORFGBG 的终端中强制指定 TUI 主题。",
+    "在 TUI 中按下 Ctrl+G 或 Ctrl+X Ctrl+E 可在 $EDITOR 中打开输入缓冲区，用于编辑长篇多行提示词。",
+    "TUI 支持内联渲染 LaTeX——如 $E=mc^2$ 会渲染为漂亮的 Unicode 数学符号而非原始 TeX 代码。",
+    "hermes dashboard 在 127.0.0.1:9119 启动本地 Web 控制台——所有数据完全保留在本地，绝不上云。",
+    "hermes dashboard 通过 xterm.js 和 WebSocket PTY 将完整的 Hermes TUI 无缝嵌入浏览器中。",
+    "在 ~/.hermes/dashboard-themes/ 下放置一个指定两色调色板的 YAML 文件，即可为整个控制台更换新皮肤主题。",
+    "控制台插件即插即用：只需在 ~/.hermes/dashboard-plugins/ 放入 manifest.json 和 JS 打包文件——无需 npm 构建。",
+    "控制台主题中的 layoutVariant: cockpit 会添加 260px 宽的左侧导航轨，插件可通过 sidebar 插槽进行内容扩展。",
+    "display.tool_progress_command: true 允许在即时通讯平台上使用 /verbose 命令；该命令默认仅限 CLI。",
+    "HERMES_BACKGROUND_NOTIFICATIONS=result 仅在后台任务执行完成时发送提示（可选 concise/all/error/off）。",
+    "HERMES_WRITE_SAFE_ROOT 将 write_file/patch 限制在指定目录前缀内；多个路径可用 os.pathsep（: 或 ;）分隔。",
+    "HERMES_IGNORE_RULES 会跳过 AGENTS.md、SOUL.md、.cursorrules、记忆以及预加载技能的自动注入。",
+    "HERMES_ACCEPT_HOOKS 自动批准 config.yaml 中声明的未见过的 Shell 钩子，无需弹出 TTY 交互提示。",
+    "auxiliary.goal_judge.model 将 /goal 的结果评判路由到快速且廉价的模型，使循环执行成本接近于零。",
+    "检查点功能会自动跳过包含超过 50,000 个文件的目录，以避免在超大型单体代码仓库中执行缓慢的 Git 操作。",
+    "tts.provider: piper 可在 CPU 上运行支持 44 种语言的本地 TTS——语音包会自动下载至 ~/.hermes/cache/piper-voices/。",
+    "tts.providers.<name>.type: command 可通过 {input_path} 和 {output_path} 占位符无缝接入任意 CLI 语音合成引擎。",
+    "API_SERVER_ENABLED=true 可在网关旁同步运行兼容 OpenAI 的接口端点，支持 Open WebUI 与 LibreChat。",
+    "GATEWAY_PROXY_URL 支持分离式架构：本地处理平台消息收发 I/O，将智能体核心工作委派给远程 API 服务端。",
+    "MATRIX_DEVICE_ID 为端到端加密（E2EE）固定稳定的设备 ID——若不配置，密钥每次启动都会轮换导致无法解密历史消息。",
+    "凡是设置了 TELEGRAM_WEBHOOK_URL 就必须提供 TELEGRAM_WEBHOOK_SECRET——可使用 openssl rand -hex 32 命令生成。",
+    "batch_runner.py --resume 按文本内容精准比对已完成的提示词，因此数据集顺序调整不会重复运行已完成的任务。",
+    "/new 原地开启全新会话（别名 /reset）——分配新会话 ID、清空历史，且 CLI 终端保持开启。",
+    "/clear 清空终端屏幕并同步开启新会话——一个快捷命令即可完成视觉与会话的双重重置。",
+    "/history 在不离开 CLI 的情况下内联打印当前完整对话记录——非常便于快速复盘重读。",
+    "/save 将当前对话写入磁盘保存，且不会结束会话。",
+    "/status 一目了然地展示会话信息：ID、标题、模型、Token 使用量以及已耗费时长。",
+    "/image <path> 为你的下一条提示词附加本地图片文件，无需手动粘贴或拖拽。",
+    "/platforms 直接在聊天内部展示网关以及各个即时通讯平台的连接状态。",
+    "/commands 分页展示全部斜杠命令及已安装技能列表——在不支持 Tab 自动补全的平台上极为实用。",
+    "/toolsets 列出所有可用的工具集，方便你了解 -t/--toolsets 可接受的参数。",
+    "/voice tts 切换仅朗读模式——智能体大声朗读回复，而你依然通过打字输入提示词。",
+    "/reload-skills 重新扫描 ~/.hermes/skills/，使直接放入目录的新技能无需重启会话即可生效。",
+    "/indicator kaomoji|emoji|unicode|ascii 选择智能体运行期间 TUI 显示的忙碌指示器样式。",
+    "/debug 上传支持诊断包（系统信息 + 日志）并返回可分享的链接——在即时聊天中同样可用。",
+    "hermes -z \"<prompt>\" 是最纯粹的单次执行：标准输出仅输出最终答案，绝无杂质——非常适合在脚本中通过管道传输。",
+    "hermes chat --pass-session-id 将会话 ID 注入系统提示词中，使智能体能够自引用该 ID。",
+    "hermes chat --image path/to/pic.png 为单次 -q 查询直接附加本地图片，无需单独的上传步骤。",
+    "hermes chat --ignore-user-config 跳过当前用户配置——用于可复现的 Bug 报告与 CI 持续集成运行。",
+    "hermes chat --source tool 为程序化发起的会话打上标签，避免污染扰乱 hermes sessions list。",
+    "hermes dump --show-keys 包含脱敏后的 API Key 指纹，便于更深层次的排错与技术支持。",
+    "hermes sessions rename <ID> \"new title\" 可重命名任意历史会话；hermes sessions delete <ID> 则删除该会话。",
+    "hermes import 可完整恢复 Hermes 备份 zip 压缩包；导出的 JSON/JSONL 格式会话可在控制台的 Sessions 页面中导入。",
+    "hermes fallback 支持交互式管理 fallback_model 备用模型链——无需手动编辑 config.yaml。",
+    "hermes pairing 轮换私聊配对令牌——轮换后首个发送消息的用户将获得该 Bot 的访问权限。",
+    "hermes setup 以交互式向导带领新用户一步步完成提供商配置、密钥录入以及平台连通。",
+    "hermes status --deep 对所有组件执行全面的健康体检扫描；纯 hermes status 则是快速概览视图。",
+    "HERMES_AGENT_TIMEOUT=0 禁用网关因不活跃而终止运行中智能体的机制——适用于耗时较长的深度研究任务。",
+    "HERMES_ENABLE_PROJECT_PLUGINS=1 自动加载来自 ./.hermes/plugins/ 的项目本地插件——设计上具备信任安全门禁。",
+    "HERMES_DISABLE_FILE_STATE_GUARD=1 关闭 patch 和 write_file 针对“文件在读取后已被外部修改”的状态防冲突保护。",
+    "HERMES_ALLOW_PRIVATE_URLS=true 允许网络工具访问 localhost 及私有内网——在网关模式下默认禁用。",
+    "HERMES_OPTIONAL_SKILLS=name1,name2 会在每个配置文件首次运行时自动安装额外的可选目录技能。",
+    "HERMES_BUNDLED_SKILLS 指向自定义的捆绑技能目录树——常用于 Homebrew 与 Nix 打包分发。",
+    "HERMES_DUMP_REQUEST_STDOUT=1 将每次 API 请求的完整负载直接打印到标准输出，而非写入日志文件。",
+    "HERMES_OAUTH_TRACE=1 记录脱敏后的 OAuth 令牌交换与刷新尝试日志，便于排查提供商授权问题。",
+    "HERMES_STREAM_RETRIES（默认 3）控制在遭遇偶发网络故障时流式传输中断的重连尝试次数。",
+    "HERMES_GATEWAY_BUSY_ACK_ENABLED=false 会在用户向忙碌中的智能体发送消息时静默屏蔽 ⚡/⏳/⏩ 确认提示消息。",
+    "HERMES_AGENT_NOTIFY_INTERVAL（默认 180s）设置在长耗时轮次中网关同步进度的通知时间间隔。",
+    "HERMES_RESTART_DRAIN_TIMEOUT（默认 900s）限制 /restart 在强制终止前等待正在进行的任务排空的最大时长。",
+    "HERMES_CHECKPOINT_TIMEOUT（默认 30s）限制文件系统检查点创建的最长时间——在超大单体仓库中可适当调大。",
+    "config.yaml 中的 image_gen.model 用于选择 FAL 模型：如 flux-2/klein、gpt-image-2、nano-banana-pro 等。",
+    "image_gen.provider 可通过插件（OpenAI Images、Codex、FAL）路由图像生成任务，以替代默认服务。",
+    "AUXILIARY_VISION_BASE_URL + AUXILIARY_VISION_API_KEY 将视觉分析请求指向任意兼容 OpenAI 的接口端点。",
+    "security.tirith_fail_open: false 会在 tirith 扫描器本身发生异常报错时让 Hermes 拦截阻止命令执行。",
+    "环境变量 TIRITH_FAIL_OPEN 可覆盖 tirith_fail_open 配置——无需编辑 config.yaml 即可快速切换开关。",
+    "带有 --source tool 的会话默认在 hermes sessions list 中被隐藏——显式指定 --source 参数方可查看它们。",
+    "会话 ID 带有时间戳前缀（如 20250305_091523_abcd），便于在 ls 和 jq 中自然按时间先后排序。",
+    "API_SERVER_MODEL_NAME 可自定义 /v1/models 返回的模型名称——对于多配置文件 Open WebUI 环境至关重要。",
+    "控制台插件通过 /dashboard-plugins/<name>/ 对外服务——只需将文件放入 ~/.hermes/dashboard-plugins/ 目录即可。"
+  ]
+}
