@@ -256,6 +256,10 @@ _PICKER_TEXT_REPLACEMENTS: tuple[tuple[str, str], ...] = (
     ("Model selection cancelled.", "已取消模型选择。"),
     ("☤ *Update needs your input:*", "☤ *更新需要您的确认：*"),
     ("☤ _Update needs your input:_", "☤ _更新需要您的确认：_"),
+    ("☤ Update prompt answered: Yes", "☤ 更新已确认：是"),
+    ("☤ Update prompt answered: No", "☤ 更新已确认：否"),
+    ("Update prompt answered: Yes", "更新已确认：是"),
+    ("Update prompt answered: No", "更新已确认：否"),
 )
 _PICKER_MORE_RE = re.compile(
     r"(?P<open>\\?_)(?P<count>\d+) more available — type `/model <name>` directly(?P<close>\\?_)"
@@ -493,11 +497,11 @@ AUTO_RESET_PATTERNS = [
 
 # 7.1 Lifecycle & System Notices localization
 SYSTEM_NOTICES_PATTERNS: list[tuple[str, str]] = [
-    (r"♻\s*Gateway restarted successfully\.\s*Your session continues\.", "♻ 网关重启成功，您的会话已恢复继续。"),
-    (r"♻️\s*Gateway online\s*—\s*Hermes is back and ready\.", "♻️ 网关已上线 — Hermes 已就绪。"),
+    (r"♻\s*(?:Gateway|Hermes)\s*(?:restarted successfully|is back online)\.\s*Your session continues\.", "♻ 网关重启成功，您的会话已恢复继续。"),
+    (r"♻️\s*(?:Gateway|Hermes)\s*online\s*—\s*Hermes is back and ready\.", "♻️ 网关已上线 — Hermes 已就绪。"),
     (r"Inference:\s*Nous free tier \(nous/welcome\)\.\s*Sign in for more:\s*/login", "推理服务：Nous 免费层 (nous/welcome)。登录以获取更多权限：/login"),
-    (r"⚠️\s*Gateway restarting\s*—\s*Your current task will be interrupted\.\s*Send any message after restart and I'll try to resume where you left off\.", "⚠️ 网关正在重启 — 当前任务将被中断。重启后发送任意消息，我将尝试为您恢复现场。"),
-    (r"⚠️\s*Gateway shutting down\s*—\s*Your current task will be interrupted\.", "⚠️ 网关正在关闭 — 当前任务将被中断。"),
+    (r"(?i)⚠️\s*(?:Gateway|Hermes)\s*(?:is\s*)?restarting\s*—\s*your current task will be interrupted\.\s*Send any message after (?:the\s*)?restart and I'll try to resume where you left off\.", "⚠️ Hermes 正在重启 — 当前任务将被中断。重启后发送任意消息，我将尝试为您恢复现场。"),
+    (r"(?i)⚠️\s*(?:Gateway|Hermes)\s*(?:is\s*)?shutting down\s*—\s*your current task will be interrupted\.(?:\s*When it is back online, send any message and I'll try to pick up where we left off\.)?", "⚠️ Hermes 正在关闭 — 当前任务将被中断。恢复在线后发送任意消息，我将尝试为您恢复现场。"),
     (r"✅\s*Hermes update finished successfully\.", "✅ Hermes 更新成功完成。"),
     (r"✅\s*Hermes update finished\.", "✅ Hermes 更新已完成。"),
     (r"❌\s*Hermes update failed\.\s*Check the gateway logs or run `hermes update` manually for details\.", "❌ Hermes 更新失败。请检查网关日志或手动运行 `hermes update` 查看详情。"),
@@ -505,6 +509,13 @@ SYSTEM_NOTICES_PATTERNS: list[tuple[str, str]] = [
     (r"⚠️\s*Session database corruption detected\.\s*Messages may not be persisted\.\s*Recovery options:", "⚠️ 检测到会话数据库损坏，消息可能无法持久化保存。恢复选项："),
     (r"⚠️\s*Session database reported a corruption error confined to the search index", "⚠️ 会话数据库报告搜索索引局部损坏"),
     (r"⚠️\s*Session database unavailable\s*—\s*messages may not be persisted\.", "⚠️ 会话数据库不可用 — 消息可能无法持久化保存。"),
+    (r"(?i)☤\s*Update prompt answered:\s*Yes", "☤ 更新确认：已选择「是」"),
+    (r"(?i)☤\s*Update prompt answered:\s*No", "☤ 更新确认：已选择「否」"),
+    (r"(?i)Update prompt answered:\s*Yes", "更新确认：已选择「是」"),
+    (r"(?i)Update prompt answered:\s*No", "更新确认：已选择「否」"),
+    (r"(?i)Already on the latest version\.", "当前已是最新版本。"),
+    (r"(?i)No updates available\.", "暂无可用更新。"),
+    (r"(?i)Updating Hermes Agent\.\.\.", "正在更新 Hermes Agent..."),
 ]
 
 

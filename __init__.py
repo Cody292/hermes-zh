@@ -12,21 +12,18 @@ Features:
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from typing import Any
 
-_PLUGIN_DIR = Path(__file__).resolve().parent
-if str(_PLUGIN_DIR) not in sys.path:
-    sys.path.insert(0, str(_PLUGIN_DIR))
+from . import hermes_zh_patcher as patcher
+
+__all__ = ["register", "patcher"]
 
 PLUGIN_NAME = "hermes-zh"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 
 def _status(_raw_args: str = "") -> str:
     """Return status and ensure all patches are updated."""
-    import patcher
     patcher.apply_all()
     try:
         import agent.display as display
@@ -59,14 +56,12 @@ def _status(_raw_args: str = "") -> str:
 
 def _wire_telegram(native: Any, adapter: Any) -> bool:
     """Lazy platform handler invoked only when Telegram connects."""
-    import patcher
     return patcher.wire_telegram_adapter(native, adapter)
 
 
 def _on_session_start(*args: Any, **kwargs: Any) -> None:
     """Lazy session hook to ensure core patches are active when session starts."""
     try:
-        import patcher
         patcher.apply_all()
     except Exception:
         pass
