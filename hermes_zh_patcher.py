@@ -826,13 +826,155 @@ def _load_tips_data() -> bool:
                 logger.debug("Failed loading tips from %s: %s", p, exc)
     return False
 
+# 9.1 Model & Provider Failover / Fallback Reason Mapping and Interceptor
+ZH_FALLBACK_REASONS: dict[str, str] = {
+    # FailoverReason enum labels
+    "request timeout": "请求超时",
+    "timeout": "请求超时",
+    "rate limit": "触发速率限制",
+    "rate_limit": "触发速率限制",
+    "upstream model rate limit": "上游模型请求频次受限",
+    "billing or quota exhausted": "额度或余额耗尽",
+    "provider overloaded": "服务商过载",
+    "overloaded": "服务商过载",
+    "provider server error": "服务商服务器错误",
+    "server error": "服务器错误",
+    "server_error": "服务器错误",
+    "authentication failed": "身份鉴权失败",
+    "authentication permanently failed": "身份鉴权永久失败",
+    "auth failed": "身份鉴权失败",
+    "tls certificate verification failed": "TLS 证书校验失败",
+    "ssl certificate verification failed": "SSL 证书校验失败",
+    "context window exceeded": "超出上下文窗口容量",
+    "context overflow": "超出上下文窗口容量",
+    "request payload too large": "请求载荷过大",
+    "payload too large": "请求载荷过大",
+    "image payload too large": "图片载荷过大",
+    "image too large": "图片载荷过大",
+    "model not found": "模型不存在",
+    "provider policy blocked the request": "服务商策略拦截该请求",
+    "provider policy blocked": "服务商策略拦截该请求",
+    "content policy blocked the request": "内容安全策略拦截该请求",
+    "content policy blocked": "内容安全策略拦截该请求",
+    "request format rejected": "请求格式被拒绝",
+    "format error": "请求格式被拒绝",
+    "adjacent same-role messages rejected": "相邻同角色消息被拒绝",
+    "role alternation": "相邻同角色消息被拒绝",
+    "encrypted reasoning state rejected": "加密思考状态被拒绝",
+    "invalid encrypted content": "加密思考状态被拒绝",
+    "multimodal tool content unsupported": "不支持多模态工具内容",
+    "thinking signature rejected": "思考签名被拒绝",
+    "thinking signature": "思考签名被拒绝",
+    "long-context tier unavailable": "长上下文服务层不可用",
+    "oauth long-context beta unavailable": "OAuth 长上下文测试版不可用",
+    "grammar pattern rejected": "语法模式被拒绝",
+    "provider failure": "服务商故障",
+
+    # Common network / API errors
+    "connection lost": "网络连接中断",
+    "connection reset": "网络连接重置",
+    "connection closed": "网络连接关闭",
+    "connection terminated": "网络连接终止",
+    "network error": "网络错误",
+    "upstream connect error": "上游连接错误",
+    "peer closed": "对端关闭连接",
+    "broken pipe": "管道断开",
+    "bad gateway": "网关错误",
+    "gateway timeout": "网关超时",
+    "service unavailable": "服务暂时不可用",
+    "internal server error": "内部服务器错误",
+    "model cooldown": "模型处于冷却状态",
+    "model unavailable": "模型不可用",
+    "provider unavailable": "服务商不可用",
+    "fallback candidate unavailable": "备用模型候选不可用",
+    "capacity exhausted": "算力容量耗尽",
+}
+
+
+def translate_fallback_reason(reason: str) -> str:
+    """Translate model failover reason to concise Chinese."""
+    if not reason:
+        return "未知原因"
+    clean = reason.strip().strip("()")
+    lower = clean.lower()
+    if lower in ZH_FALLBACK_REASONS:
+        return ZH_FALLBACK_REASONS[lower]
+    normalized = lower.replace("_", " ")
+    if normalized in ZH_FALLBACK_REASONS:
+        return ZH_FALLBACK_REASONS[normalized]
+    for en_key, zh_val in ZH_FALLBACK_REASONS.items():
+        if en_key in normalized:
+            return zh_val
+    return clean
+
+
+def _format_fallback_target(target: str) -> str:
+    target = target.strip()
+    m = re.match(r"^(.+?)\s+via\s+(\S+)$", target, re.IGNORECASE)
+    if m:
+        model, provider = m.group(1), m.group(2)
+        return f"{model}（通过 {provider}）"
+    return target
+
+
+_MODEL_FALLBACK_RE = re.compile(
+    r"(?i)(?P<emoji>⚠️\s*)?\*?\*?model fallback\*?\*?:\s*"
+    r"(?P<old_target>.+?)\s+unavailable\s*\((?P<reason>[^)]+)\);\s*"
+    r"using\s+(?P<fb_target>[^\r\n]+?)\."
+    r"(?=\s+Primary retry|\s*$|\n)"
+    r"(?P<retry>\s*Primary retry eligible in ~?(?P<remaining>\d+)\s*s;\s*recovery is not guaranteed\.?)?"
+)
+
+
+def _replace_model_fallback(m: re.Match) -> str:
+    old_target = _format_fallback_target(m.group("old_target"))
+    reason_zh = translate_fallback_reason(m.group("reason"))
+    fb_target = _format_fallback_target(m.group("fb_target"))
+    remaining = m.group("remaining")
+    retry_zh = f" 预计约 {remaining} 秒后可重试主模型（不保证恢复）。" if remaining else ""
+    sep = "" if old_target.endswith("）") else " "
+    return f"⚠️ 模型故障回退：{old_target}{sep}不可用（{reason_zh}）；已改用 {fb_target}。{retry_zh}".rstrip()
+
+
+_PROVIDER_FALLBACK_RE = re.compile(
+    r"(?i)(?P<emoji>⚠️\s*)?\*?\*?provider fallback\*?\*?:\s*(?P<primary>[^\r\n;]+?)\s+unavailable;\s*using\s+(?P<fallback>[^\r\n.]+?)\s+for this response\.?"
+)
+
+
+def _replace_provider_fallback(m: re.Match) -> str:
+    primary = m.group("primary").strip()
+    fallback = m.group("fallback").strip()
+    return f"⚠️ 服务商故障回退：{primary} 不可用；本次响应改用 {fallback}。"
+
+
+_EXTRA_FALLBACK_PATTERNS: list[tuple[re.Pattern, str]] = [
+    (re.compile(r"🔄\s*Primary model failed — switching to fallback:\s*(.+)", re.IGNORECASE), r"🔄 主模型调用失败 — 正在切换至备用模型：\1"),
+    (re.compile(r"🔄\s*Switched to fallback model:\s*(.+)", re.IGNORECASE), r"🔄 已切换至备用模型：\1"),
+    (re.compile(r"↻\s*Switched to fallback:\s*(.+)", re.IGNORECASE), r"↻ 已切换至备用模型：\1"),
+]
+
+
+def translate_fallback_notice(content: str) -> str:
+    """Translate model and provider fallback notices into idiomatic Chinese."""
+    if not isinstance(content, str) or not content:
+        return content
+    res = content
+    if re.search(r"(?i)model fallback", res):
+        res = _MODEL_FALLBACK_RE.sub(_replace_model_fallback, res)
+    if re.search(r"(?i)provider fallback", res):
+        res = _PROVIDER_FALLBACK_RE.sub(_replace_provider_fallback, res)
+    for pat, rep in _EXTRA_FALLBACK_PATTERNS:
+        if pat.search(res):
+            res = pat.sub(rep, res)
+    return res
+
 
 def translate_telegram_content(content: str) -> str:
     """Translate non-conversational system notices passing through Telegram adapter."""
     if not isinstance(content, str):
         return content
     content = sanitize_literal_newlines(content)
-
+    content = translate_fallback_notice(content)
     # 0. Lifecycle & System Notices (gateway restart, shutdown, update, online, db warnings)
     for pat, rep in SYSTEM_NOTICES_PATTERNS:
         if re.search(pat, content):
@@ -1692,12 +1834,39 @@ def patch_context_breakdown() -> bool:
         logger.warning("patch_context_breakdown failed: %s", exc)
         return False
 
+def patch_fallback_notice() -> bool:
+    """Safely patch StatusOutputMixin._emit_pending_fallback_notice to translate fallback messages."""
+    try:
+        from agent.status_output import StatusOutputMixin
+        if getattr(StatusOutputMixin, "_hermes_zh_fallback_patched", False):
+            return True
+        orig_fn = getattr(StatusOutputMixin, "_emit_pending_fallback_notice", None)
+        if orig_fn is None:
+            return False
+
+        def _zh_emit_pending_fallback_notice(self: Any) -> None:
+            notice = getattr(self, "_pending_fallback_notice", None)
+            if not notice:
+                return
+            if isinstance(notice, list):
+                self._pending_fallback_notice = [translate_fallback_notice(str(n)) for n in notice]
+            else:
+                self._pending_fallback_notice = translate_fallback_notice(str(notice))
+            return orig_fn(self)
+
+        StatusOutputMixin._emit_pending_fallback_notice = _zh_emit_pending_fallback_notice
+        StatusOutputMixin._hermes_zh_fallback_patched = True
+        return True
+    except Exception as exc:
+        logger.debug("patch_fallback_notice skipped: %s", exc)
+        return False
+
 
 _hermes_zh_all_applied = False
 
 
 def apply_all() -> bool:
-    """Apply standalone patches (display verbs, builders, fallback, activity, runner, review, tips, i18n, registry, slash, context_breakdown) idempotently."""
+    """Apply standalone patches (display verbs, builders, fallback, activity, runner, review, tips, i18n, registry, slash, context_breakdown, fallback_notice) idempotently."""
     global _hermes_zh_all_applied
     if _hermes_zh_all_applied:
         return True
@@ -1711,5 +1880,6 @@ def apply_all() -> bool:
     ok8 = patch_command_registry()
     ok9 = patch_slash_commands()
     ok10 = patch_context_breakdown()
+    ok11 = patch_fallback_notice()
     _hermes_zh_all_applied = True
-    return ok1 or ok2 or ok3 or ok4 or ok5 or ok6 or ok7 or ok8 or ok9 or ok10
+    return ok1 or ok2 or ok3 or ok4 or ok5 or ok6 or ok7 or ok8 or ok9 or ok10 or ok11

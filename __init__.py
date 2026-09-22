@@ -19,7 +19,7 @@ from . import hermes_zh_patcher as patcher
 __all__ = ["register", "patcher"]
 
 PLUGIN_NAME = "hermes-zh"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 
 def _status(_raw_args: str = "") -> str:
@@ -44,6 +44,7 @@ def _status(_raw_args: str = "") -> str:
         f"- 终端动词状态: {tv}\n"
         f"- 记忆动词状态: {mv}\n"
         f"- 审批卡与高危拦截: 已启用 (含审批结果「已允许本会话执行」等汉化)\n"
+        f"- 模型故障回退汉化: 已启用 (含 Model fallback 与前置 Provider fallback 中文本地化)\n"
         f"- 常用指令深度支持: 已汉化 /whoami、/busy、/platform、/approvals 等\n"
         f"- 心跳与流式状态汉化: 已启用 (「正在处理中 — N 分钟 — 轮次 N/M，等待模型响应」)\n"
         f"- 自我提升复盘汉化: 已启用 (「自我提升复盘：技能 '...' 已更新」)\n"
