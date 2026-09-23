@@ -138,12 +138,28 @@ def translate_reason(desc: str) -> str:
 
 # 3. Background review action summary localization
 REVIEW_PATTERNS = [
-    (r"Skill '([^']+)' patched(\s*\(.*?\))?", r"技能 '\1' 已更新\2"),
-    (r"Skill '([^']+)' created(\s*\(.*?\))?", r"技能 '\1' 已创建\2"),
-    (r"Skill '([^']+)' rewritten(\s*\(.*?\))?", r"技能 '\1' 已重写\2"),
-    (r"Skill '([^']+)' written(\s*\(.*?\))?", r"技能 '\1' 已写入\2"),
-    (r"Skill '([^']+)' removed(\s*\(.*?\))?", r"技能 '\1' 已移除\2"),
-    (r"Skill '([^']+)' deleted(\s*\(.*?\))?", r"技能 '\1' 已删除\2"),
+    # 针对 Background review may not delete memory entries unattended 等后台文案
+    (r"Background review may not delete memory entries unattended\.\s*The proposed\s*(.*?)\s*was staged for your approval\s*-\s*review it with /memory pending\s*\(approve to apply, discard to drop\)\.?",
+     r"后台自我提升复盘无法自动执行记忆删除操作。已将建议的 \1 暂存以待审批 — 请使用 /memory pending 进行审核（approve 批准应用，discard 丢弃放弃）。"),
+    (r"Background review may not delete memory entries\s*\('replace'/'remove', including in a batch\);\s*'add' is still available\.?",
+     r"后台自我提升复盘无法自动执行记忆删除操作（含 'replace'/'remove' 及批量操作）；仅允许执行 'add' 新增。"),
+    (r"background review consolidation \((batch|[a-z]+) on (memory|user)\):\s*(.*)",
+     r"后台自我提升复盘合并提案（在 \2 上执行 \1）：\3"),
+    (r"Memory ➕ (.*)", r"记忆库 ➕ \1"),
+    (r"Memory ✏️ (.*)", r"记忆库 ✏️ \1"),
+    (r"Memory ➖ (.*)", r"记忆库 ➖ \1"),
+    (r"User profile ➕ (.*)", r"用户画像 ➕ \1"),
+    (r"User profile ✏️ (.*)", r"用户画像 ✏️ \1"),
+    (r"User profile ➖ (.*)", r"用户画像 ➖ \1"),
+    (r"""Skill '([^']+)' patched: "([^"]*)" → "([^"]*)" """.strip(), r"""技能 '\1' 已更新: "\2" → "\3" """.strip()),
+    (r"Skill '([^']+)' created: (.*)", r"技能 '\1' 已创建: \2"),
+    (r"Skill '([^']+)' rewritten: (.*)", r"技能 '\1' 已重写: \2"),
+    (r"Skill '([^']+)' patched(\s*\(.*\?\))?", r"技能 '\1' 已更新\2"),
+    (r"Skill '([^']+)' created(\s*\(.*\?\))?", r"技能 '\1' 已创建\2"),
+    (r"Skill '([^']+)' rewritten(\s*\(.*\?\))?", r"技能 '\1' 已重写\2"),
+    (r"Skill '([^']+)' written(\s*\(.*\?\))?", r"技能 '\1' 已写入\2"),
+    (r"Skill '([^']+)' removed(\s*\(.*\?\))?", r"技能 '\1' 已移除\2"),
+    (r"Skill '([^']+)' deleted(\s*\(.*\?\))?", r"技能 '\1' 已删除\2"),
     (r"Memory updated", r"记忆库已更新"),
     (r"User profile updated", r"用户画像已更新"),
     (r"Proposal staged:\s*(.*)", r"已暂存合并提案: \1"),
@@ -495,8 +511,41 @@ AUTO_RESET_PATTERNS = [
     (r"Use /resume to browse and restore a previous session\.", "输入 /resume 可浏览并恢复之前的会话。"),
 ]
 
+def _translate_time_window(window_str: str) -> str:
+    """Convert '5 minutes', '90 seconds', '2 hours' to natural Chinese."""
+    w = window_str.strip()
+    w = re.sub(r"(\d+)\s*minutes?", r"\1 分钟", w, flags=re.IGNORECASE)
+    w = re.sub(r"(\d+)\s*seconds?", r"\1 秒", w, flags=re.IGNORECASE)
+    w = re.sub(r"(\d+)\s*hours?", r"\1 小时", w, flags=re.IGNORECASE)
+    return w
+
+
+def _replace_approval_timed_out(m: re.Match) -> str:
+    win = _translate_time_window(m.group(1))
+    return f"⌛ 审批在 {win}后超时 — 该命令未执行。如果仍需执行，请让我重试，或在 config.yaml 中调高 approvals.timeout。"
+
+
+def _replace_approval_deadline(m: re.Match) -> str:
+    win = _translate_time_window(m.group(1))
+    return f"如果在 {win}内未回复，命令将不会执行。"
+
+
 # 7.1 Lifecycle & System Notices localization
 SYSTEM_NOTICES_PATTERNS: list[tuple[str, str]] = [
+    # 审批超时与截止时间提示（覆盖平台卡片与网关提示）
+    (r"(?i)(?:⌛|\[WAIT\])\s*Approval timed out after\s*([0-9a-zA-Z\s]+?)\s*[—\-]\s*the command was NOT run\.\s*Ask me to try again if you still want it,\s*or raise approvals\.timeout in config\.yaml\.?",
+     _replace_approval_timed_out),
+    (r"(?i)If you don't answer within\s*([0-9a-zA-Z\s]+?)\s*it will NOT run\.?",
+     _replace_approval_deadline),
+    (r"(?i)Hermes wants to run a command that needs your OK", "Hermes 想要运行需要您批准的命令"),
+    (r"(?i)Why it was flagged", "标记原因"),
+    (r"(?i)⚠️?\s*Approval expired\s*\(agent is no longer waiting\)\.\s*Ask the agent to try again\.?",
+     "⚠️ 审批已过期（代理不再等待）。请让代理重试。"),
+    (r"(?i)❌?\s*Command denied\s*\(approval was stale\)\.?",
+     "❌ 命令已拒绝（审批已过期）。"),
+    (r"(?i)⚠ Context compression timed out after\s*([\d\.]+)s\s*with no output from the summary model\.\s*No messages were dropped\s*—\s*continuing without compression\.\s*Run /compress to retry,\s*/new for a clean session,\s*or check auxiliary\.compression\.?",
+     r"⚠️ 上下文压缩在  秒后超时且摘要模型无输出。未丢失任何消息 — 正在跳过压缩继续执行。输入 /compress 可重试，/new 可开启全新会话，或检查 auxiliary.compression 配置。"),
+
     (r"♻\s*(?:Gateway|Hermes)\s*(?:restarted successfully|is back online)\.\s*Your session continues\.", "♻ 网关重启成功，您的会话已恢复继续。"),
     (r"♻️\s*(?:Gateway|Hermes)\s*online\s*—\s*Hermes is back and ready\.", "♻️ 网关已上线 — Hermes 已就绪。"),
     (r"Inference:\s*Nous free tier \(nous/welcome\)\.\s*Sign in for more:\s*/login", "推理服务：Nous 免费层 (nous/welcome)。登录以获取更多权限：/login"),
@@ -746,6 +795,14 @@ ZH_I18N_OVERRIDES: dict[str, str] = {
     "gateway.model.capabilities_label": "模型特性",
     "gateway.model.provider_label": "提供商",
 
+    # Approval & Timeout Lifecycle
+    "approval.dangerous_header": "⚠️ 危险命令：{description}",
+    "approval.timeout": "⏱ {waited} 内没有回应 — 未执行该命令。再次请求即可重试，或提高上限：hermes config set approvals.timeout {suggested}",
+    "gateway.approval_expired": "⚠️ 审批已过期（代理不再等待）。请让代理重试。",
+    "gateway.deny.stale": "❌ 命令已拒绝（审批已过期）。",
+    "gateway.deny.no_pending": "没有待处理的审批命令。",
+    "gateway.approve.no_pending": "没有待处理的审批命令。",
+
     # Commands & Help
     "gateway.help.header": "📖 **Hermes 命令指南**\n",
     "gateway.help.skill_header": "\n⚡ **扩展技能指令**（{count} 个活跃）：",
@@ -981,11 +1038,13 @@ def translate_telegram_content(content: str) -> str:
             content = re.sub(pat, rep, content)
 
 
-    # 1. Background review summary
-    m_rev = re.match(r"^\s*💾\s*Self-improvement review:\s*(.*)$", content, re.IGNORECASE)
+    # 1. Background review summary & Unattended delete notices
+    m_rev = re.match(r"^\s*(?:💾\s*)?Self-improvement review:\s*(.*)$", content, re.IGNORECASE)
     if m_rev:
         sub = translate_review_summary(m_rev.group(1).strip())
         return f"💾 自我提升复盘：{sub}"
+    if "Background review may not delete memory entries" in content:
+        return translate_review_summary(content)
 
     # 2. Heartbeat: ⏳ Working — 9 min — iteration 62/500, waiting for provider response (streaming)
     m_hb = re.match(r"^\s*⏳\s*Working\s*—\s*(\d+)\s*min(.*)$", content, re.IGNORECASE)
@@ -1446,6 +1505,121 @@ def patch_i18n() -> bool:
         return False
 
 
+def patch_plugin_command_registration() -> bool:
+    """Ensure /hermes-zh and /hermes_zh are registered in COMMAND_REGISTRY, COMMANDS,
+    COMMANDS_BY_CATEGORY, and slash_exec for instant completion and dispatch across
+    CLI, Telegram Bot menu, and Gateway."""
+    try:
+        from hermes_cli.commands import COMMAND_REGISTRY, COMMANDS, COMMANDS_BY_CATEGORY, CommandDef
+        desc = "查看汉化插件版本与反馈链接"
+        if not any(cmd.name == "hermes-zh" for cmd in COMMAND_REGISTRY):
+            cmd_zh = CommandDef(
+                name="hermes-zh",
+                description=desc,
+                category="Plugins",
+                aliases=("hermes_zh",),
+                busy_policy="dispatch",
+                execute="gateway_hermes_zh",
+            )
+            COMMAND_REGISTRY.append(cmd_zh)
+
+        COMMANDS["/hermes-zh"] = desc
+        COMMANDS["/hermes_zh"] = f"{desc} (alias for /hermes-zh)"
+        COMMANDS_BY_CATEGORY.setdefault("Plugins", {})["/hermes-zh"] = desc
+        COMMANDS_BY_CATEGORY["Plugins"]["/hermes_zh"] = f"{desc} (alias for /hermes-zh)"
+
+        # Wire into slash_exec._DISPATCH_MAP if present
+        if "hermes_cli.slash_exec" in sys.modules:
+            se = sys.modules["hermes_cli.slash_exec"]
+            if hasattr(se, "_DISPATCH_MAP") and "gateway_hermes_zh" not in se._DISPATCH_MAP:
+                def _exec_hermes_zh_gateway(ctx: Any) -> Any:
+                    from hermes_cli.slash_exec import CommandReply
+                    return CommandReply(
+                        "hermes-zh v0.1.2\n问题反馈与建议：https://github.com/Cody292/hermes-zh/issues",
+                        format="markdown",
+                    )
+                se._DISPATCH_MAP["gateway_hermes_zh"] = _exec_hermes_zh_gateway
+
+        return True
+    except Exception as exc:
+        logger.warning("patch_plugin_command_registration failed: %s", exc)
+        return False
+
+
+def patch_help_formatting() -> bool:
+    """Restructure /help output into categorized functional groups for high readability."""
+    try:
+        import hermes_cli.commands as hc
+        if getattr(hc, "_hermes_zh_help_formatted", False):
+            return True
+
+        orig_gateway_help_lines = hc.gateway_help_lines
+
+        CATEGORY_ORDER = ["Session", "Configuration", "Tools & Skills", "Info", "Plugins", "Exit"]
+        CATEGORY_HEADERS = {
+            "Session": "💬 **会话与流程管理 (Session)**",
+            "Configuration": "⚙️ **系统与个性化配置 (Configuration)**",
+            "Tools & Skills": "🛠️ **工具、技能与自动化 (Tools & Skills)**",
+            "Info": "📊 **系统信息与状态 (Info)**",
+            "Plugins": "🧩 **插件与扩展管理 (Plugins)**",
+            "Exit": "🚪 **退出与会话结束 (Exit)**",
+        }
+
+        def _zh_gateway_help_lines(allowed: Optional[Any] = None) -> list[str]:
+            overrides = hc._resolve_config_gates()
+            allowed_set = None if allowed is None else set(allowed)
+
+            # 收集并按分类归档命令
+            grouped: dict[str, list[str]] = {}
+            for cmd in hc.COMMAND_REGISTRY:
+                if not hc._is_gateway_available(cmd, overrides):
+                    continue
+                if allowed_set is not None and cmd.name not in allowed_set:
+                    continue
+                args = f" {cmd.args_hint}" if cmd.args_hint else ""
+                alias_parts = [f"`/{a}`" for a in (cmd.aliases or []) if (a.replace("-", "_") and a != cmd.name)]
+                alias_note = f" (alias: {', '.join(alias_parts)})" if alias_parts else ""
+                cat = cmd.category or "Other"
+                entry = f"`/{cmd.name}{args}` -- {cmd.description}{alias_note}"
+                grouped.setdefault(cat, []).append(entry)
+
+            # 补充插件命令
+            try:
+                for pname, pdesc, pargs in hc._iter_plugin_command_entries():
+                    if allowed_set is not None and pname not in allowed_set:
+                        continue
+                    args_hint = f" {pargs}" if pargs else ""
+                    entry = f"`/{pname}{args_hint}` -- {pdesc}"
+                    if not any(f"`/{pname}" in line for lines in grouped.values() for line in lines):
+                        grouped.setdefault("Plugins", []).append(entry)
+            except Exception:
+                pass
+
+            output_lines: list[str] = []
+            # 按既定顺序输出各分类
+            all_cats = CATEGORY_ORDER + [c for c in grouped if c not in CATEGORY_ORDER]
+            for cat in all_cats:
+                entries = grouped.get(cat)
+                if not entries:
+                    continue
+                header = CATEGORY_HEADERS.get(cat, f"📁 **{cat}**")
+                output_lines.append("")
+                output_lines.append(header)
+                output_lines.extend(entries)
+
+            # 去除开头的空行
+            if output_lines and output_lines[0] == "":
+                output_lines.pop(0)
+
+            return output_lines
+
+        hc.gateway_help_lines = _zh_gateway_help_lines
+        hc._hermes_zh_help_formatted = True
+        return True
+    except Exception as exc:
+        logger.warning("patch_help_formatting failed: %s", exc)
+        return False
+
 def patch_command_registry() -> bool:
     """Safely update COMMAND_REGISTRY command descriptions to idiomatic Chinese."""
     try:
@@ -1866,7 +2040,7 @@ _hermes_zh_all_applied = False
 
 
 def apply_all() -> bool:
-    """Apply standalone patches (display verbs, builders, fallback, activity, runner, review, tips, i18n, registry, slash, context_breakdown, fallback_notice) idempotently."""
+    """Apply standalone patches (display verbs, builders, fallback, activity, runner, review, tips, i18n, registry, slash, context_breakdown, fallback_notice, command registration, help formatting) idempotently."""
     global _hermes_zh_all_applied
     if _hermes_zh_all_applied:
         return True
@@ -1881,5 +2055,7 @@ def apply_all() -> bool:
     ok9 = patch_slash_commands()
     ok10 = patch_context_breakdown()
     ok11 = patch_fallback_notice()
+    ok12 = patch_plugin_command_registration()
+    ok13 = patch_help_formatting()
     _hermes_zh_all_applied = True
-    return ok1 or ok2 or ok3 or ok4 or ok5 or ok6 or ok7 or ok8 or ok9 or ok10 or ok11
+    return any([ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11, ok12, ok13])
