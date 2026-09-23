@@ -565,6 +565,8 @@ SYSTEM_NOTICES_PATTERNS: list[tuple[str, str]] = [
     (r"(?i)Already on the latest version\.", "当前已是最新版本。"),
     (r"(?i)No updates available\.", "暂无可用更新。"),
     (r"(?i)Updating Hermes Agent\.\.\.", "正在更新 Hermes Agent..."),
+    (r"(?i)⚠️?\s*File-mutation verifier:\s*(\d+)\s*file edit\(s\)\s*FAILED this turn despite any wording above that may suggest otherwise\.\s*Run `?git status`? or `?read_file`? to confirm what actually landed\.?",
+     r"⚠️ 文件修改验证器：本轮有 \1 个文件编辑失败（无论上方文字如何表述）。请运行 git status 或 read_file 确认实际落盘情况。"),
 ]
 
 
@@ -1026,12 +1028,104 @@ def translate_fallback_notice(content: str) -> str:
     return res
 
 
+
+
+def translate_file_mutation_verifier(text: str) -> str:
+    """Translate Hermes File-mutation verifier notices and write_file overwrite refusals."""
+    if not isinstance(text, str):
+        return text
+
+    # 1. Header: ⚠️ File-mutation verifier: (\d+) file edit(s) FAILED this turn...
+    pat_head = re.compile(
+        r'⚠️?\s*File-mutation verifier:\s*(\d+)\s*file edit\(s\)\s*FAILED this turn despite any wording above that may suggest otherwise\.\s*Run\s*`?git status`?\s*or\s*`?read_file`?\s*to confirm what actually landed\.?',
+        re.IGNORECASE,
+    )
+    text = pat_head.sub(
+        r'⚠️ 文件修改验证器：本轮有 \1 个文件编辑失败（无论上方文字如何表述）。请运行 git status 或 read_file 确认实际落盘情况。',
+        text,
+    )
+
+    # 2. Refusing to overwrite (.*?): (.*?) exists but this task has not seen its full current content (.*?)
+    # ➔ 拒绝覆盖 :  已存在但本次任务尚未读取其当前完整内容（）。
+    def _rep_refuse_unseen(m: re.Match[str]) -> str:
+        target1 = m.group(1).strip()
+        target2 = m.group(2).strip()
+        tail = m.group(3).strip()
+        tail = tail.rstrip(".").strip()
+        if tail.startswith("(") and tail.endswith(")"):
+            tail = tail[1:-1].strip()
+        elif tail.startswith("("):
+            tail = tail[1:].strip()
+        elif tail.endswith(")"):
+            tail = tail[:-1].strip()
+        tail = tail.rstrip(".").strip()
+        if tail:
+            return f"拒绝覆盖 {target1}: {target2} 已存在但本次任务尚未读取其当前完整内容（{tail}）。"
+        return f"拒绝覆盖 {target1}: {target2} 已存在但本次任务尚未读取其当前完整内容。"
+
+    pat_refuse_unseen = re.compile(
+        r'Refusing to overwrite\s+(.*?):\s*(.*?)\s+exists but this task has not seen its full current content\s*(.*?)(?=(?:\s*The file was NOT modified|\n|$))',
+        re.IGNORECASE,
+    )
+    text = pat_refuse_unseen.sub(_rep_refuse_unseen, text)
+
+    # 3. Read file guidance
+    text = re.sub(
+        r'Read the file\s*—\s*every page of it,\s*if it needs offset/limit\s*—\s*or use patch for a targeted edit;\s*a stale conversation copy must not overwrite the current disk content\.?',
+        '请读取文件（若需要 offset/limit 请读取其每一页），或使用 patch 进行定向编辑；切勿使用陈旧的对话副本覆盖当前磁盘内容。',
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    # 4. Refusing to overwrite existing PDF / binary file
+    text = re.sub(
+        r'Refusing to overwrite existing PDF [\'\"]?(.*?)[\'\"]? with plain text[^\n]*',
+        r'拒绝使用纯文本覆盖已有 PDF 文件 \1。',
+        text,
+        flags=re.IGNORECASE,
+    )
+    text = re.sub(
+        r'Refusing to overwrite existing binary file [\'\"]?(.*?)[\'\"]?\s*\((.*?)\)\s*with plain text[^\n]*',
+        r'拒绝使用纯文本覆盖已有二进制文件 \1 (\2)。',
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    # 5. Modified since last read
+    text = re.sub(
+        r'(\S+)\s+was modified since you last read it\s*\(external edit or concurrent agent\)\.\s*Re-read the file before writing\.?',
+        r'\1 自上次读取后已被修改（外部编辑或并发代理）。请在写入前重新读取该文件。',
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    # 6. Remaining file edits overflow
+    text = re.sub(
+        r'•\s*… and (\d+) more',
+        r'• … 以及另外 \1 个',
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    # 7. File was not modified advice
+    text = re.sub(
+        r'The file was NOT modified\.\s*Reload the current contents with read_file\s*\(every page, for a file that needs offset/limit\),\s*merge the requested change,\s*then call write_file again\.\s*For small edits, prefer patch so existing unrelated changes are preserved\.?',
+        r'文件未被修改。请使用 read_file 重新加载当前内容（需要 offset/limit 的文件请加载每一页），合并所需更改后再次调用 write_file。对于小范围编辑，建议优先使用 patch 以保留现有不相关的修改。',
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    return text
+
+
 def translate_telegram_content(content: str) -> str:
     """Translate non-conversational system notices passing through Telegram adapter."""
     if not isinstance(content, str):
         return content
     content = sanitize_literal_newlines(content)
     content = translate_fallback_notice(content)
+    if "File-mutation verifier" in content or "Refusing to overwrite" in content:
+        content = translate_file_mutation_verifier(content)
     # 0. Lifecycle & System Notices (gateway restart, shutdown, update, online, db warnings)
     for pat, rep in SYSTEM_NOTICES_PATTERNS:
         if re.search(pat, content):
@@ -1535,7 +1629,7 @@ def patch_plugin_command_registration() -> bool:
                 def _exec_hermes_zh_gateway(ctx: Any) -> Any:
                     from hermes_cli.slash_exec import CommandReply
                     return CommandReply(
-                        "hermes-zh v0.1.2\n问题反馈与建议：https://github.com/Cody292/hermes-zh/issues",
+                        "hermes-zh版本：v0.1.2\n问题反馈与建议：https://github.com/Cody292/hermes-zh/issues",
                         format="markdown",
                     )
                 se._DISPATCH_MAP["gateway_hermes_zh"] = _exec_hermes_zh_gateway
@@ -1543,6 +1637,90 @@ def patch_plugin_command_registration() -> bool:
         return True
     except Exception as exc:
         logger.warning("patch_plugin_command_registration failed: %s", exc)
+        return False
+
+
+
+
+def patch_turn_explainers() -> bool:
+    """Patch TurnExplainersMixin to localize file mutation verifier failure footers at generation time."""
+    try:
+        from agent.turn_explainers import TurnExplainersMixin
+        if getattr(TurnExplainersMixin, "_hermes_zh_explainer_patched", False):
+            return True
+        orig_func = getattr(TurnExplainersMixin, "_format_file_mutation_failure_footer", None)
+        if orig_func is not None:
+            @classmethod
+            def _zh_format_file_mutation_failure_footer(cls, failed: Dict[str, Dict[str, Any]]) -> str:
+                footer = orig_func(failed)
+                return translate_file_mutation_verifier(footer)
+
+            TurnExplainersMixin._format_file_mutation_failure_footer = _zh_format_file_mutation_failure_footer
+            TurnExplainersMixin._hermes_zh_explainer_patched = True
+            return True
+    except Exception as exc:
+        logger.debug("patch_turn_explainers skipped: %s", exc)
+    return False
+
+
+def patch_telegram_menu_priority() -> bool:
+    """Ensure /hermes_zh is prioritized in Telegram bot menu and survives max_commands truncations."""
+    try:
+        import hermes_cli.commands_platforms as cp
+        if getattr(cp, "_hermes_zh_menu_priority_patched", False):
+            return True
+
+        orig_prioritize = getattr(cp, "_prioritize_telegram_menu_candidates", None)
+        if orig_prioritize is not None:
+            def _zh_prioritize_telegram_menu_candidates(
+                candidates: list[tuple[str, str, str, str]]
+            ) -> list[tuple[str, str, str, str]]:
+                ordered = list(orig_prioritize(candidates))
+                zh_cand = None
+                zh_idx = -1
+                for idx, c in enumerate(ordered):
+                    if c[0] in ("hermes_zh", "hermes-zh") or c[3] in ("hermes_zh", "hermes-zh"):
+                        zh_cand = c
+                        zh_idx = idx
+                        break
+                if zh_cand is not None and zh_idx > 1:
+                    ordered.pop(zh_idx)
+                    insert_pos = 1 if (ordered and ordered[0][0] == "help") else 0
+                    ordered.insert(insert_pos, zh_cand)
+                return ordered
+
+            cp._prioritize_telegram_menu_candidates = _zh_prioritize_telegram_menu_candidates
+
+        orig_menu_cmds = getattr(cp, "telegram_menu_commands", None)
+        if orig_menu_cmds is not None:
+            def _zh_telegram_menu_commands(max_commands: int = 100) -> tuple[list[tuple[str, str]], int]:
+                menu, hidden = orig_menu_cmds(max_commands=max_commands)
+                has_zh = any(name in ("hermes_zh", "hermes-zh") for name, _ in menu)
+                if not has_zh:
+                    desc = "查看汉化插件版本与反馈链接"
+                    try:
+                        from hermes_cli.plugins import get_plugin_commands
+                        plugin_cmds = get_plugin_commands()
+                        if "hermes_zh" in plugin_cmds:
+                            desc = plugin_cmds["hermes_zh"].get("description", desc)
+                        elif "hermes-zh" in plugin_cmds:
+                            desc = plugin_cmds["hermes-zh"].get("description", desc)
+                    except Exception:
+                        pass
+                    norm_desc = cp._normalize_telegram_desc(desc)
+                    insert_pos = 1 if (menu and menu[0][0] == "help") else 0
+                    if len(menu) >= max_commands:
+                        menu = menu[: max_commands - 1]
+                        hidden += 1
+                    menu.insert(insert_pos, ("hermes_zh", norm_desc))
+                return menu, hidden
+
+            cp.telegram_menu_commands = _zh_telegram_menu_commands
+
+        cp._hermes_zh_menu_priority_patched = True
+        return True
+    except Exception as exc:
+        logger.debug("patch_telegram_menu_priority skipped: %s", exc)
         return False
 
 
@@ -1833,6 +2011,21 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
                 adapter.edit_message = _zh_edit_message
 
             adapter._hermes_zh_send_wired = True
+
+        # 6. Ensure Telegram command menu includes /hermes_zh and refresh active bot menu if connected
+        patch_telegram_menu_priority()
+        if getattr(adapter, "_bot", None) is not None:
+            try:
+                import asyncio
+                reg_menu = getattr(adapter, "_register_command_menu", None)
+                if callable(reg_menu):
+                    try:
+                        loop = asyncio.get_running_loop()
+                        loop.create_task(reg_menu())
+                    except RuntimeError:
+                        pass
+            except Exception as exc:
+                logger.debug("Could not refresh telegram command menu: %s", exc)
         return True
     except Exception as exc:
         logger.error("wire_telegram_adapter failed: %s", exc, exc_info=True)
@@ -2057,5 +2250,7 @@ def apply_all() -> bool:
     ok11 = patch_fallback_notice()
     ok12 = patch_plugin_command_registration()
     ok13 = patch_help_formatting()
+    ok14 = patch_telegram_menu_priority()
+    ok15 = patch_turn_explainers()
     _hermes_zh_all_applied = True
-    return any([ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11, ok12, ok13])
+    return any([ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11, ok12, ok13, ok14, ok15])

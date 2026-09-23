@@ -16,7 +16,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from . import hermes_zh_patcher as patcher
+try:
+    from . import hermes_zh_patcher as patcher
+except ImportError:
+    import hermes_zh_patcher as patcher
 
 __all__ = ["register", "patcher"]
 
@@ -29,7 +32,7 @@ def _status(_raw_args: str = "") -> str:
     patcher.apply_all()
     v_str = f"v{VERSION}" if not str(VERSION).startswith("v") else str(VERSION)
     return (
-        f"{PLUGIN_NAME} {v_str}\n"
+        f"{PLUGIN_NAME}版本：{v_str}\n"
         "问题反馈与建议：https://github.com/Cody292/hermes-zh/issues"
     )
 
@@ -77,5 +80,9 @@ def register(ctx) -> None:
     # 4. Ensure command registry entry for autocomplete and menu discovery
     try:
         patcher.patch_plugin_command_registration()
+    except Exception:
+        pass
+    try:
+        patcher.patch_telegram_menu_priority()
     except Exception:
         pass
