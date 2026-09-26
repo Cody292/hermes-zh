@@ -2171,9 +2171,50 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
                         pass
             except Exception as exc:
                 logger.debug("Could not refresh telegram command menu: %s", exc)
+
+        # 7. Wire multi-platform interactive card handler for Telegram
+        try:
+            try:
+                from . import card_adapter
+            except ImportError:
+                import card_adapter
+            card_adapter.wire_telegram_card_handler(native, adapter)
+        except Exception as exc:
+            logger.debug("Failed to wire telegram card handler: %s", exc)
+
         return True
     except Exception as exc:
         logger.error("wire_telegram_adapter failed: %s", exc, exc_info=True)
+        return False
+
+
+def wire_discord_adapter(native: Any, adapter: Any) -> bool:
+    """Wire Simplified Chinese settings and card handlers into Discord adapter."""
+    try:
+        apply_all()
+        try:
+            from . import card_adapter
+        except ImportError:
+            import card_adapter
+        card_adapter.wire_discord_card_handler(native, adapter)
+        return True
+    except Exception as exc:
+        logger.error("wire_discord_adapter failed: %s", exc, exc_info=True)
+        return False
+
+
+def wire_feishu_adapter(native: Any, adapter: Any) -> bool:
+    """Wire Simplified Chinese settings and card handlers into Feishu adapter."""
+    try:
+        apply_all()
+        try:
+            from . import card_adapter
+        except ImportError:
+            import card_adapter
+        card_adapter.wire_feishu_card_handler(native, adapter)
+        return True
+    except Exception as exc:
+        logger.error("wire_feishu_adapter failed: %s", exc, exc_info=True)
         return False
 
 

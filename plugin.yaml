@@ -1,6 +1,6 @@
 name: hermes-zh
-version: "0.1.3"
-description: "官方正规生命周期·纯懒加载 Simplified Chinese 汉化插件（覆盖 102 条指令菜单/审批卡与超时提示/高危原因/动词汉化/网关状态与上下文面板/380条Tips精翻/系统通知多层拦截与官方 i18n 协同）"
+version: "0.1.4-dev"
+description: "官方正规生命周期·纯懒加载 Simplified Chinese 汉化插件（覆盖 102 条指令菜单/审批卡与超时提示/高危原因/动词汉化/网关状态与上下文面板/380条Tips精翻/系统通知多层拦截/多平台交互弹卡与官方 i18n 协同）"
 author: "Cody"
 license: "MIT"
 kind: standalone
@@ -9,6 +9,8 @@ tags:
   - localization
   - chinese
   - telegram
+  - discord
+  - feishu
   - gateway
 provides_hooks:
   - on_session_start
