@@ -1,7 +1,7 @@
 # hermes-zh: Hermes 官方原生简体中文汉化插件 / Simplified Chinese Localization Plugin for Hermes Agent
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-green.svg)](#)
+[![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-green.svg)](#)
 [![Hermes: Plugin](https://img.shields.io/badge/Hermes-Native%20Plugin-purple.svg)](#)
 
 [中文文档](#中文文档) | [English Documentation](#english-documentation)

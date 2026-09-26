@@ -24,7 +24,7 @@ except ImportError:
 __all__ = ["register", "patcher"]
 
 PLUGIN_NAME = "hermes-zh"
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 
 
 def _status(_raw_args: str = "") -> str:

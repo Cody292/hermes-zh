@@ -512,11 +512,12 @@ AUTO_RESET_PATTERNS = [
 ]
 
 def _translate_time_window(window_str: str) -> str:
-    """Convert '5 minutes', '90 seconds', '2 hours' to natural Chinese."""
-    w = window_str.strip()
-    w = re.sub(r"(\d+)\s*minutes?", r"\1 分钟", w, flags=re.IGNORECASE)
-    w = re.sub(r"(\d+)\s*seconds?", r"\1 秒", w, flags=re.IGNORECASE)
-    w = re.sub(r"(\d+)\s*hours?", r"\1 小时", w, flags=re.IGNORECASE)
+    """Convert '5 minutes', '90 seconds', '2 hours', '5 mins', '5m', '300s' to natural Chinese."""
+    w = str(window_str or "").strip()
+    w = re.sub(r"(\d+)\s*(?:seconds?|secs?|s\b)", r"\1 秒", w, flags=re.IGNORECASE)
+    w = re.sub(r"(\d+)\s*(?:minutes?|mins?|m\b)", r"\1 分钟", w, flags=re.IGNORECASE)
+    w = re.sub(r"(\d+)\s*(?:hours?|hrs?|h\b)", r"\1 小时", w, flags=re.IGNORECASE)
+    w = re.sub(r"(\d+)\s*(?:days?|d\b)", r"\1 天", w, flags=re.IGNORECASE)
     return w
 
 
@@ -535,8 +536,18 @@ SYSTEM_NOTICES_PATTERNS: list[tuple[str, str]] = [
     # 审批超时与截止时间提示（覆盖平台卡片与网关提示）
     (r"(?i)(?:⌛|\[WAIT\])\s*Approval timed out after\s*([0-9a-zA-Z\s]+?)\s*[—\-]\s*the command was NOT run\.\s*Ask me to try again if you still want it,\s*or raise approvals\.timeout in config\.yaml\.?",
      _replace_approval_timed_out),
-    (r"(?i)If you don't answer within\s*([0-9a-zA-Z\s]+?)\s*it will NOT run\.?",
+    (r"(?i)If you (?:don['’]t|do not) answer within\s*([0-9a-zA-Z\s]+?)\s*,?\s*(?:it|the command)\s+will NOT run\.?",
      _replace_approval_deadline),
+    (r"(?i)If you don't answer within 5 minutes it will NOT run\.?",
+     "如果在 5 分钟内未回复，命令将不会执行。"),
+    (r"(?i)No answer within\s*([0-9a-zA-Z\s]+?)\s*[—\-]\s*the\s+(?:command|action)\s+did not run\.?",
+     lambda m: f"在 {_translate_time_window(m.group(1))}内未收到回复 — 该命令未执行。"),
+    (r"(?i)BLOCKED:\s*Command timed out without user response\.\s*Silence is not consent\.?",
+     "拦截：命令在用户未回复的情况下超时。保持沉默不代表同意。"),
+    (r"(?i)BLOCKED:\s*Action timed out without user response\.\s*Silence is not consent\.?",
+     "拦截：操作在用户未回复的情况下超时。保持沉默不代表同意。"),
+    (r"(?i)Silence is not consent", "保持沉默不代表同意"),
+    (r"(?i)timed out without user response", "超时且未收到用户回复"),
     (r"(?i)Hermes wants to run a command that needs your OK", "Hermes 想要运行需要您批准的命令"),
     (r"(?i)Why it was flagged", "标记原因"),
     (r"(?i)⚠️?\s*Approval expired\s*\(agent is no longer waiting\)\.\s*Ask the agent to try again\.?",
@@ -1502,9 +1513,15 @@ def patch_gateway_fallback() -> bool:
             choices.append(f"`{command_prefix}deny` 取消执行")
 
             desc_zh = translate_reason(description)
+            try:
+                from gateway.platforms.base_exec_approval import approval_timeout_seconds, format_approval_deadline_line
+                deadline_str = format_approval_deadline_line(approval_timeout_seconds())
+            except Exception:
+                deadline_str = "如果在 5 分钟内未回复，命令将不会执行。"
             return (
                 f"{heading}\n```\n{cmd_preview}\n```\n原因: {desc_zh}\n\n"
-                + "，".join(choices[:-1]) + f"，或 {choices[-1]}。"
+                + "，".join(choices[:-1]) + f"，或 {choices[-1]}。\n"
+                + deadline_str
             )
 
         gr._format_exec_approval_fallback = _patched_format_exec_approval_fallback
@@ -1513,6 +1530,112 @@ def patch_gateway_fallback() -> bool:
     except Exception as exc:
         logger.debug("patch_gateway_fallback skipped: %s", exc)
         return False
+
+def patch_base_exec_approval() -> bool:
+    """Safely patch gateway.platforms.base_exec_approval to localize approval prompt texts, notices, and deadlines."""
+    try:
+        import gateway.platforms.base_exec_approval as bea
+        if getattr(bea, "_hermes_zh_bea_patched", False):
+            return True
+
+        bea.EA_HEADER_TEXT = "需要命令执行审批"
+        bea.EA_REASON_LABEL_TEXT = "原因"
+        bea.APPROVAL_TIMED_OUT_NOTICE = (
+            "⌛ 审批在 {window}后超时 — 该命令未执行。如果仍需执行，请让我重试，或在 config.yaml 中调高 approvals.timeout。"
+        )
+
+        orig_deadline_fn = getattr(bea, "format_approval_deadline_line", None)
+        def _zh_format_approval_deadline_line(timeout_s: int) -> str:
+            raw_win = bea.format_approval_window(timeout_s)
+            zh_win = _translate_time_window(raw_win)
+            return f"如果在 {zh_win}内未回复，命令将不会执行。"
+        bea.format_approval_deadline_line = _zh_format_approval_deadline_line
+
+        orig_timeout_notice_fn = getattr(bea, "format_approval_timed_out_notice", None)
+        def _zh_format_approval_timed_out_notice(timeout_s: int) -> str:
+            raw_win = bea.format_approval_window(timeout_s)
+            zh_win = _translate_time_window(raw_win)
+            return bea.APPROVAL_TIMED_OUT_NOTICE.format(window=zh_win)
+        bea.format_approval_timed_out_notice = _zh_format_approval_timed_out_notice
+
+        # 同步更新已导入模块对这些函数和常量的引用
+        if "gateway.platforms.base" in sys.modules:
+            try:
+                import gateway.platforms.base as gpb
+                gpb.format_approval_deadline_line = bea.format_approval_deadline_line
+                gpb.EA_HEADER_TEXT = bea.EA_HEADER_TEXT
+                gpb.EA_REASON_LABEL_TEXT = bea.EA_REASON_LABEL_TEXT
+                if hasattr(gpb, "BasePlatformAdapter"):
+                    def _base_ea_deadline_line(self) -> str:
+                        raw_win = bea.format_approval_window(bea.approval_timeout_seconds())
+                        zh_win = _translate_time_window(raw_win)
+                        return self._EA_DEADLINE_PREFIX + self._ea_escape(f"如果在 {zh_win}内未回复，命令将不会执行。")
+                    gpb.BasePlatformAdapter._ea_deadline_line = _base_ea_deadline_line
+                    gpb.BasePlatformAdapter._EA_HEADER = f"⚠️ {bea.EA_HEADER_TEXT}\n\n"
+                    gpb.BasePlatformAdapter._EA_REASON_LABEL = f"{bea.EA_REASON_LABEL_TEXT}: "
+                    gpb.BasePlatformAdapter._EA_SMART_DENY_LINE = "\n\n智能拦截：管理员覆盖仅适用于本次单次操作。"
+                    gpb.BasePlatformAdapter._EA_ACTION_LABELS = {
+                        "once": "✅ 允许一次",
+                        "session": "✅ 本会话允许",
+                        "always": "🔒 永久允许",
+                        "deny": "❌ 拒绝",
+                    }
+            except Exception as e:
+                logger.debug("patch gateway.platforms.base references skipped: %s", e)
+
+        if "gateway.run_turn_runner_approval_settle" in sys.modules:
+            try:
+                import gateway.run_turn_runner_approval_settle as asettle
+                asettle.format_approval_timed_out_notice = bea.format_approval_timed_out_notice
+            except Exception as e:
+                logger.debug("patch run_turn_runner_approval_settle references skipped: %s", e)
+
+        bea._hermes_zh_bea_patched = True
+        return True
+    except Exception as exc:
+        logger.debug("patch_base_exec_approval skipped: %s", exc)
+        return False
+
+
+def patch_approval_tools() -> bool:
+    """Safely patch tools.approval _user_summary to localize completion user summary lines."""
+    try:
+        import tools.approval as ta
+        if getattr(ta, "_hermes_zh_approval_tools_patched", False):
+            return True
+
+        zh_summaries = {
+            "once": "您已允许本次执行该{noun}。",
+            "session": "您已在本次会话中允许该{noun}。",
+            "always": "您已将该{noun}加入永久允许列表。",
+            "denied": "您拒绝了该{noun} — 未执行。",
+            "timeout": "{minutes} 内未收到回复 — 该{noun}未执行。",
+            "notify_failed": "审批请求无法送达 — 该{noun}未执行。",
+            "cancelled": "审批提示已被撤回或未能送达 — 该{noun}未执行。",
+            "blocked": "在无人值守会话中不允许执行该{noun} — 未执行。",
+            "refused": "该{noun}已被拦截 — 未执行。",
+        }
+        noun_map = {
+            "command": "命令",
+            "action": "操作",
+            "operation": "操作",
+        }
+
+        def _zh_user_summary(outcome: str, noun: str = "command") -> str:
+            from tools.approval_context import _get_approval_timeout, format_approval_window
+            window = format_approval_window(_get_approval_timeout())
+            zh_window = _translate_time_window(window)
+            zh_noun = noun_map.get(noun, noun)
+            tpl = zh_summaries.get(outcome, "该{noun}未执行。")
+            return tpl.format(noun=zh_noun, minutes=zh_window)
+
+        ta._user_summary = _zh_user_summary
+        ta._hermes_zh_approval_tools_patched = True
+        return True
+    except Exception as exc:
+        logger.debug("patch_approval_tools skipped: %s", exc)
+        return False
+
 
 
 def patch_tips() -> bool:
@@ -1902,13 +2025,27 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
             "deny": "❌ 拒绝",
         }
 
+        # 1.1 Wire localized deadline line
+        def _zh_telegram_deadline_line() -> str:
+            try:
+                from gateway.platforms.base_exec_approval import approval_timeout_seconds, format_approval_window
+                raw_win = format_approval_window(approval_timeout_seconds())
+                zh_win = _translate_time_window(raw_win)
+            except Exception:
+                zh_win = "5 分钟"
+            esc_fn = getattr(adapter, "_ea_escape", lambda s: s)
+            prefix = getattr(adapter, "_EA_DEADLINE_PREFIX", "\n\n")
+            return prefix + esc_fn(f"如果在 {zh_win}内未回复，命令将不会执行。")
+        adapter._ea_deadline_line = _zh_telegram_deadline_line
+
         # 2. Safe format wrapper with strict anti-recursion guard
         if not getattr(adapter, "_hermes_zh_wired", False):
             orig_format = getattr(adapter, "_format_exec_approval", None)
             if orig_format is not None:
                 def _zh_format_exec_approval(command: str, description: str = "dangerous command", smart_denied: bool = False) -> str:
                     zh_desc = translate_reason(description)
-                    return orig_format(command, zh_desc, smart_denied)
+                    res = orig_format(command, zh_desc, smart_denied)
+                    return translate_telegram_content(res)
 
                 adapter._format_exec_approval = _zh_format_exec_approval
             adapter._hermes_zh_wired = True
@@ -2009,6 +2146,14 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
                     content_zh = translate_telegram_content(content)
                     return await orig_edit_message(chat_id, message_id, content_zh, finalize=finalize, metadata=metadata)
                 adapter.edit_message = _zh_edit_message
+
+            # 5.1 Safe control-style message interceptor (approval cards, clarify, confirmation prompts)
+            orig_send_ctrl = getattr(adapter, "_send_control_message", None)
+            if orig_send_ctrl is not None:
+                async def _zh_send_control_message(chat_id: str, text: str, *args: Any, **kwargs: Any) -> Any:
+                    text_zh = translate_telegram_content(text)
+                    return await orig_send_ctrl(chat_id, text_zh, *args, **kwargs)
+                adapter._send_control_message = _zh_send_control_message
 
             adapter._hermes_zh_send_wired = True
 
@@ -2252,5 +2397,7 @@ def apply_all() -> bool:
     ok13 = patch_help_formatting()
     ok14 = patch_telegram_menu_priority()
     ok15 = patch_turn_explainers()
+    ok16 = patch_base_exec_approval()
+    ok17 = patch_approval_tools()
     _hermes_zh_all_applied = True
-    return any([ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11, ok12, ok13, ok14, ok15])
+    return any([ok1, ok2, ok3, ok4, ok5, ok6, ok7, ok8, ok9, ok10, ok11, ok12, ok13, ok14, ok15, ok16, ok17])
