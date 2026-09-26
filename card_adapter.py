@@ -33,6 +33,11 @@ PLATFORM_CLI = "cli"
 ACTION_UPDATE = "update"
 ACTION_CANCEL = "cancel"
 
+# 本地开发模式更新报错标准化提示
+LOCAL_DEV_UPDATE_HINT = (
+    "当前为本地开发版，官方更新命令仅适用于通过 hermes plugins install 安装的官方社区版"
+)
+
 # 运行时活动 Adapter 缓存（弱耦合解耦）
 _active_adapters: Dict[str, Any] = {}
 
@@ -139,11 +144,23 @@ async def run_async_update(
 
             return True, out_msg or "插件更新成功", target_version or "最新"
         else:
+            raw_err = (err_msg + " " + out_msg).strip()
+            # 优雅捕获本地开发模式（无 .git 目录导致官方命令报错）
+            if (
+                "no .git directory" in raw_err
+                or "not installed from git" in raw_err
+                or "Cannot update" in raw_err
+                or not (Path(__file__).resolve().parent / ".git").is_dir()
+            ):
+                return False, LOCAL_DEV_UPDATE_HINT, ""
             fail_reason = err_msg or out_msg or f"进程退出码 {proc.returncode}"
             return False, fail_reason, ""
     except Exception as exc:
         logger.error("真实更新执行异常: %s", exc, exc_info=True)
-        return False, str(exc), ""
+        raw_exc = str(exc)
+        if "no .git directory" in raw_exc or "not installed from git" in raw_exc:
+            return False, LOCAL_DEV_UPDATE_HINT, ""
+        return False, raw_exc, ""
 
 
 # ============================================================================
@@ -254,11 +271,17 @@ async def _execute_telegram_update_flow(query: Any, is_test: bool, target_versio
                 "插件已平滑重载生效，请在会话中继续使用。"
             )
         else:
-            done_text = (
-                f"{PLUGIN_NAME} 汉化插件\n"
-                f"更新未完成：{message}\n"
-                "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
-            )
+            if message == LOCAL_DEV_UPDATE_HINT or "本地开发版" in message:
+                done_text = (
+                    f"{PLUGIN_NAME} 汉化插件\n"
+                    f"更新提示：{message}"
+                )
+            else:
+                done_text = (
+                    f"{PLUGIN_NAME} 汉化插件\n"
+                    f"更新未完成：{message}\n"
+                    "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
+                )
         await query.edit_message_text(text=done_text, reply_markup=None)
     except Exception as exc:
         logger.debug("Telegram 更新结果卡片编辑失败: %s", exc)
@@ -454,11 +477,17 @@ async def _execute_discord_update_flow(interaction: Any, is_test: bool, target_v
             "插件已平滑重载生效，请在会话中继续使用。"
         )
     else:
-        done_text = (
-            f"{PLUGIN_NAME} 汉化插件\n"
-            f"更新未完成：{message}\n"
-            "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
-        )
+        if message == LOCAL_DEV_UPDATE_HINT or "本地开发版" in message:
+            done_text = (
+                f"{PLUGIN_NAME} 汉化插件\n"
+                f"更新提示：{message}"
+            )
+        else:
+            done_text = (
+                f"{PLUGIN_NAME} 汉化插件\n"
+                f"更新未完成：{message}\n"
+                "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
+            )
 
     try:
         followup = getattr(interaction, "followup", None)
@@ -688,11 +717,17 @@ async def _execute_feishu_update_flow(
             "插件已平滑重载生效，请在会话中继续使用。"
         )
     else:
-        done_text = (
-            f"{PLUGIN_NAME} 汉化插件\n"
-            f"更新未完成：{message}\n"
-            "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
-        )
+        if message == LOCAL_DEV_UPDATE_HINT or "本地开发版" in message:
+            done_text = (
+                f"{PLUGIN_NAME} 汉化插件\n"
+                f"更新提示：{message}"
+            )
+        else:
+            done_text = (
+                f"{PLUGIN_NAME} 汉化插件\n"
+                f"更新未完成：{message}\n"
+                "提示：您也可在终端执行 hermes plugins update hermes-zh 手动更新。"
+            )
 
     try:
         send_fn = getattr(adapter, "send", None)
@@ -770,7 +805,7 @@ def dispatch_status(raw_args: str = "", current_version: str = "0.1.4") -> str:
     """分发 /hermes_zh 命令：多平台交互弹卡与优雅降级统一入口。
 
     1. 解析测试指令与强制刷新参数；
-    2. 统一执行先锋源与 Curated Catalog 检测；
+    2. 统一执行官方 Curated Catalog 检测；
     3. 若检测到新版本（或处于测试模拟模式）：
        - 在 Telegram 环境下发原生 InlineKeyboardMarkup 交互卡；
        - 在 Discord 环境下发 Message Component 交互卡；

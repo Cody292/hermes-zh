@@ -1,20 +1,19 @@
-"""Hermes-zh plugin: Version checker aligned with Curated Catalog and Pioneer Releases.
+"""Hermes-zh plugin: Version checker strictly aligned with Official Curated Catalog.
 
 Conforms strictly to Hermes plugin guidelines:
 1. Pure lazy loading (zero network/eager requests at import or register time).
-2. Short network timeout (<= 1.5s) preventing slash command response blocking.
-3. Local TTL caching (6 hours) reducing unnecessary remote round-trips.
-4. Failure cooldown preventing consecutive timeout stalls on network drops.
-5. Multi-channel pioneer detection: GitHub Releases + default branches (main/master) raw + Contents API.
+2. Sole version source: Hermes Official Curated Catalog (LIVE_CATALOG_URL).
+3. Short network timeout (<= 1.5s) preventing slash command response blocking.
+4. Local TTL caching (6 hours) reducing unnecessary remote round-trips.
+5. Failure cooldown (60s) preventing consecutive timeout stalls on network drops.
 6. Semantic versioning (SemVer) with -dev / prerelease support.
-7. Forced test simulation support for real interactive card testing.
+7. Isolated developer test mode for interactive card UI testing.
 8. Cross-platform standardized output without any emoji.
 
 Author: Cody
 """
 from __future__ import annotations
 
-import base64
 import json
 import logging
 import os
@@ -30,15 +29,6 @@ logger = logging.getLogger("hermes_zh.version_checker")
 
 PLUGIN_NAME = "hermes-zh"
 LIVE_CATALOG_URL = "https://hermes-agent.nousresearch.com/docs/api/plugin-catalog.json"
-PIONEER_GITHUB_OWNER = "Cody292"
-PIONEER_GITHUB_REPO = "hermes-zh"
-PIONEER_BRANCHES = ("main", "master")
-PIONEER_RAW_URL = (
-    f"https://raw.githubusercontent.com/{PIONEER_GITHUB_OWNER}/{PIONEER_GITHUB_REPO}/main/plugin.yaml"
-)
-PIONEER_API_URL = (
-    f"https://api.github.com/repos/{PIONEER_GITHUB_OWNER}/{PIONEER_GITHUB_REPO}/releases/latest"
-)
 
 LIVE_CATALOG_TTL_SECONDS = 6 * 60 * 60  # 6 小时本地缓存
 LIVE_CATALOG_FAILURE_TTL_SECONDS = 60.0  # 失败冷却时间 60 秒
@@ -76,6 +66,7 @@ def get_cache_dir() -> Path:
             cache_dir = Path(hermes_home) / "cache"
         else:
             cache_dir = Path.home() / ".hermes" / "cache"
+
     try:
         cache_dir.mkdir(parents=True, exist_ok=True)
         return cache_dir
@@ -264,95 +255,6 @@ def write_local_cached_version(version: str) -> bool:
         return False
 
 
-def fetch_pioneer_version_online(
-    timeout: float = REQUEST_TIMEOUT,
-    current_version: str = "",
-) -> Optional[str]:
-    """在线请求 GitHub 先锋源（Releases 或默认分支 plugin.yaml）获取最新版本。
-
-    严格遵循短超时与失败保护，采用多级降级机制：
-    1. 优先尝试 GitHub Releases API（若已正式发版则获取最新 tag）；
-    2. 若尚未正式发版（Releases 返回 404 或无 tag），不触发故障冷却，回退读取默认分支（main/master）上的 plugin.yaml；
-    3. 若 raw.githubusercontent.com 受限或遭遇 DNS 污染，平滑降级至 GitHub Contents API 解析 base64 文件；
-    4. 成功获取后写入本地专属缓存。
-    """
-    global _last_failure_time
-    now = time.time()
-    if now < (_last_failure_time + LIVE_CATALOG_FAILURE_TTL_SECONDS):
-        logger.debug("处于网络失败冷却期，跳过先锋源在线检测")
-        return None
-
-    user_agent = f"hermes-zh/{current_version}" if current_version else "hermes-zh"
-    headers = {
-        "User-Agent": user_agent,
-        "Accept": "application/json, text/plain, */*",
-    }
-
-    # 1. 优先尝试 GitHub Releases API
-    try:
-        req = urllib.request.Request(PIONEER_API_URL, headers=headers)
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            if resp.status == 200:
-                raw_bytes = resp.read(MAX_CATALOG_BYTES)
-                data = json.loads(raw_bytes.decode("utf-8"))
-                tag = data.get("tag_name")
-                if tag and isinstance(tag, str):
-                    ver = tag.strip().lstrip("vV")
-                    if ver:
-                        write_local_cached_version(ver)
-                        return ver
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            logger.debug("GitHub 远端尚未发布 Release (HTTP 404)，平滑回退读取默认分支 plugin.yaml")
-        else:
-            logger.debug("请求 GitHub Releases API 失败: HTTP %s", e.code)
-    except Exception as e:
-        logger.debug("请求 GitHub Releases API 异常: %s", e)
-
-    # 2. 回退方案：按序探测默认分支 (main / master) 上的 plugin.yaml
-    for branch in PIONEER_BRANCHES:
-        # 2.1 尝试 raw.githubusercontent.com
-        raw_url = (
-            f"https://raw.githubusercontent.com/{PIONEER_GITHUB_OWNER}/{PIONEER_GITHUB_REPO}/{branch}/plugin.yaml"
-        )
-        try:
-            req = urllib.request.Request(raw_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                if resp.status == 200:
-                    raw_text = resp.read(64 * 1024).decode("utf-8")
-                    m = re.search(r'version:\s*["\']?([^"\'\s]+)["\']?', raw_text)
-                    if m:
-                        ver = m.group(1).strip().lstrip("vV")
-                        if ver:
-                            write_local_cached_version(ver)
-                            return ver
-        except Exception as e:
-            logger.debug("请求 raw plugin.yaml (%s) 失败: %s", branch, e)
-
-        # 2.2 尝试 GitHub Contents API（作为防污染与阻断的第二备选通道）
-        contents_url = (
-            f"https://api.github.com/repos/{PIONEER_GITHUB_OWNER}/{PIONEER_GITHUB_REPO}/contents/plugin.yaml?ref={branch}"
-        )
-        try:
-            req = urllib.request.Request(contents_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                if resp.status == 200:
-                    data = json.loads(resp.read(64 * 1024).decode("utf-8"))
-                    raw_content = data.get("content")
-                    if raw_content and isinstance(raw_content, str):
-                        decoded_text = base64.b64decode(raw_content).decode("utf-8")
-                        m = re.search(r'version:\s*["\']?([^"\'\s]+)["\']?', decoded_text)
-                        if m:
-                            ver = m.group(1).strip().lstrip("vV")
-                            if ver:
-                                write_local_cached_version(ver)
-                                return ver
-        except Exception as e:
-            logger.debug("请求 GitHub Contents API (%s) 失败: %s", branch, e)
-
-    return None
-
-
 def fetch_catalog_version_online(
     timeout: float = REQUEST_TIMEOUT,
     current_version: str = "",
@@ -422,20 +324,22 @@ def get_latest_catalog_version(
 
 
 def is_test_command(raw_args: str) -> bool:
-    """判断是否为测试模式指令（例如 test, --test, -t, mock）。"""
+    """判断是否为测试模式指令（例如 test, --test, -t, mock, --mock）。"""
     tokens = str(raw_args).strip().lower().split()
     return any(t in ("test", "--test", "-t", "mock", "--mock") for t in tokens)
 
 
 def generate_mock_newer_version(current_version: str) -> str:
     """生成严格高于当前版本的模拟版本号（供测试交互弹卡流程）。"""
-    parsed = parse_version(current_version)
+    clean = str(current_version).strip().lstrip("vV")
+    parsed = parse_version(clean)
+
+    # 预发布版提升为同级正式版
     if parsed.prerelease:
-        # 当前为预发布版（如 0.1.4-dev），模拟新版为对应的正式发布版 0.1.4
-        if len(parsed) >= 3:
-            return f"{parsed[0]}.{parsed[1]}.{parsed[2]}"
-        elif len(parsed) == 2:
-            return f"{parsed[0]}.{parsed[1]}.0"
+        core_str = ".".join(str(x) for x in parsed[:3]) if len(parsed) >= 3 else clean.split("-")[0]
+        return core_str
+
+    # 正式版将末位版本号递增 1
     if len(parsed) >= 3:
         return f"{parsed[0]}.{parsed[1]}.{parsed[2] + 1}"
     elif len(parsed) == 2:
@@ -449,16 +353,16 @@ class CheckResult:
     def __init__(
         self,
         current_version: str,
-        latest_version: Optional[str],
+        latest_version: str,
         has_update: bool,
         is_test: bool = False,
-        source: str = "curated",
+        source: str = "none",  # curated | cache | mock | none
     ):
         self.current_version = current_version
         self.latest_version = latest_version
         self.has_update = has_update
         self.is_test = is_test
-        self.source = source  # curated | pioneer | cache | mock | none
+        self.source = source  # curated | cache | mock | none
 
     def __repr__(self) -> str:
         return (
@@ -473,57 +377,17 @@ def check_update(
     force_refresh: bool = False,
     timeout: float = REQUEST_TIMEOUT,
 ) -> CheckResult:
-    """统一版本检测入口：集成先锋源检测、官方 Catalog、本地缓存与测试模式。"""
+    """统一版本检测入口：严格对齐 Hermes 官方社区插件库（Curated Catalog）。
+
+    1. 开发者测试模式隔离：仅在用户显式传入测试参数时触发模拟新版弹卡；
+    2. 默认执行模式：100% 走官方 Catalog 真实判定，严禁越俎代庖；
+    3. 仅当官方社区库中收录的版本严格高于当前本地版本时，才判定存在新版本；
+    4. 保持 <= 1.5s 短超时、6 小时本地 TTL 缓存与失败冷却容灾机制。
+    """
     clean_curr = str(current_version).strip().lstrip("vV")
     is_test = is_test_command(raw_args)
-    force = force_refresh or str(raw_args).strip().lower() in ("check", "refresh", "-f", "--force")
 
-    # 1. 优先命中新鲜缓存（非强制刷新时）
-    if not force:
-        cached_ver, is_fresh = read_local_cached_version()
-        if cached_ver and is_fresh and is_newer_version(cached_ver, clean_curr):
-            return CheckResult(
-                current_version=clean_curr,
-                latest_version=cached_ver,
-                has_update=True,
-                is_test=is_test,
-                source="cache",
-            )
-
-    # 2. 尝试先锋源 (GitHub Releases / raw plugin.yaml)
-    pioneer_ver = fetch_pioneer_version_online(timeout=timeout, current_version=clean_curr)
-    if pioneer_ver and is_newer_version(pioneer_ver, clean_curr):
-        return CheckResult(
-            current_version=clean_curr,
-            latest_version=pioneer_ver,
-            has_update=True,
-            is_test=is_test,
-            source="pioneer",
-        )
-
-    # 3. 尝试官方 Curated Catalog（调用 get_latest_catalog_version，兼容缓存与历史 mock）
-    catalog_ver = get_latest_catalog_version(timeout=timeout, current_version=clean_curr, force_refresh=force)
-    if catalog_ver and is_newer_version(catalog_ver, clean_curr):
-        return CheckResult(
-            current_version=clean_curr,
-            latest_version=catalog_ver,
-            has_update=True,
-            is_test=is_test,
-            source="curated",
-        )
-
-    # 4. 回退检查本地陈旧缓存是否有高于当前版本的记录
-    stale_ver, _ = read_local_cached_version(max_age_seconds=float("inf"))
-    if stale_ver and is_newer_version(stale_ver, clean_curr):
-        return CheckResult(
-            current_version=clean_curr,
-            latest_version=stale_ver,
-            has_update=True,
-            is_test=is_test,
-            source="cache",
-        )
-
-    # 5. 若处于测试模式且线上无更新，强制生成测试模拟版本
+    # 1. 开发者测试模式严格隔离：仅在用户显式传入测试参数时触发模拟新版
     if is_test:
         mock_ver = generate_mock_newer_version(clean_curr)
         return CheckResult(
@@ -534,14 +398,26 @@ def check_update(
             source="mock",
         )
 
-    # 6. 无新版本
-    latest_seen = pioneer_ver or catalog_ver or stale_ver or clean_curr
+    # 2. 默认执行模式：100% 走官方 Catalog 真实判定
+    force = force_refresh or str(raw_args).strip().lower() in ("check", "refresh", "-f", "--force")
+    catalog_ver = get_latest_catalog_version(timeout=timeout, current_version=clean_curr, force_refresh=force)
+
+    if catalog_ver and is_newer_version(catalog_ver, clean_curr):
+        return CheckResult(
+            current_version=clean_curr,
+            latest_version=catalog_ver,
+            has_update=True,
+            is_test=False,
+            source="curated",
+        )
+
+    latest_seen = catalog_ver or clean_curr
     return CheckResult(
         current_version=clean_curr,
         latest_version=latest_seen,
         has_update=False,
         is_test=False,
-        source="curated" if (pioneer_ver or catalog_ver) else "none",
+        source="curated" if catalog_ver else "none",
     )
 
 
