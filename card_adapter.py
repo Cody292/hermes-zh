@@ -766,7 +766,7 @@ async def send_feishu_card(
 # 5. 跨平台调度中枢与优雅降级 (Central Dispatcher & Graceful Fallback)
 # ============================================================================
 
-def dispatch_status(raw_args: str = "", current_version: str = "0.1.4-dev") -> str:
+def dispatch_status(raw_args: str = "", current_version: str = "0.1.4") -> str:
     """分发 /hermes_zh 命令：多平台交互弹卡与优雅降级统一入口。
 
     1. 解析测试指令与强制刷新参数；
