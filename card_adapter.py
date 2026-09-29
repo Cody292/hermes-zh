@@ -113,7 +113,7 @@ async def run_async_update(
     if is_test:
         # 测试模式：模拟微小异步网络耗时（0.5s），保证交互感
         await asyncio.sleep(0.5)
-        new_ver = target_version or "0.1.4"
+        new_ver = target_version or "0.1.5"
         return True, "模拟更新流程执行成功", new_ver
 
     # 真实更新流程
@@ -801,7 +801,7 @@ async def send_feishu_card(
 # 5. 跨平台调度中枢与优雅降级 (Central Dispatcher & Graceful Fallback)
 # ============================================================================
 
-def dispatch_status(raw_args: str = "", current_version: str = "0.1.4") -> str:
+def dispatch_status(raw_args: str = "", current_version: str = "0.1.5") -> str:
     """分发 /hermes_zh 命令：多平台交互弹卡与优雅降级统一入口。
 
     1. 解析测试指令与强制刷新参数；

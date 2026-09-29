@@ -1776,7 +1776,7 @@ def patch_plugin_command_registration() -> bool:
                 def _exec_hermes_zh_gateway(ctx: Any) -> Any:
                     from hermes_cli.slash_exec import CommandReply
                     return CommandReply(
-                        "hermes-zh版本：v0.1.2\n问题反馈与建议：https://github.com/Cody292/hermes-zh/issues",
+                        "hermes-zh版本：v0.1.5\n问题反馈与建议：https://github.com/Cody292/hermes-zh/issues",
                         format="markdown",
                     )
                 se._DISPATCH_MAP["gateway_hermes_zh"] = _exec_hermes_zh_gateway

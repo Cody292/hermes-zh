@@ -1,7 +1,7 @@
 # hermes-zh: Hermes 官方原生简体中文汉化插件
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-green.svg)](https://github.com/Cody292/hermes-zh)
+[![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-green.svg)](https://github.com/Cody292/hermes-zh)
 [![Hermes: Native Plugin](https://img.shields.io/badge/Hermes-Native%20Plugin-purple.svg)](https://hermes-agent.nousresearch.com/)
 [![Requires: Hermes >=0.19](https://img.shields.io/badge/Requires-Hermes%20%3E%3D0.19-blueviolet.svg)](https://github.com/NousResearch/hermes-agent)
 
@@ -182,8 +182,8 @@ hermes plugins validate path/to/hermes-zh
 
 ```text
 hermes-zh 汉化插件
-当前版本：v0.1.4
-官方版本：v0.1.4
+当前版本：v0.1.5
+官方版本：v0.1.5
 状态：已是最新版本
 问题反馈：https://github.com/Cody292/hermes-zh/issues
 ```
@@ -352,3 +352,5 @@ pytest tests/
 
 - 本项目基于 [MIT License](LICENSE) 协议开源。
 - 感谢 [Nous Research](https://nousresearch.com/) 团队创建优秀的 Hermes Agent 项目与插件生态。
+- 特别感谢社区贡献者：
+  - [Misyra](https://github.com/Misyra)：适配上游 `_load_catalog(lang, home)` 新签名与多 Profile 缓存支持（PR #1）。
