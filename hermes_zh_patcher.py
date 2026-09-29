@@ -1687,15 +1687,29 @@ def patch_i18n() -> bool:
                     cat[k] = sanitize_literal_newlines(v)
             return cat
 
+        # Resolve the current profile home once. Upstream (Hermes >= 0.19)
+        # made i18n multi-profile aware: catalogs are cached per (home, lang) and
+        # _load_catalog/_normalize_lang take an optional ``home`` argument.
+        try:
+            _zh_home = i18n_mod._current_home()
+        except Exception:
+            _zh_home = None
+
         # 1. Load catalog first WITHOUT holding _catalog_lock to prevent deadlock
         # (_load_catalog internally acquires _catalog_lock)
-        base_cat = i18n_mod._load_catalog("zh")
+        base_cat = i18n_mod._load_catalog("zh", _zh_home) if _zh_home is not None else i18n_mod._load_catalog("zh")
         if base_cat:
             _sanitize_cat(base_cat)
 
-        # 2. Safely update _catalog_cache under lock
+        # 2. Safely update _catalog_cache under lock.
+        # Newer Hermes keys the cache by (home, lang); older builds use the bare
+        # language string. Pick whichever the running version expects.
+        if _zh_home is not None:
+            _zh_cache_key = (_zh_home, "zh")
+        else:
+            _zh_cache_key = "zh"
         with i18n_mod._catalog_lock:
-            zh_catalog = i18n_mod._catalog_cache.setdefault("zh", {})
+            zh_catalog = i18n_mod._catalog_cache.setdefault(_zh_cache_key, {})
             if base_cat:
                 zh_catalog.update(base_cat)
             zh_catalog.update(ZH_I18N_OVERRIDES)
@@ -1704,9 +1718,19 @@ def patch_i18n() -> bool:
         # 3. Hook _load_catalog for future lookups
         orig_load = i18n_mod._load_catalog
 
-        def _zh_load_catalog(lang: str) -> dict[str, str]:
-            cat = orig_load(lang)
-            norm = i18n_mod._normalize_lang(lang) if hasattr(i18n_mod, "_normalize_lang") else lang
+        def _zh_load_catalog(lang, *args, **kwargs):
+            # Forward all arguments (today: the optional ``home``) unchanged so the
+            # hook survives signature evolution upstream instead of raising
+            # TypeError: _load_catalog() takes 1 positional argument but 2 were given.
+            cat = orig_load(lang, *args, **kwargs)
+            home = args[0] if args else kwargs.get("home")
+            if hasattr(i18n_mod, "_normalize_lang"):
+                try:
+                    norm = i18n_mod._normalize_lang(lang, home)
+                except TypeError:
+                    norm = i18n_mod._normalize_lang(lang)
+            else:
+                norm = lang
             if norm == "zh" or lang in ("zh", "zh-cn", "zh-hans", "mandarin", "chinese", "zh-sg"):
                 _sanitize_cat(cat)
                 cat.update(ZH_I18N_OVERRIDES)
