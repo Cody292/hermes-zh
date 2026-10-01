@@ -94,6 +94,50 @@ def get_current_platform_context() -> Tuple[str, str, Optional[str]]:
     return platform or PLATFORM_CLI, chat_id, thread_id
 
 
+# 未授权用户点击【立即更新】时的提示
+UNAUTHORIZED_UPDATE_TEXT = "你没有权限执行插件更新"
+
+
+def is_update_click_authorized(platform: str, adapter: Any, actor: Any) -> bool:
+    """复用 Hermes 平台 Adapter 自带的授权检查，判断点击者能否触发插件更新。
+
+    任何缺失或异常一律拒绝（fail-closed），避免群聊中任意成员触发 `hermes plugins update`。
+    actor: Telegram 为 CallbackQuery，Discord 为 Interaction，飞书为 card.action 事件。
+    """
+    if adapter is None or actor is None:
+        return False
+    try:
+        if platform == PLATFORM_TELEGRAM:
+            check = getattr(adapter, "_is_callback_user_authorized", None)
+            user = getattr(actor, "from_user", None)
+            message = getattr(actor, "message", None)
+            chat = getattr(message, "chat", None)
+            chat_id = getattr(message, "chat_id", None)
+            chat_type = getattr(chat, "type", None)
+            thread_id = getattr(message, "message_thread_id", None)
+            return bool(callable(check) and user is not None and check(
+                str(getattr(user, "id", "") or ""),
+                chat_id=str(chat_id) if chat_id is not None else None,
+                chat_type=str(chat_type) if chat_type is not None else None,
+                thread_id=str(thread_id) if thread_id is not None else None,
+                user_name=getattr(user, "first_name", None),
+            ))
+        if platform == PLATFORM_DISCORD:
+            check = getattr(adapter, "_is_allowed_user", None)
+            user = getattr(actor, "user", None)
+            guild = getattr(actor, "guild", None)
+            return bool(callable(check) and user is not None and getattr(user, "id", None) is not None and check(
+                str(user.id), user, guild=guild, is_dm=guild is None,
+            ))
+        if platform == PLATFORM_FEISHU:
+            check = getattr(adapter, "_is_interactive_operator_authorized", None)
+            open_id = str(getattr(getattr(actor, "operator", None), "open_id", "") or "")
+            return bool(callable(check) and open_id and check(open_id))
+    except Exception as exc:
+        logger.debug("更新按钮授权检查异常，按未授权处理: %s", exc)
+    return False
+
+
 # ============================================================================
 # 1. 安全平滑异步更新与重载执行器 (Non-blocking Async Updater)
 # ============================================================================
@@ -241,6 +285,13 @@ async def handle_telegram_callback(update: Any, context: Any, adapter: Any = Non
 
     # 2. 点击【立即更新】
     if action == ACTION_UPDATE:
+        if not is_update_click_authorized(PLATFORM_TELEGRAM, adapter, query):
+            try:
+                await query.answer(text=UNAUTHORIZED_UPDATE_TEXT)
+            except Exception:
+                pass
+            return
+
         try:
             await query.answer(text="正在启动更新流程...")
         except Exception:
@@ -453,6 +504,14 @@ async def handle_discord_interaction(interaction: Any, adapter: Any = None) -> N
 
     # 2. 立即更新
     if action == ACTION_UPDATE:
+        if not is_update_click_authorized(PLATFORM_DISCORD, adapter, interaction):
+            try:
+                if response and hasattr(response, "send_message"):
+                    await response.send_message(UNAUTHORIZED_UPDATE_TEXT, ephemeral=True)
+            except Exception as exc:
+                logger.debug("Discord 未授权提示发送失败: %s", exc)
+            return
+
         updating_text = (
             f"{PLUGIN_NAME} 汉化插件\n"
             "正在执行平滑更新，请稍候..."
@@ -666,6 +725,12 @@ def handle_feishu_card_action(data: Any, adapter: Any) -> Tuple[bool, Any]:
 
     # 2. 点击【立即更新】
     if zh_action == ACTION_UPDATE:
+        if not is_update_click_authorized(PLATFORM_FEISHU, adapter, event):
+            logger.warning("飞书未授权用户尝试触发插件更新，已拒绝")
+            if callable(card_resp_fn):
+                return True, card_resp_fn()
+            return True, None
+
         updating_card = {
             "config": {"wide_screen_mode": True},
             "header": {

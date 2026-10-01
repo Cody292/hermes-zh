@@ -1129,6 +1129,18 @@ def translate_file_mutation_verifier(text: str) -> str:
     return text
 
 
+def _is_exec_approval_markup(reply_markup: Any) -> bool:
+    """True when an inline keyboard carries Hermes exec-approval buttons (callback_data "ea:...")."""
+    try:
+        for row in getattr(reply_markup, "inline_keyboard", None) or ():
+            for button in row:
+                if str(getattr(button, "callback_data", "") or "").startswith("ea:"):
+                    return True
+    except Exception:
+        pass
+    return False
+
+
 def translate_telegram_content(content: str) -> str:
     """Translate non-conversational system notices passing through Telegram adapter."""
     if not isinstance(content, str):
@@ -2068,8 +2080,11 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
             if orig_format is not None:
                 def _zh_format_exec_approval(command: str, description: str = "dangerous command", smart_denied: bool = False) -> str:
                     zh_desc = translate_reason(description)
-                    res = orig_format(command, zh_desc, smart_denied)
-                    return translate_telegram_content(res)
+                    # Already localized via _EA_* slots + translate_reason. Do NOT run
+                    # translate_telegram_content here: its whole-message replacements
+                    # (e.g. "Approval expired") would hide the command preview while the
+                    # Allow/Deny buttons stay live.
+                    return orig_format(command, zh_desc, smart_denied)
 
                 adapter._format_exec_approval = _zh_format_exec_approval
             adapter._hermes_zh_wired = True
@@ -2175,6 +2190,11 @@ def wire_telegram_adapter(native: Any, adapter: Any) -> bool:
             orig_send_ctrl = getattr(adapter, "_send_control_message", None)
             if orig_send_ctrl is not None:
                 async def _zh_send_control_message(chat_id: str, text: str, *args: Any, **kwargs: Any) -> Any:
+                    # Exec-approval cards must reach the user verbatim: the command preview
+                    # has to equal what will run, and must never be swapped for an
+                    # "expired" notice while the Allow/Deny keyboard is attached.
+                    if _is_exec_approval_markup(kwargs.get("reply_markup")):
+                        return await orig_send_ctrl(chat_id, text, *args, **kwargs)
                     text_zh = translate_telegram_content(text)
                     return await orig_send_ctrl(chat_id, text_zh, *args, **kwargs)
                 adapter._send_control_message = _zh_send_control_message
