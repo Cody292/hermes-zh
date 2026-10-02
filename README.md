@@ -1,7 +1,7 @@
 # hermes-zh: Hermes 官方标准简体中文语言包
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-green.svg)](https://github.com/Cody292/hermes-zh)
+[![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-green.svg)](https://github.com/Cody292/hermes-zh)
 [![Hermes: Language Pack](https://img.shields.io/badge/Hermes-Language%20Pack-purple.svg)](https://hermes-agent.nousresearch.com/)
 [![Requires: Hermes >=0.19](https://img.shields.io/badge/Requires-Hermes%20%3E%3D0.19-blueviolet.svg)](https://github.com/NousResearch/hermes-agent)
 
