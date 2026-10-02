@@ -1,0 +1,301 @@
+gateway:
+  draining: ⏳ 正在等待 {count} 个活跃代理结束后重启...
+  restart:
+    in_progress: ⏳ 网关重启已在进行中...
+    restarting: ♻ 正在重启网关。如果 60 秒内没有收到通知，请在控制台运行 `hermes gateway restart` 重启。
+  status:
+    header: 📊 **Hermes 网关状态**
+    session_id: '**会话 ID：** `{session_id}`'
+    title: '**标题：** {title}'
+    created: '**创建时间：** {timestamp}'
+    last_activity: '**最近活动：** {timestamp}'
+    model: '**模型：** `{model}`'
+    model_provider: '**模型：** `{model}` ({provider})'
+    free_tier: Nous · 免费套餐 · nous/welcome · /login 登录
+    context: '**上下文：** {used} / {total} ({pct}%)'
+    context_used: '**上下文：** ~{used} Token'
+    tokens: '**累计计费 Token：** {tokens} _(非当前上下文占用；使用 `/context` 查看)_'
+    agent_running: '**代理运行中：** {state}'
+    state_yes: 是 ⚡
+    state_no: 否
+    queued: '**排队的后续：** {count}'
+    platforms: '**已连接平台：** {platforms}'
+    matrix_scope_header: '**Matrix 作用域：**'
+    matrix_scope_room: '  房间: {room}'
+    matrix_scope_room_id: '  房间 ID: {room_id}'
+    matrix_scope_thread: '  线程 ID: {thread_id}'
+    matrix_scope_mode: '  会话作用域: {scope}'
+    matrix_scope_key: '  会话标识: {session_key}'
+  context:
+    header: 🧠 **上下文窗口 (Context Window)**
+    model: 模型：`{model}`
+    window: 窗口总容量：{total} Token
+    in_use: 当前占用：{used} / {total} ({pct}%)
+    bar: '{bar}'
+    headroom: 距上限余量：{headroom} Token
+    threshold: 自动压缩阈值：{threshold} ({threshold_pct}%) — 剩余 {to_go} Token 触发
+    over_threshold: ⚠️ **已超过自动压缩阈值 ({threshold}, {threshold_pct}%)**
+    compressions: 本会话压缩次数：{count}
+    last_savings: 上次压缩释放空间：{savings}%
+    totals_header: 会话累计总计 (跨 {calls} 次 API 调用)
+    totals_line: 输入 {input} · 输出 {output} · 思考 {reasoning}
+    total_billed: 累计计费：{total} Token
+    throughput_note: _此为吞吐总量，非当前上下文大小 — 每次调用均需重新传递上方窗口。_
+    estimated: 预估上下文：~{count} Token，跨 {messages} 条消息
+    detail_after_first: _(完整的压缩与吞吐统计将在模型首次回复后可用)_
+    no_data: 暂无可用上下文数据。发送一条消息以开启会话。
+  resume:
+    db_unavailable: 会话数据库不可用。
+    parse_error: "⚠️ 无法解析 `/resume` 参数：{error}。\n对于包含空格的会话标题请使用引号包裹，例如：`/resume \"\
+      项目 A 计划\"`。"
+    matrix_no_named_sessions: "未找到当前 Matrix 房间的已命名会话。\n使用 `/title 我的会话` 命名当前会话，使用
+      `/resume --all` 列出全部会话，或使用 `/resume --cross-room <会话名称>` 明确跨房间恢复。"
+    matrix_blocked_no_origin: ⚠️ Matrix /resume 已拦截：该指定会话未记录房间归属，Hermes 
+      默认不会在当前房间恢复。若确需跨房间恢复，请使用 `/resume --cross-room {name}`。
+    matrix_blocked_other_room: ⚠️ Matrix /resume 已拦截：该会话属于其他 Matrix 房间 
+      ({room})。若确需恢复至此处，请使用 `/resume --cross-room {name}`。
+    matrix_cross_room_success: "⚠️ 跨房间恢复：已在 Matrix 房间 **{room}** 中恢复 **{title}**。\n\
+      本房间的后续消息将使用该历史记录，直到 `/reset` 或再次执行 `/resume`。{msg_part}"
+    blocked_not_owner: ⚠️ /resume 已拦截：'**{name}**' 属于其他用户或聊天。您只能恢复来自本聊天的会话。
+    no_named_sessions: "未找到已命名的会话。\n使用 `/title 我的会话` 为当前会话命名，然后用 `/resume 我的会话` 返回。"
+    all_requires_admin: _注意：`--all`（跨聊天列表）需要已配置的管理员；仅显示本聊天的会话。_
+    list_header: "📋 **已命名会话**\n"
+    list_item: • **{title}**{preview_part}
+    list_item_numbered: '{index}. **{title}**{preview_part}'
+    list_preview_suffix: ' — _{preview}_'
+    list_footer: "\n用法：`/resume <会话名称>`"
+    list_footer_numbered: "\n用法：`/resume <会话名称>` 或 `/resume <编号>`（例如，`/resume 1` 表示最近的会话）"
+    list_failed: 无法列出会话：{error}
+    out_of_range: "恢复索引 {index} 超出范围。\n请使用不带参数的 `/resume` 查看可用会话。"
+    not_found: "未找到匹配 '**{name}**' 的会话。\n使用不带参数的 `/resume` 查看可用会话。"
+    already_on: 📌 已在会话 **{name}** 上。
+    switch_failed: 切换会话失败。
+    resumed_one: ↻ 已恢复会话 **{title}**（{count} 条消息）。对话已还原。
+    resumed_many: ↻ 已恢复会话 **{title}**（{count} 条消息）。对话已还原。
+    resumed_no_count: ↻ 已恢复会话 **{title}**。对话已还原。
+  fast:
+    not_supported: ⚡ /fast 仅适用于支持优先处理（Priority Processing）的 OpenAI 模型。
+    status: "⚡ 优先处理\n\n当前模式：`{mode}`\n\n_用法：_ `/fast <normal|fast|status>`"
+    unknown_arg: "⚠️ 未知参数：`{arg}`\n\n**有效选项：** normal、fast、status"
+    saved: "⚡ ✓ 优先处理：**{label}**（已保存到配置）\n_（下一条消息生效）_"
+    session_only: ⚡ ✓ 优先处理：**{label}**（仅本次会话）
+    label_fast: 极速 (FAST)
+    label_normal: 标准 (NORMAL)
+    status_fast: 极速模式 (fast)
+    status_normal: 标准模式 (normal)
+    picker_title: "⚡ **优先处理**\n\n当前模式：`{mode}`\n\n请选择："
+    choice_fast: fast — 开启优先处理
+    choice_normal: normal — 标准处理
+    choice_auto: auto — 每轮的前几秒快速
+    choice_cold: cold — 仅会话的第一轮快速
+  reasoning:
+    level_default: medium（默认）
+    level_disabled: none（已禁用）
+    scope_session: 会话覆盖
+    scope_global: 全局配置
+    status: "🧠 **推理设置**\n\n**强度：** `{level}`\n**作用域：** {scope}\n**显示：** {display}\n\
+      \n_用法：_ `/reasoning <none|minimal|low|medium|high|xhigh|max|ultra|reset|show|hide>
+      [--global]`"
+    display_on: 开 ✓
+    display_off: 关
+    display_set_on: "🧠 ✓ 推理显示：**开启**\n在 **{platform}** 上每次响应前将显示模型的思考过程。"
+    display_set_off: 🧠 ✓ **{platform}** 上的推理显示：**关闭**
+    reset_global_unsupported: ⚠️ 不支持 `/reasoning reset --global`。请使用 `/reasoning
+      <level> --global` 修改全局默认值。
+    reset_done: 🧠 ✓ 已清除本会话的推理覆盖；回退到全局配置。
+    unknown_arg: "⚠️ 未知参数：`{arg}`\n\n**有效级别：** none, minimal, low, medium, high, xhigh,
+      max, ultra\n**显示：** show, hide\n**持久化：** 添加 `--global` 以跨会话保存"
+    picker_title: "🧠 **推理设置**\n\n**强度：** `{level}`\n**作用域：** {scope}\n**显示：** {display}\n\
+      \n请选择："
+    choice_none: none — 关闭推理
+    choice_reset: reset — 清除会话覆盖
+    choice_show: 在回复中显示推理
+    choice_hide: 在回复中隐藏推理
+    set_global: "🧠 ✓ 推理强度已设置为 `{effort}`（已保存到配置）\n_（下一条消息生效）_"
+    set_global_save_failed: "🧠 ✓ 推理强度已设置为 `{effort}`（仅本会话 — 配置保存失败）\n_（下一条消息生效）_"
+    set_session: "🧠 ✓ 推理强度已设置为 `{effort}`（仅本会话 — 添加 `--global` 以持久化）\n_（下一条消息生效）_"
+  model:
+    context_label: '上下文: {tokens} Token'
+    max_output_label: '最大输出: {tokens} Token'
+    capabilities_label: '能力特性: {capabilities}'
+    provider_label: '供应商: {provider}'
+    error_prefix: '错误: {error}'
+    switched: 模型已切换为 `{model}`
+    cost_label: '费用: {cost}'
+    prompt_caching_enabled: '提示词缓存: 已启用'
+    warning_prefix: '警告: {warning}'
+    saved_global: 已保存到 config.yaml (`--global`)
+    session_only_hint: _(仅本会话有效 — 添加 `--global` 可持久化)_
+    current_label: '当前: {provider} 上的 `{model}`'
+    current_tag: ' (当前)'
+    more_models_suffix: ' (+ 还有 {count} 个)'
+    usage_switch_model: '`/model <名称>` — 切换模型'
+    usage_switch_provider: '`/model <名称> --provider <标识>` — 切换供应商'
+    usage_persist: '`/model <名称> --global` — 持久化保存'
+    switch_cancelled: 🟡 模型切换已取消。当前模型保持不变 ({model})。
+  approval_expired: ⚠️ 审批已过期（代理不再等待）。请让代理重试。
+  deny:
+    stale: 该审批请求已失效或已被处理。
+    no_pending: 没有等待拒绝的审批。
+    denied_singular: ❌ 命令已被拒绝。
+    denied_reason_singular: '❌ 命令已被拒绝 (原因: {reason})。'
+  approve:
+    no_pending: 没有等待审批的命令。
+    once_singular: ✅ 命令已批准。代理正在恢复...
+    once_plural: ✅ 命令已批准 ({count} 条命令)。代理正在恢复...
+    session_singular: ✅ 命令已批准（本会话允许该模式）。代理正在恢复...
+    session_plural: ✅ 命令已批准（本会话允许该模式）({count} 条命令)。代理正在恢复...
+  help:
+    header: 📖 **Hermes 命令与技能帮助**
+    skill_header: 🛠 **已启用技能:**
+    more_use_commands: 使用 `/commands` 查看完整指令清单
+  commands:
+    usage: 用法：`/commands [页码]`
+    skill_header: ⚡ **扩展技能指令**：
+    default_desc: 扩展技能指令
+    none: 当前没有可用的指令。
+    header: 📚 **指令大全**（共 {total} 个，第 {page}/{total_pages} 页）
+    nav_prev: '`/commands {page}` ← 上一页'
+    nav_next: 下一页 → `/commands {page}`
+    out_of_range: _（请求的第 {requested} 页超出范围，已显示第 {page} 页。）_
+  usage:
+    rate_limits: ⏱️ **速率限制：** {state}
+    header_session: 📊 **会话 Token 使用统计**
+    label_model: 模型：`{model}`
+    label_input_tokens: 输入 Token：{count}
+    label_cache_read: 缓存读取 Token：{count}
+    label_cache_write: 缓存写入 Token：{count}
+    label_output_tokens: 输出 Token：{count}
+    label_total: 总计：{count}
+    label_api_calls: API 调用次数：{count}
+    label_cost: 费用：{prefix}${amount}
+    label_cost_included: 费用：已包含
+    label_context: 上下文：{used} / {total}（{pct}%）
+    label_compressions: 压缩次数：{count}
+    breakdown_header: 🧩 **按分类预估占用明细**
+    breakdown_line: • {label}：约 {count} ({pct}%)
+    breakdown_cat_system_prompt: 系统提示词
+    breakdown_cat_tool_definitions: 工具定义
+    breakdown_cat_rules: 规则指令
+    breakdown_cat_skills: 技能
+    breakdown_cat_mcp: MCP 工具
+    breakdown_cat_subagent_definitions: 子代理定义
+    breakdown_cat_memory: 记忆
+    breakdown_cat_conversation: 对话历史
+    header_session_info: 📊 **会话信息**
+    label_messages: 消息数：{count}
+    label_estimated_context: 预估上下文：~{count} Token
+    detailed_after_first: _（首次代理响应后可查看详细使用统计）_
+    no_data: 此会话暂无使用数据。
+    unknown_subcommand: 未知的 /usage 子命令：`{args}`。请尝试 `/usage` 或 `/usage reset 
+      [--force]`。
+    reset_wrong_provider: 存储的用量重置仅在 openai-codex 提供商上可用。请先使用 `/model` 切换。
+  goal_cleared: ✓ 目标已清除。
+  no_active_goal: 无活动目标。
+  config_read_failed: '⚠️ 无法读取 config.yaml: {error}'
+  config_save_failed: '⚠️ 无法保存配置: {error}'
+  agents:
+    header: 🤖 **活跃代理与任务**
+    active_agents: '**活跃代理:** {count}'
+    this_chat: ' · 本对话'
+    more: '... 还有 {count} 个'
+    running_processes: '**运行中的后台进程:** {count}'
+    async_jobs: '**网关异步任务:** {count}'
+    background_delegations: '**后台任务委派:** {count}'
+    none: 当前没有活跃代理或运行中的任务。
+    state_starting: 启动中
+    state_running: 运行中
+    no_progress: ' · 无进展 {seconds}秒'
+    quiet_for: ' · 静默 {seconds}秒'
+    between_turns: 轮次间隔
+    child_row: '  - 子任务 {index}: {calls} 次 API 调用 · {doing}'
+    active_ago: ' · {seconds}秒前活跃'
+  background:
+    usage: '用法: `/bg <命令>` 在后台运行任务'
+    started: '后台任务已启动 (PID: {pid})'
+  btw:
+    usage: '用法: `/btw <问题>` 顺带提问'
+    no_history: 没有可参考的历史对话。
+    no_provider: 未配置可用模型供应商。
+    started: 正在后台思考顺带提问...
+    answer: "💡 **顺带提问解答:**\n{answer}"
+    failed: '顺带提问处理失败: {error}'
+  branch:
+    db_unavailable: 会话数据库不可用。
+    create_failed: '创建分支失败: {error}'
+    branched_one: ✓ 已从会话 `{parent}` 创建新分支 `{branch}`
+  compress:
+    not_enough: 当前上下文长度不足以执行压缩。
+    focus_line: 正在重点提炼核心结论与状态...
+    summary_failed: '上下文摘要生成失败: {error}'
+    aborted: 上下文压缩已中止。
+  footer:
+    status: '页脚状态显示: {state}'
+    usage: '用法: `/footer [on|off]`'
+    saved: 页脚状态配置已保存。
+    state_on: 开启
+    state_off: 关闭
+  goal:
+    unavailable: 目标管理功能暂不可用。
+    no_goal_set: 当前会话未设定长期目标。
+    paused: 目标追踪已暂停。
+    resumed: 目标追踪已恢复。
+    set: '已设定当前会话目标: {goal}'
+  personality:
+    header: 🎭 **角色预设人格选择**
+    none_option: 默认 (标准模式)
+    cleared: 已清除自定义角色人格，恢复默认。
+    set_to: '角色人格已切换为: {name}'
+    unknown: '未知的角色人格: {name}'
+  reset:
+    header_default: ✓ 会话已重置。
+    header_new: ✓ 已开启全新会话。
+    title_rejected: 标题不符合规范。
+  rollback:
+    not_enabled: 检查点回滚功能未启用。
+    none_found: 未找到可回滚的有效检查点。
+    restored: '✓ 已成功回滚至检查点: {checkpoint}'
+approval:
+  dangerous_header: ⚠️  危险命令：{description}
+  timeout: '      ⏱ {waited} 内未收到答复 — 命令未执行。可重新请求以重试，或调高上限：hermes config set approvals.timeout
+    {suggested}'
+  choose_long: '      [o]单次允许  |  [s]本会话允许  |  [a]永久允许  |  [d]拒绝'
+  choose_short: '      [o]单次允许  |  [s]本会话允许  |  [d]拒绝'
+  prompt_long: '      选择 [o/s/a/D]: '
+  prompt_short: '      选择 [o/s/D]: '
+  choose_smart_deny: '      [o]单次允许  |  [d]拒绝'
+  prompt_smart_deny: '      选择 [o/D]: '
+  smart_deny_once_inputs: o,once,单次,允许
+  smart_deny_deny_inputs: d,deny,拒绝
+  allowed_once: '      ✓ 已单次允许'
+  allowed_session: '      ✓ 本会话已允许'
+  allowed_always: '      ✓ 已添加到永久允许列表'
+  denied: '      ✗ 已拒绝'
+  cancelled: '      ✗ 已取消'
+  blocklist_message: 该命令处于无条件黑名单中，无法予以批准。
+  inputs:
+    approve: approve,yes,ok,okay,confirm,y,批准,确认,同意,是
+    deny: deny,no,reject,cancel,n,拒绝,否,取消
+    always: always,approve always,always approve,永久,永久允许
+    session: session,approve session,session approve,会话,本会话
+    confirm_once: approve,approve once,once,yes,ok,confirm,单次,允许一次
+    confirm_always: always,always approve,remember,永久,总是允许
+    confirm_cancel: cancel,nevermind,no,deny,取消,拒绝
+  summary:
+    denied: 您拒绝了此{noun} — 未执行。
+    timeout: '{window} 内未收到答复 — 此{noun}未执行。'
+    notify_failed: 无法送达审批请求 — 此{noun}未执行。
+    cancelled: 审批提示已撤回或未送达 — 此{noun}未执行。
+    blocked: 无人值守会话中不允许执行此{noun} — 未执行。
+    default: 此{noun}未执行。
+  noun:
+    command: 命令
+    code: 代码
+    action: 操作
+  window:
+    hour_one: '{count} 小时'
+    hour_other: '{count} 小时'
+    minute_one: '{count} 分钟'
+    minute_other: '{count} 分钟'
+    second_one: '{count} 秒'
+    second_other: '{count} 秒'
