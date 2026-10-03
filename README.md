@@ -33,7 +33,7 @@
 
 hermes-zh 是专为 Hermes Agent 打造的官方标准声明式 Simplified Chinese (简体中文) 语言包插件。
 
-本插件严格遵循 Hermes Plugin Catalog Rule 9 (上游优先准则与目录准入规范)，完全基于官方 agent.i18n 体系构建，采用声明式 provides_locales 与 register_locale_dir 机制，无任何运行时私有函数劫持或核心表篡改。
+本插件只通过公开的语言包接口扩展：plugin.yaml 声明 provides_locales，并用 register_locale_dir 注册 locales/。没有运行时私有函数劫持，也没有改核心私有表。
 
 ### 核心特性
 
@@ -76,7 +76,7 @@ hermes config set locale zh
 
 hermes-zh is the official declarative Simplified Chinese (zh) language pack for Hermes Agent.
 
-It strictly adheres to Hermes Plugin Catalog Rule 9, implementing declarative locale provision via provides_locales and register_locale_dir without any runtime monkey-patching or private internal modifications.
+It registers Simplified Chinese only through provides_locales and register_locale_dir. No runtime monkey-patching and no private table writes.
 
 ### Key Features
 
