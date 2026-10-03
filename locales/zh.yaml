@@ -135,10 +135,10 @@ gateway:
     switch_cancelled: 🟡 模型切换已取消。当前模型保持不变 ({model})。
   approval_expired: ⚠️ 审批已过期（代理不再等待）。请让代理重试。
   deny:
-    stale: 该审批请求已失效或已被处理。
+    stale: "❌ 命令已拒绝（批准已过期）。"
     no_pending: 没有等待拒绝的审批。
     denied_singular: ❌ 命令已被拒绝。
-    denied_reason_singular: '❌ 命令已被拒绝 (原因: {reason})。'
+    denied_reason_singular: "❌ 命令已拒绝。 已将原因转达给代理: \"{reason}\""
   approve:
     no_pending: 没有等待审批的命令。
     once_singular: ✅ 命令已批准。代理正在恢复...
@@ -147,8 +147,8 @@ gateway:
     session_plural: ✅ 命令已批准（本会话允许该模式）({count} 条命令)。代理正在恢复...
   help:
     header: 📖 **Hermes 命令与技能帮助**
-    skill_header: 🛠 **已启用技能:**
-    more_use_commands: 使用 `/commands` 查看完整指令清单
+    skill_header: "\n⚡ **技能命令**（{count} 个活跃）："
+    more_use_commands: "\n... 还有 {count} 个。使用 `/commands` 查看完整分页列表。"
   commands:
     usage: 用法：`/commands [页码]`
     skill_header: ⚡ **扩展技能指令**：
@@ -211,50 +211,50 @@ gateway:
     child_row: '  - 子任务 {index}: {calls} 次 API 调用 · {doing}'
     active_ago: ' · {seconds}秒前活跃'
   background:
-    usage: '用法: `/bg <命令>` 在后台运行任务'
-    started: '后台任务已启动 (PID: {pid})'
+    usage: "用法：/bg <提示>\n示例：/bg 总结今天 HN 上热门的故事\n\n在独立会话中运行该提示。你可以继续聊天 — 结果完成后将在此显示。"
+    started: "🔄 后台任务已启动：「{preview}」\n任务 ID：{task_id}\n你可以继续聊天 — 完成后结果将在此显示。"
   btw:
-    usage: '用法: `/btw <问题>` 顺带提问'
-    no_history: 没有可参考的历史对话。
-    no_provider: 未配置可用模型供应商。
-    started: 正在后台思考顺带提问...
-    answer: "💡 **顺带提问解答:**\n{answer}"
-    failed: '顺带提问处理失败: {error}'
+    usage: "用法：/btw <问题>\n示例：/btw 那个错误在哪个文件？\n\n在不打断当前工作的情况下，回答关于此对话的快速问题。要运行独立的后台任务，请使用 /bg <提示>。"
+    no_history: "还没有对话 — 请将问题作为普通消息发送。"
+    no_provider: "❌ 无法回答问题：未配置提供商凭据。"
+    started: "💬 顺便一问：「{preview}」\n正根据此对话的快照回答 — 当前工作继续进行。"
+    answer: "💬 /btw:「{preview}」\n\n{answer}"
+    failed: "❌ /btw 失败：「{preview}」\n{error}"
   branch:
     db_unavailable: 会话数据库不可用。
     create_failed: '创建分支失败: {error}'
-    branched_one: ✓ 已从会话 `{parent}` 创建新分支 `{branch}`
+    branched_one: "⑂ 已分支到 **{title}**（已复制 {count} 条消息）\n原始：`{parent}`\n分支：`{new}`\n使用 `/resume` 切换回原始会话。"
   compress:
-    not_enough: 当前上下文长度不足以执行压缩。
-    focus_line: 正在重点提炼核心结论与状态...
-    summary_failed: '上下文摘要生成失败: {error}'
-    aborted: 上下文压缩已中止。
+    not_enough: "对话内容不足，无法压缩（至少需要 4 条消息）。"
+    focus_line: "聚焦：\"{topic}\""
+    summary_failed: "⚠️ 摘要生成失败（{error}）。{count} 条历史消息已被移除并替换为占位符；之前的上下文已无法恢复。建议检查 auxiliary.compression 模型配置。"
+    aborted: "⚠️ 压缩已中止 ({error})。未删除任何消息 — 对话保持不变。运行 /compress 重试，运行 /reset 开始新会话，或检查你的 auxiliary.compression 模型配置。"
   footer:
-    status: '页脚状态显示: {state}'
-    usage: '用法: `/footer [on|off]`'
-    saved: 页脚状态配置已保存。
+    status: "📎 运行时页脚：**{state}**\n字段：`{fields}`\n平台：`{platform}`"
+    usage: "用法：`/footer [on|off|status]`"
+    saved: "📎 运行时页脚：**{state}**{example}\n_（已全局保存 — 下一条消息生效）_"
     state_on: 开启
     state_off: 关闭
   goal:
     unavailable: 目标管理功能暂不可用。
     no_goal_set: 当前会话未设定长期目标。
-    paused: 目标追踪已暂停。
-    resumed: 目标追踪已恢复。
-    set: '已设定当前会话目标: {goal}'
+    paused: "⏸ 目标已暂停：{goal}"
+    resumed: "▶ 目标已恢复：{goal}\n立即继续 — 我马上进行下一步。"
+    set: "⊙ 目标已设置（{budget} 轮预算）：{goal}\n我将持续工作直到目标完成、你暂停/清除它，或预算耗尽。\n控制命令：/goal status · /goal pause · /goal resume · /goal clear"
   personality:
     header: 🎭 **角色预设人格选择**
     none_option: 默认 (标准模式)
-    cleared: 已清除自定义角色人格，恢复默认。
-    set_to: '角色人格已切换为: {name}'
-    unknown: '未知的角色人格: {name}'
+    cleared: "🎭 已清除人格 — 使用基础代理行为。\n_（在下一条消息时生效）_"
+    set_to: "🎭 人格已设置为 **{name}**\n_（在下一条消息时生效）_"
+    unknown: "未知人格：`{name}`\n\n可用：{available}"
   reset:
     header_default: ✓ 会话已重置。
     header_new: ✓ 已开启全新会话。
-    title_rejected: 标题不符合规范。
+    title_rejected: "\n⚠️ 标题被拒绝：{error}"
   rollback:
-    not_enabled: 检查点回滚功能未启用。
-    none_found: 未找到可回滚的有效检查点。
-    restored: '✓ 已成功回滚至检查点: {checkpoint}'
+    not_enabled: "检查点未启用。\n请在 config.yaml 中启用：\n```\ncheckpoints:\n  enabled: true\n```"
+    none_found: "未找到 {cwd} 的检查点"
+    restored: "✅ 已恢复到检查点 {hash}：{reason}\n已自动保存回滚前的快照。"
 approval:
   dangerous_header: ⚠️  危险命令：{description}
   timeout: '      ⏱ {waited} 内未收到答复 — 命令未执行。可重新请求以重试，或调高上限：hermes config set approvals.timeout

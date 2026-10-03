@@ -4,10 +4,13 @@ __pycache__/
 *$py.class
 *.so
 
-# Tests & Coverage (Excluded as required)
-tests/
+# Tests & Coverage
+# Directory stays out of the catalog clone except the placeholder gate,
+# which `hermes plugins validate` does not cover.
+tests/*
 test_*.py
 *.test.py
+!tests/test_locale_placeholders.py
 .pytest_cache/
 .coverage
 htmlcov/

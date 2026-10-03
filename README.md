@@ -1,7 +1,7 @@
 # hermes-zh: Hermes 官方标准简体中文语言包
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-green.svg)](https://github.com/Cody292/hermes-zh)
+[![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.7-green.svg)](https://github.com/Cody292/hermes-zh)
 [![Hermes: Language Pack](https://img.shields.io/badge/Hermes-Language%20Pack-purple.svg)](https://hermes-agent.nousresearch.com/)
 [![Requires: Hermes >=0.19](https://img.shields.io/badge/Requires-Hermes%20%3E%3D0.19-blueviolet.svg)](https://github.com/NousResearch/hermes-agent)
 
@@ -39,7 +39,7 @@ hermes-zh 是专为 Hermes Agent 打造的官方标准声明式 Simplified Chine
 
 1. 官方标准语言包集成
    - 基于官方 provides_locales: ["zh"] 标准清单声明。
-   - 核心静态文本字典 locales/zh.yaml 100% 对齐官方 en.yaml 键集合，零孤立死键。
+   - 核心静态文本 `locales/zh.yaml` 只覆盖 `approval.*` 与 `gateway.*` 的一部分（当前 261 键，不是 en.yaml 全量）。没有的键回落 Hermes 自带中文。每一条的 `{占位符}` 集合与英文源一致，不写未覆盖的覆盖率。
    - 零运行时侵入，零性能损耗，零异步调度阻塞。
 
 2. 关键业务表面本土化覆盖
@@ -83,7 +83,7 @@ It strictly adheres to Hermes Plugin Catalog Rule 9, implementing declarative lo
 1. Native Locale Pack:
    Declaratively provides the "zh" locale for the standard agent.i18n catalog.
 2. Verified Key Coverage:
-   100% key parity with core en.yaml for approval prompts and gateway messages.
+   Partial overlay of `approval.*` and `gateway.*` (261 keys, not the full en.yaml catalog). Placeholder sets match the English source. Unlisted keys fall back to Hermes's bundled Chinese.
 3. Clean Architecture:
    Zero private object mutation, zero custom commands, clean lifecycle.
 
